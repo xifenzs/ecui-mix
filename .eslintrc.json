@@ -1,0 +1,47 @@
+{
+    "extends": "eslint:recommended",
+    "rules": {
+        "guard-for-in": "error",
+        "no-extra-bind": "error",
+        "brace-style": "error",
+        "semi": "error",
+        "comma-dangle": [2, "never"],
+        "comma-spacing": "error",
+        "indent": ["error", 4],
+        "keyword-spacing": ["error"],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "space-infix-ops": "error",
+        "no-spaced-func": 2
+    },
+    "parserOptions": {
+        "ecmaVersion": 5
+    },
+    "globals": {
+        "ecui": "writable",
+        "etpl": "writable",
+        "FeatureFlags": "writable",
+        "less": "writable",
+        "ui": "writable",
+        "NS": "writable",
+        "yiche": "writable",
+        "document": "writable",
+        "window": "writable",
+        "FileReader": "writable",
+        "navigator": "writable",
+        "localStorage": "writable",
+        "sessionStorage": "writable",
+        "setTimeout": "writable",
+        "Image": "writable",
+        "history": "writable",
+        "frd": "writable",
+        "_interface": "writable",
+        "location": "writable"
+    }
+}

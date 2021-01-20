@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>系统登录</title>
+    <!--[if lte IE 8]>
+        <script type="text/javascript" src="ie-es5.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet/less" type="text/css" href="common.css">
+    <link rel="stylesheet/less" type="text/css" href="ecui.css" />
+    <link rel="stylesheet" type="text/css" href="login.css" />
+    <script type="text/javascript" src="options.js"></script>
+    <script type="text/javascript" src="ecui.js"></script>
+    <script type="text/javascript" src="common.js"></script>
+    <script type="text/javascript" src="login.js"></script>
+    <script type="text/javascript" src="compatible-2.0.0.js"></script>
+</head>
+
+<body class="login-container">
+    <div class="login-wrap">
+      <div class="login-left-part">
+        <img class="left-part-img" src="images/bg.png">
+      </div>
+      <div class="login-right-part">
+        <div class="login-title-wrap">
+          <p class="login-title-text">用户登录</p>
+          <div class="login-title-line"></div>
+        </div>
+        <form name="loginForm" class="form clearfix">
+            <div class="input-item">
+                <i class="icon icon-phone"></i>
+                <div ui="type:text;id:mobile" class="inp-wrapper">
+                    <input name="mobile" placeholder="请输入用户名" class="phone-num">
+                </div>
+            </div>
+            <div class="input-item">
+                <i class="icon icon-password"></i>
+                <div  class="inp-wrapper clearfix" ui="type:text;id:password">
+                    <input type="password" name="password" placeholder="请输入密码" class="phone-num">
+                </div>
+            </div>
+            <div class="icon-error ui-hide" id="error"></div>
+            <div class="action-box">
+              <input ui="type:button;id:login-btn;" value="登录" type="button" class="btn-login">
+            </div>
+        </form>
+      </div>
+    </div>
+</body>
+
+</html>

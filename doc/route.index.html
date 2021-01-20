@@ -1,0 +1,564 @@
+<!-- target:docTarget -->
+<div class="page-container">
+    <h1>栅格布局</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-24">
+            <div class="ec-bg-purple-dark" style="height: 40px;"></div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-12">
+            <div class="ec-bg-purple" style="height: 40px;"></div>
+        </div>
+        <div class="ec-col col-12">
+            <div class="bg-purple-light" style="height: 40px;"></div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-8">
+            <div class="ec-bg-purple" style="height: 40px;"></div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="bg-purple-light" style="height: 40px;"></div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="ec-bg-purple" style="height: 40px;"></div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-6">
+            <div class="bg-purple-light" style="height: 40px;"></div>
+        </div>
+        <div class="ec-col col-6">
+            <div class="ec-bg-purple" style="height: 40px;"></div>
+        </div>
+        <div class="ec-col col-6">
+            <div class="bg-purple-light" style="height: 40px;"></div>
+        </div>
+        <div class="ec-col col-6">
+            <div class="ec-bg-purple" style="height: 40px;"></div>
+        </div>
+    </div>
+
+    <h1>点击展开收起</h1>
+    <div class="ec-custom-toggle-wrap">
+        <div class="ec-custom-toggle" ui="type:yiche.ui.CustomToggle;">点击</div>
+        <div class="ec-custom-toggle-body code-html">
+            <div>
+                内容
+            </div>
+        </div>
+    </div>
+
+
+    <h1>日期范围</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-4">
+            <div ui="type:yiche.ui.CustomTimers;startName:start;endName:end;startValue:${tableParams.start};endValue:${tableParams.end};">
+            </div>
+        </div>
+    </div>
+
+    <h1>输入搜索</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-8">
+            <div ui="type:yiche.ui.CustomNumberTexts;decimal:0;trim:true;placeholder:请输入数字;name:;"></div>
+        </div>
+        <div class="ec-col col-8">
+            <div ui="type:yiche.ui.CustomTexts;trim:true;placeholder:不限制输入内容;name:;value:;"></div>
+        </div>
+        <div class="ec-col col-8">
+            <div ui="type:yiche.ui.CustomTexts;trim:true;placeholder:请输入字母和数字;name:;checkRule:^[0-9a-zA-Z]+$;value:;"></div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-8">
+            <div class="ec-left-right-view">
+                <div class="width-fixed">
+                    <div class="ec-label">标题:</div>
+                </div>
+                <div class="width-auto">
+                    <div ui="type:yiche.ui.CustomNumberTexts;decimal:0;trim:true;placeholder:请输入数字;name:;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="ec-left-right-view">
+                <div class="width-fixed">
+                    <div class="ec-label text-center">标题:</div>
+                </div>
+                <div class="width-auto">
+                    <div ui="type:yiche.ui.CustomTexts;trim:true;placeholder:不限制输入内容;name:;value:;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="ec-left-right-view">
+                <div class="width-fixed">
+                    <div class="ec-label text-right">标题:</div>
+                </div>
+                <div class="width-auto">
+                    <div ui="type:yiche.ui.CustomTexts;trim:true;placeholder:请输入字母和数字;name:;checkRule:^[0-9a-zA-Z]+$;value:;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1>下拉搜索</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-6">
+            <div ui="type:yiche.ui.CustomSelect;placeholder:普通下拉;name:;value:;">
+                <div ui="value:1;" title="全部尺寸">全部创意图片尺寸1</div>
+                <div ui="value:2;" title="全部尺寸">全部创意图片尺寸2</div>
+            </div>
+        </div>
+        <div class="ec-col col-6">
+            <div ui="type:yiche.ui.CustomCombox;placeholder:请选择下拉搜索;name:;value:;">
+                <div ui="value:-1;" title="全部车型">全部车型</div>
+            </div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-8">
+            <div class="ec-left-right-view">
+                <div class="width-fixed">
+                    <div class="ec-label ec-required">标题:</div>
+                </div>
+                <div class="width-auto">
+                    <div ui="type:yiche.ui.CustomSelect;placeholder:普通下拉;name:;value:;">
+                        <div ui="value:1;" title="全部尺寸">全部创意图片尺寸1</div>
+                        <div ui="value:2;" title="全部尺寸">全部创意图片尺寸2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="ec-left-right-view">
+                <div class="width-fixed">
+                    <div class="ec-label">标题:</div>
+                </div>
+                <div class="width-auto">
+                    <div ui="type:yiche.ui.CustomCombox;placeholder:请选择下拉搜索;name:;value:;">
+                        <div ui="value:-1;" title="全部车型">全部车型</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1>编辑输入</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-8">
+            <div class="edit-form-item">
+                <div ui="type:yiche.ui.CustomInputTexts;trim:true;placeholder:请输入颜色;name:;rules:&{inputRules};"></div>
+                <div class="error-info"></div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="edit-form-item">
+                <div ui="type:yiche.ui.CustomInputTexts;trim:true;placeholder:请输入放非空;name:;rules:&{noNullRules};"></div>
+                <div class="error-info"></div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="edit-form-item">
+                <div ui="type:yiche.ui.CustomInputTexts;trim:true;placeholder:请输入不校验;name:;"></div>
+                <div class="error-info"></div>
+            </div>
+        </div>
+    </div>
+
+    <h1>编辑下拉</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-8">
+            <div class="edit-form-item">
+                <div ui="type:yiche.ui.CustomEditSelect;placeholder:请选择内容;name:;required:true;"></div>
+                <div class="error-info">内容不能为空</div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="edit-form-item">
+                <div ui="type:yiche.ui.CustomEditSelect;placeholder:请选择内容;name:;"></div>
+                <div class="error-info"></div>
+            </div>
+        </div>
+    </div>
+
+    <h1>echarts 图表</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-24">
+            <div style="height: 400px;" ui="type:NS.SetBarEcharts;id:analyHobbyChart;echartInfo:&{echartReqInfo}"></div>
+        </div>
+    </div>
+
+    <h1>按钮</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-4">
+            <div class="ec-btn">默认</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn ui-disabled">默认</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn">
+                <i class="iconfont iconfont-download"></i>默认
+            </div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn circle">
+                <i class="iconfont iconfont-download"></i>默认
+            </div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-primary">普通</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-primary ui-disabled">普通</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-primary">
+                <i class="iconfont iconfont-download"></i>普通
+            </div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-primary circle">
+                <i class="iconfont iconfont-download"></i>普通
+            </div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-link">链接</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-link ui-disabled">链接</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-link">
+                <i class="iconfont iconfont-download"></i>链接
+            </div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-link circle">
+                <i class="iconfont iconfont-download"></i>链接
+            </div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-success">成功</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-success ui-disabled">成功</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-success">
+                <i class="iconfont iconfont-download"></i>成功
+            </div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-success circle">
+                <i class="iconfont iconfont-download"></i>成功
+            </div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-warning">警告</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-warning ui-disabled">警告</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-warning">
+                <i class="iconfont iconfont-download"></i>警告
+            </div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-warning circle">
+                <i class="iconfont iconfont-download"></i>警告
+            </div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-danger">危险</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-danger ui-disabled">危险</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-danger">
+                <i class="iconfont iconfont-download"></i>危险
+            </div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-danger circle">
+                <i class="iconfont iconfont-download"></i>
+            </div>
+        </div>
+    </div>
+
+    <h1>字体图标</h1>
+    <div class="ec-row ec-mb-20 iconfont-html">
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-image"></i>
+            <p>iconfont-image</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-images"></i>
+            <p>iconfont-images</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-file-text"></i>
+            <p>iconfont-file-text</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-location"></i>
+            <p>iconfont-location</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-floppy-disk"></i>
+            <p>iconfont-floppy-disk</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-spinner"></i>
+            <p>iconfont-spinner</p>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20 iconfont-html">
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-search"></i>
+            <p>iconfont-search</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-switch"></i>
+            <p>iconfont-switch</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-list"></i>
+            <p>iconfont-list</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-download"></i>
+            <p>iconfont-download</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-upload"></i>
+            <p>iconfont-upload</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-checkbox-checked"></i>
+            <p>iconfont-checkbox-checked</p>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20 iconfont-html">
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-checkbox-unchecked"></i>
+            <p>iconfont-checkbox-unchecked</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-radio-checked"></i>
+            <p>iconfont-radio-checked</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-radio-unchecked"></i>
+            <p>iconfont-radio-unchecked</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-indent-increase"></i>
+            <p>iconfont-indent-increase</p>
+        </div>
+        <div class="ec-col col-4">
+            <i class="iconfont iconfont-indent-decrease"></i>
+            <p>iconfont-indent-decrease</p>
+        </div>
+    </div>
+
+
+    <h1>分页</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-24">
+            <div ui="type:yiche.ui.Pagination;total:${paginationInfo.total};pageSize:${paginationInfo.pageSize};pageNo:${paginationInfo.pageNo};pageSizeOptions:&{paginationInfo.pageSizeOptions};"></div>
+        </div>
+    </div>
+
+
+    <h1>单选</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-8">
+            <div class="ec-radio-session primary" ui="type:yiche.ui.CustomRadio;refreshChildRoute:false;name:;value:1;">
+                <div ui="value:1;">选项一</div>
+                <div ui="value:2;">选项二</div>
+                <div ui="value:3;">选项三</div>
+                <div ui="value:4;">选项四</div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="ec-radio-session primary" ui="type:yiche.ui.CustomRadio;refreshChildRoute:true;name:;value:1;">
+                <div ui="value:1;">选项一</div>
+                <div ui="value:2;">选项二</div>
+                <div ui="value:3;">选项三</div>
+                <div ui="value:4;">选项四</div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="ec-radio-session primary" ui="type:yiche.ui.CustomRadio;refreshChildRoute:false;name:;value:1;disabled">
+                <div ui="value:1;">选项一</div>
+                <div ui="value:2;">选项二</div>
+                <div ui="value:3;">选项三</div>
+                <div ui="value:4;">选项四</div>
+            </div>
+        </div>
+    </div>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-8">
+            <div class="ec-radio-session radio" ui="type:yiche.ui.CustomRadio;refreshChildRoute:false;name:;value:1;">
+                <div ui="value:1;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项一
+                </div>
+                <div ui="value:2;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项二
+                </div>
+                <div ui="value:3;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项三
+                </div>
+                <div ui="value:4;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项四
+                </div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="ec-radio-session radio" ui="type:yiche.ui.CustomRadio;refreshChildRoute:true;name:;value:1;">
+                <div ui="value:1;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项一
+                </div>
+                <div ui="value:2;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项二
+                </div>
+                <div ui="value:3;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项三
+                </div>
+                <div ui="value:4;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项四
+                </div>
+            </div>
+        </div>
+        <div class="ec-col col-8">
+            <div class="ec-radio-session radio" ui="type:yiche.ui.CustomRadio;refreshChildRoute:true;name:;value:1;disabled;">
+                <div ui="value:1;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项一
+                </div>
+                <div ui="value:2;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项二
+                </div>
+                <div ui="value:3;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项三
+                </div>
+                <div ui="value:4;">
+                    <i class="iconfont iconfont-radio-status"></i> 选项四
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1>复选</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-8">
+            <div class="ec-checkbox-session" id="ec_checkbox_session_1">
+                <!-- for: ${checkboxList} as ${item} -->
+                <div class="ec-checkbox-item checkbox" ui="type:NS.CheckBox;itemData:&{item};scopedName:ec_checkbox_session_1;">
+                    <i class="iconfont iconfont-checkbox-status"></i> ${item.name}
+                </div>
+                <!-- /for -->
+            </div>
+            <div class="ec-checkbox-item-all checkbox" ui="type:NS.CustomCheckboxSelectAll;scopedName:ec_checkbox_session_1;id:checkboxAll">
+                <i class="iconfont iconfont-checkbox-status"></i> 全选
+            </div>
+        </div>
+
+        <div class="ec-col col-8">
+            <div class="ec-checkbox-session" id="ec_checkbox_session_2">
+                <!-- for: ${checkboxList} as ${item} -->
+                <div class="ec-checkbox-item button" ui="type:NS.BtnCheckBox;itemData:&{item};scopedName:ec_checkbox_session_2;">
+                    ${item.name}
+                </div>
+                <!-- /for -->
+            </div>
+            <div class="ec-checkbox-item-all button" style="margin-top: 10px;" ui="type:NS.BtnCustomCheckboxSelectAll;scopedName:ec_checkbox_session_2;id:checkboxAllBtn">
+                全选
+            </div>
+        </div>
+
+        <div class="ec-col col-8">
+            <div class="ec-checkbox-session" id="ec_checkbox_session_3">
+                <!-- for: ${checkboxList} as ${item} -->
+                <div class="ec-checkbox-item border" ui="type:NS.BorderCheckBox;itemData:&{item};scopedName:ec_checkbox_session_3;">
+                    ${item.name}
+                </div>
+                <!-- /for -->
+            </div>
+            <div class="ec-checkbox-item-all border" style="margin-top: 10px;" ui="type:NS.BorderCustomCheckboxSelectAll;scopedName:ec_checkbox_session_3;id:checkboxAllBorder">
+                全选
+            </div>
+        </div>
+    </div>
+
+    <h1>弹窗</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-primary" ui="type:NS.OpenDialog;btnAlgin:left;">按钮左对齐</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-primary" ui="type:NS.OpenDialog;btnAlgin:center;">按钮居中</div>
+        </div>
+        <div class="ec-col col-4">
+            <div class="ec-btn btn-type-primary" ui="type:NS.OpenDialog;btnAlgin:right;">按钮右对齐</div>
+        </div>
+    </div>
+
+
+
+
+    <h1>上传</h1>
+
+
+</div>
+
+
+<!-- target:demoDialogBtnAlignLeftTarget -->
+<div ui="type:dialog" class="ec-dialog">
+    <strong>标题</strong>
+    <div class="dialog-content" id="dialog_test"></div>
+    <div class="action">
+        <div ui="type:@Cancel">取消</div>
+        <div class="ec-btn btn-type-primary">确认</div>
+    </div>
+</div>
+
+<!-- target:demoDialogBtnAlignCenterTarget -->
+<div ui="type:dialog" class="ec-dialog">
+    <strong>标题</strong>
+    <div class="dialog-content" id="dialog_test"></div>
+    <div class="action btn-align-center">
+        <div ui="type:@Cancel">取消</div>
+        <div class="ec-btn btn-type-primary">确认</div>
+    </div>
+</div>
+
+<!-- target:demoDialogBtnAlignRightTarget -->
+<div ui="type:dialog" class="ec-dialog">
+    <strong>标题</strong>
+    <div class="dialog-content" id="dialog_test"></div>
+    <div class="action btn-align-right">
+        <div ui="type:@Cancel">取消</div>
+        <div class="ec-btn btn-type-primary">确认</div>
+    </div>
+</div>
+
+<!-- target:demoDialogBodyTarget -->
+<form name="">
+    <section class="body-test"></section>
+</form>

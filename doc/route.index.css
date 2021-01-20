@@ -1,0 +1,30 @@
+h1{
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 40px;
+    text-align: left;
+}
+
+.code-html{
+    box-sizing: border-box;
+    margin: 0;
+    border: none;
+    max-height: none;
+    border-radius: 0;
+    background: #fafafa;
+    border-radius: 5px;
+}
+
+.iconfont-html {
+    .iconfont {
+        font-size: 20px;
+    }
+    p{
+        font-size: 20px;
+    }
+}
+
+.ec-checkbox-session {
+    display: flex;
+    flex-wrap: wrap;
+}

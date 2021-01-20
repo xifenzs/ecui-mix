@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>创意中心登录</title>
+    <!--[if lte IE 8]>
+        <script type="text/javascript" src="ie-es5.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .main img {
+            width: 390px;
+            height: 280px;
+            position: absolute;
+            left: 50%;
+            top: 40%;
+            transform: translate(-50%, -50%);
+            border: none;
+            outline: none;
+        }
+        
+        .main a {
+            text-decoration: none;
+            position: absolute;
+            left: 50%;
+            bottom: 36%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            background-color: #306BFF;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <img src="images/404.png" alt="" />
+        <a id="login-el" href="http://test.ad.yiche.com/ecui-effect-dsp/index.html">首页</a>
+    </div>
+    <script>
+        window.onload = function() {
+            getEnv = () => {
+                const loc = window.location.origin;
+                let envPath = 'http://test.ad.yiche.com/ecui-effect-dsp/index.html';
+                const Reg = new RegExp('test', 'g');
+                if (!loc.match(Reg)) {
+                    envPath = 'http://localhost:9006/ecui-effect-dsp/index.html';
+                }
+                document.getElementById('login-el').setAttribute('href', envPath);
+            }
+            getEnv();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!-- target:contentTarget -->
+<div class="content-wrap">
+    <div class="content-header">
+        <div class="content-header-left">
+            <div class="logo-wrap">
+                <img src="images/logo2x.png" alt="">
+                <span>${yiche.info.PROJECT_NAME}</span>
+            </div>
+        </div>
+        <div class="content-header-right user-exit">
+            <!-- use: userLogooutTarget(userName=${GLOBLE_USER_INFO.userName}) -->
+        </div>
+    </div>
+    <div class="layout-crumbs">
+        <div class="crumbs-left"></div>
+        <div class="crumbs-right ui-hide">
+            <!-- use: userLogooutTarget(userName=${GLOBLE_USER_INFO.userName}) -->
+        </div>
+    </div>
+    <div class="content">
+        <!-- use: menuNavsTarget(menuList=${GLOBLE_ROUTE_LISTS}, collapse=${MENU_COLLAPES}) -->
+        <div class="content-main" id="container"></div>
+    </div>
+</div>
+<div id="dialogContainer"></div>
+<div id="dialogContainer_1"></div>
+<div id="dialogContainer_2"></div>
+<div class="loading-before"></div>
+<div class="loading-after"></div>
+<div class="preview-session ui-hide" id="preview_session_handle">
+    <div class="close" ui="type:yiche.ui.PreviewHide"></div>
+    <div class="session-main">
+        <div class="swiper"></div>
+    </div>
+</div>
+
+
+<!-- target:userLogooutTarget -->
+<span class="user-name">欢迎您, ${userName}</span>
+<div class="exit" ui="type:yiche.ui.CustomLogout">
+    <img src="images/exit.png" alt="">
+</div>
+
+<!-- target:menuNavsTarget -->
+<div class="content-menu ${collapseName}">
+    <div class="menu-list">
+        <ul class="menu" id="nav_bar" ui="type:yiche.ui.CustomNavs;id:navMenu;collapse:${collapse};">
+            <!-- for: ${menuList} as ${item} -->
+            <!-- if: ${item.children} && ${item.children.length} > 0 &&  ${item.show} -->
+            <li class="nav-item" ui="type:@CustomNavsParent;navItem:&{item};">
+                <div class="parent-wrap">
+                    <!-- if: ${item.icon} -->
+                    <span class="iconfont ${item.icon}"></span>
+                    <!-- /if -->
+                    <span class="font-14">${item.name}</span>
+                    <div class="nav-item-status-icon">
+                        <i class="iconfont iconfont-down-out"></i>
+                    </div>
+                </div>
+                <ul class="nav-child-wrap">
+                    <!-- for: ${item.children} as ${cItem} -->
+                    <!-- if: ${cItem.show} -->
+                    <li class="child-item" ui="type:@CustomNavsChild;navItem:&{cItem}">
+                        <a class="c-a" href="#${cItem.route}">
+                            <div class="menu-child-item-wrap">
+                                <!-- if: ${cItem.icon} -->
+                                <span class="iconfont ${cItem.icon}"></span>
+                                <!-- /if -->
+                                <span class="font-14">${cItem.name}</span>
+                            </div>
+                            <div class="nav-item-bar"></div>
+                        </a>
+                    </li>
+                    <!-- /if -->
+                    <!-- /for -->
+                </ul>
+                <!-- if: ${collapse} -->
+                <div class="nav-child-mask-wrap">
+                    <ul>
+                        <!-- for: ${item.children} as ${cItem} -->
+                        <!-- if: ${cItem.show} -->
+                        <li class="child-item" ui="type:@LinkItem;navItem:&{cItem};">
+                            <a class="c-a" href="#${cItem.route}">
+                                <div class="menu-child-item-wrap">
+                                    <!-- if: ${cItem.icon} -->
+                                    <span class="iconfont ${cItem.icon}"></span>
+                                    <!-- /if -->
+                                    <span class="font-14">${cItem.name}</span>
+                                </div>
+                            </a>
+                        </li>
+                        <!-- /if -->
+                        <!-- /for -->
+                    </ul>
+                </div>
+                <!-- /if -->
+            </li>
+            <!-- else -->
+            <!-- if: ${item.show} -->
+            <li class="nav-item" ui="type:@CustomNavsParent;navItem:&{item};">
+                <a class="p-a" href="#${item.route}">
+                    <div class="menu-item-wrap">
+                        <!-- if: ${item.icon} -->
+                        <span class="iconfont ${item.icon}"></span>
+                        <!-- /if -->
+                        <span class="name">${item.name}</span>
+                    </div>
+                    <div class="nav-item-bar"></div>
+                    <!-- if: ${collapse} -->
+                    <div class="mask-nav-name">${item.name}</div>
+                    <!-- /if -->
+                </a>
+            </li>
+            <!-- /if -->
+            <!-- /if -->
+            <!-- /for -->
+        </ul>
+    </div>
+    <!-- if: ${collapse} -->
+    <div class="menu-collapse" ui="type:yiche.ui.CustomNavsCollapse;navId:navMenu;">
+        <i class="iconfont iconfont-indent-decrease"></i>
+        <span>收起</span>
+    </div>
+    <!-- /if -->
+</div>
