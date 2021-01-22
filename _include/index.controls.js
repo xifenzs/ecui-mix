@@ -760,6 +760,159 @@
                     }, 0);
                 }
             }
+        ),
+
+        // 树结构单选
+        CustomTreeSelect: ecui.inherits(
+            ecui.ui.Control,
+            function(el, options) {
+                ecui.ui.Control.call(this, el, options);
+                this._oResData = null;
+            }, {
+                CustomItem: ecui.inherits(
+                    ecui.ui.Control,
+                    function(el, options) {
+                        ecui.ui.Control.call(this, el, options);
+                        this._oRowData = options.data;
+                    }, {
+                        hasExpend: function() {
+                            let el = this.getMain();
+                            return ecui.dom.hasClass(el, 'tree-item-expend');
+                        },
+                        onclick: function(e) {
+                            let targetEl = e.target;
+                            this.handleCollapse(targetEl);
+                        },
+                        handleCollapse: function(dom) {
+                            if (this._oRowData.children.length > 0) {
+                                if (!ecui.dom.hasClass(dom, 'icon-open')) {
+                                    return;
+                                }
+                                let el = this.getMain();
+                                if (this.hasExpend()) {
+                                    ecui.dom.removeClass(el, 'tree-item-expend');
+                                } else {
+                                    ecui.dom.addClass(el, 'tree-item-expend');
+                                }
+                            }
+                        },
+                        CustomChildItem: ecui.inherits(
+                            ecui.ui.Control,
+                            function(el, options) {
+                                ecui.ui.Control.call(this, el, options);
+                                this._oChildItemData = options.data;
+                            }, {
+                                onclick: function(e) {
+                                    e.stopPropagation();
+                                    this.getParent().getParent().clearStatus();
+                                    this.alterStatus('+actived');
+                                    this.getParent().getParent().setValue(this._oChildItemData);
+                                }
+                            }
+                        )
+                    },
+                ),
+                setValue: function(obj) {
+                    this._oResData = obj;
+                },
+                // 外部设置值
+                handleSetValue(id) {
+                    let allCustomItem = yiche.util.findChildrenControl(this.getMain(), this.CustomItem);
+                    if (allCustomItem && allCustomItem.length > 0) {
+                        allCustomItem.forEach(item => {
+                            if (item._oRowData.children.length > 0) {
+                                let child = yiche.util.findChildrenControl(item.getMain(), item.CustomChildItem);
+                                if (child && child.length > 0) {
+                                    child.forEach(cItem => {
+                                        if (cItem._oChildItemData.id == id) {
+                                            ecui.dispatchEvent(cItem, 'click');
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    }
+                },
+                getValue: function() {
+                    return this._oResData;
+                },
+                clearStatus: function() {
+                    let allCustomItem = yiche.util.findChildrenControl(this.getMain(), this.CustomItem);
+                    if (allCustomItem && allCustomItem.length > 0) {
+                        allCustomItem.forEach(item => {
+                            if (item._oRowData.children.length > 0) {
+                                let child = yiche.util.findChildrenControl(item.getMain(), item.CustomChildItem);
+                                if (child && child.length > 0) {
+                                    child.forEach(cItem => {
+                                        cItem.alterStatus('-actived');
+                                    })
+                                }
+                            }
+                        })
+                    }
+                },
+                SearchItem: ecui.inherits(
+                    ecui.ui.Text,
+                    'custom-search-text',
+                    function(el, options) {
+                        ecui.ui.Text.call(this, el, options);
+                        var clearEl = ecui.dom.create('SPAN', {
+                            className: 'clear-icon'
+                        });
+                        el.appendChild(clearEl);
+                        this._uClear = ecui.$fastCreate(this.ClearValue, clearEl, this, {});
+                        var searchEl = ecui.dom.create('SPAN', {
+                            className: 'search-icon'
+                        });
+                        el.appendChild(searchEl);
+                        this._uSearch = ecui.$fastCreate(this.SearchText, searchEl, this, {});
+                        this._bCheckRule = options.checkRule;
+                    }, {
+                        SearchText: ecui.inherits(ecui.ui.Control, {
+                            onclick: function() {
+                                const value = this.getParent().getValue();
+                                this.getParent().getParent().handleSearch(value);
+                            }
+                        }),
+                        ClearValue: ecui.inherits(ecui.ui.Control, {
+                            onclick: function() {
+                                this.getParent().setValue('');
+                            }
+                        })
+                    }
+                ),
+                handleSearch: function(value) {
+                    let allCustomItem = yiche.util.findChildrenControl(this.getMain(), this.CustomItem);
+                    if (allCustomItem && allCustomItem.length > 0) {
+                        allCustomItem.forEach(item => {
+                            if (item._oRowData.children.length > 0) {
+                                let child = yiche.util.findChildrenControl(item.getMain(), item.CustomChildItem),
+                                    len = child.length,
+                                    count = 0;
+                                if (child && len > 0) {
+                                    child.forEach(cItem => {
+                                        if (value !== '') {
+                                            cItem.hide(cItem);
+                                            if (cItem._oChildItemData.id == value || cItem._oChildItemData.name.indexOf(value) !== -1) {
+                                                cItem.show();
+                                                count = count + 1;
+                                            }
+                                        } else {
+                                            cItem.show();
+                                            count = count + 1;
+                                        }
+                                    })
+                                    if (count === 0) {
+                                        item.hide();
+                                    } else {
+                                        item.show();
+                                    }
+                                }
+                            }
+                        })
+                    }
+                }
+            }
         )
     };
 }());

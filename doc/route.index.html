@@ -524,6 +524,13 @@
 
     <h1>上传</h1>
 
+    <h1>树结构单选</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-12">
+            <!-- use: customTreeSelectTarget(treeData=${treeData}, value=11) -->
+        </div>
+    </div>
+
 
 </div>
 
@@ -562,3 +569,27 @@
 <form name="">
     <section class="body-test"></section>
 </form>
+
+<!-- target:customTreeSelectTarget -->
+<section ui="type:yiche.ui.CustomTreeSelect;">
+    <div ui="type:@SearchItem;trim:true;placeholder:不限制输入内容;"></div>
+    <ul class="ec-custom-tree">
+        <!-- for: ${treeData} as ${item} -->
+        <!-- if: ${item.children} && ${item.children.length} > 0 -->
+        <li class="tree-item" ui="type:@CustomItem;data:&{item};">
+            <div class="tree-parent">
+                <i class="icon-open"></i>
+                <span>${item.name}</span>
+            </div>
+            <ul class="child-wrap">
+                <!-- for: ${item.children} as ${cItem} -->
+                <li class="child-item" ui="type:@CustomChildItem;data:&{cItem};">${cItem.name}</li>
+                <!-- /for -->
+            </ul>
+        </li>
+        <!-- else -->
+        <li class="tree-item" ui="type:@CustomItem;data:&{item};">${item.name}</li>
+        <!-- /if -->
+        <!-- /for -->
+    </ul>
+</section>

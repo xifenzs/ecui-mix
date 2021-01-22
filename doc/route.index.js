@@ -178,6 +178,92 @@
                 checked: false,
                 disabled: false
             }];
+            // tree data
+            context.treeData = [{
+                    id: 1,
+                    name: '你好',
+                    children: [{
+                        id: 11,
+                        name: '你好11',
+                        children: []
+                    }, {
+                        id: 12,
+                        name: '你好12',
+                        children: []
+                    }, {
+                        id: 13,
+                        name: '你好13',
+                        children: []
+                    }, {
+                        id: 14,
+                        name: '你好14',
+                        children: []
+                    }]
+                },
+                {
+                    id: 2,
+                    name: '你好2',
+                    children: [{
+                        id: 21,
+                        name: '你好21',
+                        children: []
+                    }, {
+                        id: 22,
+                        name: '你好22',
+                        children: []
+                    }, {
+                        id: 23,
+                        name: '你好23',
+                        children: []
+                    }, {
+                        id: 24,
+                        name: '你好24',
+                        children: []
+                    }]
+                },
+                {
+                    id: 33,
+                    name: '你好33',
+                    children: [{
+                        id: 31,
+                        name: '你好31',
+                        children: []
+                    }, {
+                        id: 32,
+                        name: '你好32',
+                        children: []
+                    }, {
+                        id: 33,
+                        name: '你好33',
+                        children: []
+                    }, {
+                        id: 34,
+                        name: '你好34',
+                        children: []
+                    }]
+                },
+                {
+                    id: 4,
+                    name: '你好4',
+                    children: [{
+                        id: 41,
+                        name: '你好41',
+                        children: []
+                    }, {
+                        id: 42,
+                        name: '你好42',
+                        children: []
+                    }, {
+                        id: 43,
+                        name: '你好43',
+                        children: []
+                    }, {
+                        id: 44,
+                        name: '你好44',
+                        children: []
+                    }]
+                }
+            ];
         },
         onafterrender: function(context) {},
         onleave: function(context) {
