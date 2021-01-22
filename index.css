@@ -170,7 +170,7 @@ body {
             height: 100%;
             box-sizing: border-box;
             background: #FFFFFF;
-            transition: width 0.3s;
+            transition: width 0.1s;
 
             .menu-list {
                 box-sizing: border-box;
@@ -504,7 +504,7 @@ body {
 
             &.menu-collapsed {
                 width: 72px;
-                transition: width 0.3s;
+                transition: width 0.1s;
 
                 .menu-list {
                     .menu {

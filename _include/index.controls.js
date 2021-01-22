@@ -185,9 +185,16 @@
                         menuControl.handleCollapse();
                         if (!collapseStatus) {
                             this.alterStatus('+collapsed');
+                            yiche.util.setSessionStorage('MENU_COLLAPSE', '1');
                         } else {
                             this.alterStatus('-collapsed');
+                            yiche.util.setSessionStorage('MENU_COLLAPSE', '0');
                         }
+                    }
+                },
+                onready: function() {
+                    if (yiche.util.getSessionStorage('MENU_COLLAPSE') === '1') {
+                        ecui.dispatchEvent(this, 'click');
                     }
                 }
             }
