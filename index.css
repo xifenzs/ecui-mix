@@ -499,6 +499,11 @@ body {
                     span {
                         display: none;
                     }
+
+                    .iconfont-indent-decrease:before {
+                        content: "\ea7b";
+                        color: #3366FF;
+                      }
                 }
             }
 
@@ -1273,6 +1278,10 @@ body {
 
         &.ec-checkbox-item-all-checked {
             color: #409eff;
+
+            .iconfont-checkbox-status:before {
+                content: "\ea52";
+            }
         }
     }
 

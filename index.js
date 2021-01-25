@@ -185,7 +185,7 @@
                     name: '文档',
                     route: '/doc/index',
                     show: true,
-                    icon: 'iconfont-yms-icon-07',
+                    icon: 'iconfont-nav-promotion-ad-plan',
                     children: []
                 }];
                 // 汇总路由

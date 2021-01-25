@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';
-  src:  url('fonts/iconfont.eot?oyna4a');
-  src:  url('fonts/iconfont.eot?oyna4a#iefix') format('embedded-opentype'),
-    url('fonts/iconfont.ttf?oyna4a') format('truetype'),
-    url('fonts/iconfont.woff?oyna4a') format('woff'),
-    url('fonts/iconfont.svg?oyna4a#iconfont') format('svg');
+  src:  url('fonts/iconfont.eot?mk6ho3');
+  src:  url('fonts/iconfont.eot?mk6ho3#iefix') format('embedded-opentype'),
+    url('fonts/iconfont.ttf?mk6ho3') format('truetype'),
+    url('fonts/iconfont.woff?mk6ho3') format('woff'),
+    url('fonts/iconfont.svg?mk6ho3#iconfont') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,26 +25,44 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.iconfont-yms-icon-07:before {
-  content: "\e91b";
+.iconfont-nav-promotion-idea:before {
+  content: "\e90a";
 }
-.iconfont-yms-icon-08:before {
-  content: "\e91c";
+.iconfont-nav-promotion-ad-plan:before {
+  content: "\e90b";
 }
-.iconfont-yms-icon-09:before {
-  content: "\e91d";
+.iconfont-nav-collapse:before {
+  content: "\e90c";
 }
-.iconfont-yms-icon-10:before {
-  content: "\e91e";
+.iconfont-nav-promotion-project:before {
+  content: "\e90f";
 }
-.iconfont-yms-icon-11:before {
-  content: "\e91f";
+.iconfont-nav-collapsed:before {
+  content: "\e910";
 }
-.iconfont-yms-icon-12:before {
-  content: "\e920";
+.iconfont-nav-promotion-ad-group:before {
+  content: "\e911";
 }
-.iconfont-yms-icon-13:before {
-  content: "\e921";
+.iconfont-nav-report-overview:before {
+  content: "\e908";
+}
+.iconfont-nav-report-ad-plan:before {
+  content: "\e903";
+}
+.iconfont-nav-report-ad-group:before {
+  content: "\e904";
+}
+.iconfont-nav-report-idea:before {
+  content: "\e905";
+}
+.iconfont-nav-report-car-model:before {
+  content: "\e906";
+}
+.iconfont-nav-user-pad:before {
+  content: "\e907";
+}
+.iconfont-nav-report-project:before {
+  content: "\e902";
 }
 .iconfont-down-out:before {
   content: "\e901";
@@ -105,6 +123,7 @@
 }
 
 
+
 .iconfont-radio-status:before{
   content: "\ea56";
 }
@@ -129,10 +148,5 @@
   content: "\e900";
   font-size: 20px;
   color: #409eff;
-}
-
-.menu-collapse-collapsed .iconfont-indent-decrease:before {
-  content: "\ea7b";
-  color: #3366FF;
 }
 
