@@ -18,11 +18,11 @@
                 CustomNavsParent: ecui.inherits(ecui.ui.Control,
                     function(el, options) {
                         ecui.ui.Control.call(this, el, options);
-                        this._navData = options.navItem;
+                        this._oNavData = options.navItem;
                         this._bIsOpened = false;
                     }, {
                         onclick: function() {
-                            let hasChildNav = this._navData.children;
+                            let hasChildNav = this._oNavData.children;
                             // 如果没有子菜单 就直接添加样式
                             if (hasChildNav && hasChildNav.length === 0) {
                                 this.removeParentControlSelected();
@@ -62,7 +62,7 @@
                         CustomNavsChild: ecui.inherits(ecui.ui.Control,
                             function(el, options) {
                                 ecui.ui.Control.call(this, el, options);
-                                this._navData = options.navItem;
+                                this._oNavData = options.navItem;
                             }, {
                                 onclick: function(e) {
                                     e.stopPropagation();
@@ -79,7 +79,7 @@
                             }
                             let dom = ecui.dom.getPosition(mainEl),
                                 maskEl = mainEl.querySelector('.mask-nav-name'),
-                                hasChildNav = this._navData.children;
+                                hasChildNav = this._oNavData.children;
                             if (hasChildNav && hasChildNav.length === 0) {
                                 maskEl.style.top = dom.top + 4 + 'px';
                                 return;
@@ -94,7 +94,7 @@
                         LinkItem: ecui.inherits(ecui.ui.Control,
                             function(el, options) {
                                 ecui.ui.Control.call(this, el, options);
-                                this._navData = options.navItem;
+                                this._oNavData = options.navItem;
                             }, {
                                 onclick: function(e) {
                                     e.stopPropagation();
@@ -116,7 +116,7 @@
                         let child = yiche.util.findChildrenControl(item.getMain(), item.CustomNavsChild);
                         if (child && child.length > 0) { // 二级导航
                             child.forEach(cItem => {
-                                if (cItem._navData.route === loc) {
+                                if (cItem._oNavData.route === loc) {
                                     ecui.dispatchEvent(cItem, 'click');
                                     let cItemParent = cItem.getParent();
                                     if (!cItemParent._bIsOpened) {
@@ -125,7 +125,7 @@
                                 }
                             })
                         } else { // 一级导航
-                            if (item._navData.route === loc) {
+                            if (item._oNavData.route === loc) {
                                 ecui.dispatchEvent(item, 'click');
                             }
                         }
@@ -134,7 +134,7 @@
                             let linkChild = yiche.util.findChildrenControl(wrapLinkEl, item.LinkItem);
                             if (linkChild && linkChild.length > 0) {
                                 linkChild.forEach(lItem => {
-                                    if (lItem._navData.route === loc) {
+                                    if (lItem._oNavData.route === loc) {
                                         lItem.alterStatus('+selected');
                                     }
                                 })
@@ -235,13 +235,13 @@
                 });
                 el.appendChild(searchEl);
                 this._uSearch = ecui.$fastCreate(this.SearchText, searchEl, this, {});
-                this._bCheckRule = options.checkRule;
+                this._sCheckRule = options.checkRule;
             }, {
                 $input: function(event) {
                     ecui.ui.Text.prototype.$input.call(this, event);
                     let value = this.getValue();
-                    if (this._bCheckRule) {
-                        let regexp = new RegExp(this._bCheckRule);
+                    if (this._sCheckRule) {
+                        let regexp = new RegExp(this._sCheckRule);
                         if (value.match(regexp)) {
                             this._sLastValue = value;
                             return;
@@ -396,7 +396,7 @@
                 });
                 el.appendChild(clearEl);
                 this._uClear = ecui.$fastCreate(this.ClearValue, clearEl, this, {});
-                this._cParentEl = ecui.dom.parent(el);
+                this._eParentEl = ecui.dom.parent(el);
             }, {
                 ClearValue: ecui.inherits(ecui.ui.Control, {
                     onclick: function() {
@@ -412,15 +412,15 @@
                     let regexp = new RegExp(reg);
                     let value = this.getValue();
                     if (!value.match(regexp)) {
-                        let errorInfoEl = this._cParentEl.querySelector('.error-info');
+                        let errorInfoEl = this._eParentEl.querySelector('.error-info');
                         if (errorInfoEl) {
                             errorInfoEl.innerHTML = message;
                         }
                         ecui.dispatchEvent(this, 'error');
                         return;
                     }
-                    if (value && this._cParentEl) {
-                        ecui.dom.removeClass(this._cParentEl, 'item-error');
+                    if (value && this._eParentEl) {
+                        ecui.dom.removeClass(this._eParentEl, 'item-error');
                     }
                 },
                 onblur: function() {
@@ -431,12 +431,12 @@
                     if (!check) {
                         return;
                     }
-                    ecui.dom.addClass(this._cParentEl, 'item-error');
+                    ecui.dom.addClass(this._eParentEl, 'item-error');
                 },
                 isEditControl: function() {
                     let res = false;
-                    if (this._cParentEl) {
-                        res = ecui.dom.hasClass(this._cParentEl, 'edit-form-item');
+                    if (this._eParentEl) {
+                        res = ecui.dom.hasClass(this._eParentEl, 'edit-form-item');
                     }
                     return res;
                 }
@@ -448,13 +448,13 @@
             ecui.ui.Select,
             function(el, options) {
                 ecui.ui.Select.call(this, el, options);
-                this._cParentEl = ecui.dom.parent(el);
+                this._eParentEl = ecui.dom.parent(el);
             }, {
                 onchange: function() {
                     let value = this.getValue(),
                         check = this.isEditControl();
                     if (value && check) {
-                        ecui.dom.removeClass(this._cParentEl, 'item-error');
+                        ecui.dom.removeClass(this._eParentEl, 'item-error');
                     }
                 },
                 onerror: function() {
@@ -462,12 +462,12 @@
                     if (!check) {
                         return;
                     }
-                    ecui.dom.addClass(this._cParentEl, 'item-error');
+                    ecui.dom.addClass(this._eParentEl, 'item-error');
                 },
                 isEditControl: function() {
                     let res = false;
-                    if (this._cParentEl) {
-                        res = ecui.dom.hasClass(this._cParentEl, 'edit-form-item');
+                    if (this._eParentEl) {
+                        res = ecui.dom.hasClass(this._eParentEl, 'edit-form-item');
                     }
                     return res;
                 }
@@ -617,11 +617,11 @@
         CustomRadio: ecui.inherits(
             frd.SimulationRadio,
             function(el, options) {
-                this._nRefresh = options.refreshChildRoute || false;
+                this._bRefresh = options.refreshChildRoute || false;
                 frd.SimulationRadio.call(this, el, options);
             }, {
                 onchange: function() {
-                    if (this._nRefresh) {
+                    if (this._bRefresh) {
                         this.refresh();
                     }
                 },
@@ -873,7 +873,7 @@
                         });
                         el.appendChild(searchEl);
                         this._uSearch = ecui.$fastCreate(this.SearchText, searchEl, this, {});
-                        this._bCheckRule = options.checkRule;
+                        this._sCheckRule = options.checkRule;
                     }, {
                         SearchText: ecui.inherits(ecui.ui.Control, {
                             onclick: function() {
@@ -919,6 +919,17 @@
                         })
                     }
                 }
+            }
+        ),
+
+        // 文件上传 
+        CustomUploads: ecui.inherits(
+            ecui.ui.Control,
+            function(el, options) {
+                ecui.ui.Control.call(this, el, options);
+                this._sFileType = options.fileType; // 0: 文件 1:图片
+            }, {
+
             }
         )
     };

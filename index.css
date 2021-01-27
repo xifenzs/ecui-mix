@@ -474,7 +474,7 @@ body {
             }
 
             .menu-collapse {
-                width: 100%;
+                width: 210px;
                 height: 48px;
                 box-sizing: border-box;
                 display: flex;
@@ -493,6 +493,7 @@ body {
                     font-size: 14px;
                     color: rgba(0, 0, 0, 0.85);
                     letter-spacing: 0;
+                    display: inline-block;
                 }
 
                 &.menu-collapse-collapsed {

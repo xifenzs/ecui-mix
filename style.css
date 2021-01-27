@@ -208,7 +208,7 @@ body {
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.1) url('images/base/loading.gif') center center no-repeat;
-    background-size: auto auto;
+    background-size: 100px 100px;
 }
 /*日期*/
 
