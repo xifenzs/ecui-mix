@@ -928,8 +928,88 @@
             function(el, options) {
                 ecui.ui.Control.call(this, el, options);
                 this._sFileType = options.fileType; // 0: 文件 1:图片
+                this._eFiles = '';
+                this._sUploadUrl = options.url;
+                this._sFileSize = options.fileSize;
             }, {
+                SelectFiles: ecui.inherits(
+                    ecui.ui.Upload,
+                    function(el, options) {
+                        ecui.ui.Upload.call(this, el, options);
+                        this._eFiles = el.querySelector('input');
+                    }, {
+                        onclick: function() {
+                            this._eFiles.click();
+                        },
+                        $ready: function(options) {},
+                        init: function(event) {
+                            ecui.ui.Upload.prototype.init.call(this, event);
+                            ecui.dom.addEventListener(this._eFiles, 'change', this.getParent().handleGetFiles)
+                        }
+                    }
+                ),
+                // 获取选中的文件信息
+                handleGetFiles: function(e) {
+                    let files = [],
+                        that = this,
+                        canUpload = true;
+                    if (!e.target.files) {
+                        return;
+                    }
+                    files = e.target.files;
+                    if (files.length === 0) {
+                        return;
+                    }
+                    canUpload = this.checkFileSize(files);
+                    if (!canUpload) {
+                        return;
+                    }
+                    for (let i = 0, len = files.length; i < len; i++) {
+                        const file = files[i],
+                            fileName = file.name,
+                            size = file.size,
+                            reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function(e) {
+                            const data = new FormData();
+                            data.append('file', file);
+                            ecui.io.ajax(that._sUploadUrl, {
+                                method: 'POST',
+                                data: data,
+                                headers: yiche.info.UPLOAD_FILES_HEADER,
+                                onupload: progressCallBack,
+                                onsuccess: function(res) {
+                                    if (typeof res == 'string') {
+                                        res = JSON.parse(res);
+                                    }
+                                    that.uploadSuccess(res, i);
+                                },
+                                onerror: function(event) {
+                                    that.onerror(event, i);
+                                }
+                            });
+                        }
+                    }
+                },
+                checkFileSize: function(files) {
+                    let flag = true;
+                    if (this._sFileSize) {
+                        for (let i = 0, len = files.length; i < len; i++) {
+                            const file = files[i],
+                                fileName = file.name,
+                                size = file.size;
+                            if (size / 1024 > this._sFileSize) {
+                                ecui.tip('error', `${fileName}超过可上传大小`);
+                                return false;
+                            }
 
+                        }
+                    }
+                    return flag;
+                },
+                uploadSuccess: function(res, index) {
+
+                }
             }
         )
     };

@@ -12,10 +12,11 @@
             firefoxVersion: /firefox\/(\d+\.\d)/i.test(navigator.userAgent) ? +RegExp.$1 : undefined,
             safariVersion: !/(chrome|crios|ucbrowser)/i.test(navigator.userAgent) && /(\d+\.\d)(\.\d)?\s+.*safari/i.test(navigator.userAgent) ? +RegExp.$1 : undefined,
             now: util.formatDate(new Date(), 'yyyy-MM-dd'),
-            PROJECT_NAME: '左侧导航项目模板', // logo旁的项目名称
+            PROJECT_NAME: '混合导航模板', // logo旁的项目名称
             STORAGE_HEADER: 'EFFECT_',
             routeLists: [], // 项目中的全部路由
             API_BASE: '/dsp-console/console/report/', // 接口前缀
+            UPLOAD_FILES_HEADER: {}
         }
     };
     /* 阻止 ie 按删除键会回退页面 - begin */
