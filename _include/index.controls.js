@@ -927,10 +927,13 @@
             ecui.ui.Control,
             function(el, options) {
                 ecui.ui.Control.call(this, el, options);
-                this._sFileType = options.fileType; // 0: 文件 1:图片
-                this._eFiles = '';
-                this._sUploadUrl = options.url;
-                this._sFileSize = options.fileSize;
+                this._sFileType = options.fileType || 1; // 0: 文件 1:图片 2:视频
+                this._sUploadUrl = options.url || '/serve-idea/api/file/upload'; // 上传地址
+                this._sCheckFileInfo = options.checkFileInfo || {
+                    size: 999999999,
+                    msg: '不限制文件大小!'
+                }; // 文件大小校验信息
+                this._nMaxCount = options.maxCount || 1; //一次最大可上传数量
             }, {
                 SelectFiles: ecui.inherits(
                     ecui.ui.Upload,
@@ -951,64 +954,121 @@
                 // 获取选中的文件信息
                 handleGetFiles: function(e) {
                     let files = [],
-                        that = this,
+                        selectEl = ecui.dom.parent(this),
                         canUpload = true;
-                    if (!e.target.files) {
+                    // 获取文件上传控件
+                    let customUploads = selectEl.getControl().getParent() || null;
+                    if (!e.target.files || !customUploads) {
                         return;
                     }
-                    files = e.target.files;
+                    files = Array.prototype.slice.call(e.target.files, 0);
                     if (files.length === 0) {
                         return;
                     }
-                    canUpload = this.checkFileSize(files);
-                    if (!canUpload) {
-                        return;
-                    }
-                    for (let i = 0, len = files.length; i < len; i++) {
-                        const file = files[i],
-                            fileName = file.name,
-                            size = file.size,
-                            reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = function(e) {
-                            const data = new FormData();
-                            data.append('file', file);
-                            ecui.io.ajax(that._sUploadUrl, {
-                                method: 'POST',
-                                data: data,
-                                headers: yiche.info.UPLOAD_FILES_HEADER,
-                                onupload: progressCallBack,
-                                onsuccess: function(res) {
-                                    if (typeof res == 'string') {
-                                        res = JSON.parse(res);
-                                    }
-                                    that.uploadSuccess(res, i);
-                                },
-                                onerror: function(event) {
-                                    that.onerror(event, i);
-                                }
-                            });
-                        }
-                    }
-                },
-                checkFileSize: function(files) {
-                    let flag = true;
-                    if (this._sFileSize) {
+                    // 校验文件大小
+                    if (customUploads._sCheckFileInfo) {
                         for (let i = 0, len = files.length; i < len; i++) {
                             const file = files[i],
                                 fileName = file.name,
                                 size = file.size;
-                            if (size / 1024 > this._sFileSize) {
-                                ecui.tip('error', `${fileName}超过可上传大小`);
-                                return false;
+                            // 1M文件的大小是1048576（1*1024*1024）
+                            if (size / 1024 > customUploads._sCheckFileInfo.size) {
+                                ecui.tip('error', `${fileName}${customUploads._sCheckFileInfo.msg}`);
+                                canUpload = false;
+                                return;
                             }
 
                         }
                     }
-                    return flag;
+                    if (!canUpload) {
+                        return;
+                    }
+                    // 上传文件
+                    files.forEach((file, index) => {
+                        // 
+                        const currentName = file.name;
+                        // 添加占位元素
+                        let itemFileInfo = {
+                            name: file.name
+                        };
+                        customUploads.addFileItem(itemFileInfo, 'add');
+
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function(e) {
+                            const data = new FormData();
+                            data.append('file', file);
+                            ecui.io.ajax(customUploads._sUploadUrl, {
+                                method: 'POST',
+                                data: data,
+                                headers: yiche.info.UPLOAD_FILES_HEADER,
+                                onupload: function(e) {
+                                    const percent = Math.round(e.loaded / e.total * 100);
+                                    customUploads.updateProgressStatus(percent, currentName);
+                                },
+                                onsuccess: function(res) {
+                                    if (typeof res == 'string') {
+                                        res = JSON.parse(res);
+                                    }
+                                    if (res.code === 0) {
+                                        customUploads.uploadSuccess(res.data, index);
+                                    } else {
+                                        ecui.tip('error', `${file.name}上传失败`);
+                                    }
+                                },
+                                onerror: function(event) {
+                                    customUploads.onerror(event, i);
+                                }
+                            });
+                        }
+                    });
                 },
                 uploadSuccess: function(res, index) {
+                    console.log(res)
+                },
+                FileItem: ecui.inherits(
+                    ecui.ui.Control,
+                    function(el, options) {
+                        ecui.ui.Control.call(this, el, options);
+                        this._oData = options.rowData;
 
+                    }, {
+                        onclick: function(e) {
+                            let delEl = e.target;
+                            if (!ecui.dom.hasClass(delEl, 'del-icon')) {
+                                return;
+                            }
+                            console.log(e)
+                        }
+                    }
+                ),
+                addFileItem: function(file, type) {
+                    let fileListWrpaEl = this.getMain().querySelector('.file-list-wrap');
+                    if (!fileListWrpaEl) {
+                        return;
+                    }
+                    let tempEl = ecui.dom.create({
+                        innerHTML: ecui.esr.getEngine().render('customUploadFileTarget', {
+                            timestamp: Date.now(),
+                            file,
+                            type
+                        })
+                    });
+                    let fileItemEl = ecui.dom.first(tempEl);
+                    ecui.dom.insertBefore(fileItemEl, ecui.dom.last(fileListWrpaEl));
+                    ecui.init(fileItemEl);
+                },
+                updateProgressStatus: function(percent, name) {
+                    let fileItem = this.getMain().getControl().FileItem;
+                    let itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem).filter(i => i._oData.name === name);
+                    let current = itemFiles[0],
+                        itemEl = current.getMain();
+                    itemEl.querySelector('.progress-wrap .text').innerHTML = `${percent}%`;
+                    itemEl.querySelector('.progress-wrap .progress-bar').style.width = `${percent}%`;
+                    if (percent === 100) {
+                        ecui.dom.removeClass(itemEl, 'loading');
+                        ecui.dom.addClass(itemEl, 'success');
+                    }
                 }
             }
         )

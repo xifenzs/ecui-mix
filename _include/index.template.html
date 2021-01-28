@@ -123,3 +123,19 @@
     </div>
     <!-- /if -->
 </div>
+
+<!-- target: customUploadFileTarget -->
+<!-- var addType = ${type} === 'add' ? 'loading' : 'success' -->
+<li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
+    <div class="name">${file.name}</div>
+    <div class="progress-wrap">
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+        <div class="status">
+            <span class="text"></span>
+            <span class="icon"></span>
+        </div>
+    </div>
+    <span class="del-icon">删除</span>
+</li>

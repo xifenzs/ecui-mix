@@ -211,6 +211,13 @@
                 // 菜单折叠
                 context.MENU_COLLAPES = true;
 
+                // 设置文件上传的请求头
+                yiche.info.UPLOAD_FILES_HEADER = {
+                    'x-model-name': 'idea',
+                    'customReferer': window.location.href,
+                    'x-access-token': yiche.util.getSessionStorage('token')
+                };
+
             },
             onafterrender: function(context) {
 

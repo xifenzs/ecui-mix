@@ -1482,3 +1482,157 @@ body {
         }
     }
 }
+
+
+.ec-upload-file{
+    box-sizing: border-box;
+    position: relative;
+    
+    &.upload-file {
+
+        .upload-select-file{
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .file-list-wrap {
+            box-sizing: border-box;
+            width: 100%;
+
+            .file-item{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                box-sizing: border-box;
+                padding: 0 10px;
+                height: 30px;
+                font-size: 12px;
+
+                .name {
+                    flex: 1;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space:nowrap;
+                    word-wrap: normal;
+                    box-sizing: border-box;
+                }
+
+                .progress-wrap {
+                    width: 200px;
+                    box-sizing: border-box;
+                    display: flex;
+                    margin: 0 20px;
+                    align-items: center;
+
+                    .progress {
+                        flex: 1;
+                        height: 10px;
+                        border-radius: 5px;
+                        overflow: hidden;
+                        background: #f5f5f5;
+
+                        .progress-bar {
+                            height: 100%;
+                        }
+                    }
+
+                    .status {
+                        width: 40px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .text {
+                            display: inline-block;
+                            color: rgba(0,0,0,.45);
+                            font-size: 12px;
+                            line-height: 1;
+                            white-space: nowrap;
+                            text-align: right;
+                            vertical-align: middle;
+                            word-break: normal;
+                        }
+                        .icon {
+                            display: none;
+                            height: 16px;
+                            width: 16px;
+                            background: #fff url(images/frd/upload-fail.png) no-repeat center center;
+                        }
+                    }
+
+                    
+
+                }
+
+                .del-icon {
+                    width: 30px;
+                    cursor: pointer;
+                }
+
+                &.loading {
+                    .progress {
+                        .progress-bar {
+                            background: #1890ff;
+                        }
+                    }
+
+                    .status {
+                        .text {
+                            display: inline-block;
+                        }
+                        .icon {
+                            display: none;
+                            background: #fff url(images/frd/upload-loading.gif) no-repeat center center;
+                        }
+                    }
+                }
+
+                &.success {
+                    .progress {
+                        .progress-bar {
+                            background: #52c41a;
+                        }
+                    }
+                    .status {
+                        .text {
+                            display: none;
+                        }
+                        .icon {
+                            display: inline-block;
+                            background: #fff url(images/frd/upload-success.png) no-repeat center center;
+                        }
+                    }
+                }
+
+                &.fail {
+                    border: 1px solid #ff4d4f;
+                    .name {
+                        color: #ff4d4f;
+                    }
+                    .progress {
+                        .progress-bar {
+                            background: #ff4d4f;
+                        }
+                    }
+                    .status {
+                        .text {
+                            display: none;
+                        }
+                        .icon {
+                            display: inline-block;
+                            background: url(images/frd/upload-fail.png) no-repeat center center;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    &.upload-img {
+        
+    }
+
+    &.upload-video {
+        
+    }
+}

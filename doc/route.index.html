@@ -525,11 +525,14 @@
     <h1>上传</h1>
     <section class="ec-row ec-mb-20">
         <div class="ec-col col-12">
-            <div class="ec-upload-file" ui="type:yiche.ui.CustomUploads;">
-                <div class="ec-btn btn-type-primary" ui="type:@SelectFiles;">
-                    <input type="file" class="ui-hide" accept=".png,.jpg,.jpeg" multiple/>
+            <div class="ec-upload-file upload-file" ui="type:yiche.ui.CustomUploads;">
+                <div class="ec-btn btn-type-primary upload-select-file" ui="type:@SelectFiles;">
+                    <input type="file" class="ui-hide" accept=".png,.jpg,.jpeg" multiple />
                     <span>选择文件</span>
                 </div>
+                <ul class="file-list-wrap">
+                    <span class="ui-hide">上传非图片和视频时需要改元素来确定插入位置</span>
+                </ul>
             </div>
         </div>
     </section>
