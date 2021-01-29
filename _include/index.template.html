@@ -169,7 +169,33 @@
     </div>
 </li>
 <!-- elif: ${viewType} === '2' -->
-
+<li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
+    <div class="item-file-wrap">
+        <video src="" alt="" />
+    </div>
+    <div class="mask">
+        <a href="" target="_blank">
+            <span class="iconfont iconfont-prewiew"></span>
+        </a>
+        <span class="iconfont iconfont-delete del-icon"></span>
+    </div>
+    <div class="progress-wrap">
+        <div class="status">
+            <span class="text">45%</span>
+        </div>
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+    <div class="error-wrap">
+        <div class="error-icon">
+            <span class="iconfont iconfont-image"></span>
+        </div>
+        <div class="error-text">
+            <span>上传失败</span>
+        </div>
+    </div>
+</li>
 <!-- else -->
 
 <!-- /if -->

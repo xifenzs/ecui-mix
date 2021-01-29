@@ -1062,6 +1062,10 @@
                         itemEl.querySelector('.item-file-wrap img').src = res;
                         itemEl.querySelector('.mask a').href = res;
                     }
+                    if (this._sFileType === '2') {
+                        itemEl.querySelector('.item-file-wrap video').src = res;
+                        itemEl.querySelector('.mask a').href = res;
+                    }
                 },
                 uploadFail: function(name) {
                     let fileItem = this.getMain().getControl().FileItem;

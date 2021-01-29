@@ -1634,7 +1634,7 @@ body {
 
     }
 
-    &.upload-img {
+    &.upload-img-video {
         .file-list-wrap{
             box-sizing: border-box;
             padding: 10px;
