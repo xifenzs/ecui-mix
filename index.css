@@ -1678,7 +1678,7 @@ body {
                     align-items: center;
                     justify-content: center;
                     background: rgba(0,0,0,0.3);
-                    z-index: 2;
+                    z-index: 3;
                     display: none;
 
                     .iconfont {
@@ -1687,6 +1687,36 @@ body {
                         margin: 0 5px;
                         cursor: pointer;
                     }
+                }
+
+                .error-wrap{
+                    width: 94px;
+                    height: 94px;
+                    position: absolute;
+                    left: 4px;
+                    top: 4px;
+                    box-sizing: border-box;
+                    background-color: #ffffff;
+                    z-index: 2;
+                    display: none;
+
+                    .error-icon{
+                        text-align: center;
+                        margin: 20px auto 10px;
+                        .iconfont{
+                            font-size: 30px;
+                            color: #ff4d4f;
+                        }
+                    }
+
+                    .error-text{
+                        text-align: center;
+                        span{
+                            font-size: 12px;
+                            color: #ff4d4f;
+                        }
+                    }
+
                 }
 
                 &:hover {
@@ -1718,7 +1748,6 @@ body {
                         .progress-bar {
                             height: 100%;
                             background: #1890ff;
-                            width: 45%;
                         }
                     }
 
@@ -1744,10 +1773,8 @@ body {
 
                 &.loading {
                     border: 1px dashed #d9d9d9;
-                    .progress {
-                        .progress-bar {
-                            background: #1890ff;
-                        }
+                    .error-wrap {
+                        display: none;
                     }
                 }
 
@@ -1757,11 +1784,22 @@ body {
                         opacity: 0;
                         transition: opacity 0.3s;
                     }
+                    .error-wrap {
+                        display: none;
+                    }
                 }
 
                 &.fail {
                     border: 1px solid #ff4d4f;
-                    
+                    .error-wrap {
+                        display: block;
+                    }
+
+                    .mask{
+                        .iconfont-prewiew{
+                            display: none;
+                        }
+                    }
                 }
             }
 

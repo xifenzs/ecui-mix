@@ -953,9 +953,9 @@
                 ),
                 // 获取选中的文件信息
                 handleGetFiles: function(e) {
-                    debugger
                     let files = [],
-                        selectEl = ecui.dom.parent(this),
+                        fileInputEl = this,
+                        selectEl = ecui.dom.parent(fileInputEl),
                         canUpload = true;
                     // 获取文件上传控件
                     let customUploads = selectEl.getControl().getParent() || null;
@@ -993,7 +993,8 @@
                         return;
                     }
                     // 上传文件
-                    files.forEach((file, index) => {
+                    let fileSecCount = files.length;
+                    files.forEach((file) => {
                         // 
                         const currentName = file.name;
                         // 添加占位元素
@@ -1023,9 +1024,19 @@
                                     if (res.code === 0) {
                                         customUploads.uploadSuccess(res.data, currentName);
                                     }
+                                    // 解决前后2次选同一个文件不触发file的change事件
+                                    fileSecCount--;
+                                    if (fileSecCount === 0) {
+                                        fileInputEl.value = '';
+                                    }
                                 },
                                 onerror: function(event) {
                                     customUploads.uploadFail(currentName);
+                                    // 解决前后2次选同一个文件不触发file的change事件
+                                    fileSecCount--;
+                                    if (fileSecCount === 0) {
+                                        fileInputEl.value = '';
+                                    }
                                 }
                             });
                         }
@@ -1049,6 +1060,7 @@
                     }
                     if (this._sFileType === '1') {
                         itemEl.querySelector('.item-file-wrap img').src = res;
+                        itemEl.querySelector('.mask a').href = res;
                     }
                 },
                 uploadFail: function(name) {
@@ -1057,6 +1069,7 @@
                     let current = itemFiles[0],
                         itemEl = current.getMain();
                     ecui.dom.removeClass(itemEl, 'loading');
+                    ecui.dom.removeClass(itemEl, 'success');
                     ecui.dom.addClass(itemEl, 'fail');
                 },
                 FileItem: ecui.inherits(
