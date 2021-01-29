@@ -1782,7 +1782,7 @@ body {
                     border: 1px solid #d9d9d9;
                     .progress-wrap {
                         opacity: 0;
-                        transition: opacity 0.3s;
+                        transition: opacity 2s;
                     }
                     .error-wrap {
                         display: none;
