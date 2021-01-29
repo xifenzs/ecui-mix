@@ -125,9 +125,10 @@
 </div>
 
 <!-- target: customUploadFileTarget -->
-<!-- var addType = ${type} === 'add' ? 'loading' : 'success' -->
+<!-- var addType = ${type} === 'add' ? '' : 'success' -->
+<!-- if: ${viewType} === 0 -->
 <li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
-    <div class="name">${file.name}</div>
+    <div title="${file.name}" class="name">${file.name}</div>
     <div class="progress-wrap">
         <div class="progress">
             <div class="progress-bar"></div>
@@ -137,5 +138,12 @@
             <span class="icon"></span>
         </div>
     </div>
-    <span class="del-icon">删除</span>
+    <span class="del-icon iconfont iconfont-delete"></span>
 </li>
+<!-- elif: ${viewType} === 1 -->
+
+<!-- elif: ${viewType} === 2 -->
+
+<!-- else -->
+
+<!-- /if -->

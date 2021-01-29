@@ -1565,6 +1565,9 @@ body {
 
                 .del-icon {
                     width: 30px;
+                    font-size: 18px;
+                    text-align: right;
+                    color: rgba(0,0,0,0.45);
                     cursor: pointer;
                 }
 
@@ -1621,6 +1624,9 @@ body {
                             display: inline-block;
                             background: url(images/frd/upload-fail.png) no-repeat center center;
                         }
+                    }
+                    .del-icon {
+                        color: #ff4d4f;
                     }
                 }
             }

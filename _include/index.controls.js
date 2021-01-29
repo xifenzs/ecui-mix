@@ -927,7 +927,7 @@
             ecui.ui.Control,
             function(el, options) {
                 ecui.ui.Control.call(this, el, options);
-                this._sFileType = options.fileType || 1; // 0: 文件 1:图片 2:视频
+                this._sFileType = options.fileType || 0; // 0: 文件 1:图片 2:视频
                 this._sUploadUrl = options.url || '/serve-idea/api/file/upload'; // 上传地址
                 this._sCheckFileInfo = options.checkFileInfo || {
                     size: 999999999,
@@ -965,6 +965,12 @@
                     if (files.length === 0) {
                         return;
                     }
+
+                    // 校验一次最大上传数量
+                    if (customUploads._nMaxCount && customUploads.checkMaxuploadNumber && !customUploads.checkMaxuploadNumber(files.length)) {
+                        return;
+                    }
+
                     // 校验文件大小
                     if (customUploads._sCheckFileInfo) {
                         for (let i = 0, len = files.length; i < len; i++) {
@@ -977,9 +983,11 @@
                                 canUpload = false;
                                 return;
                             }
-
+                            // 检验文件是否重复上传
+                            canUpload = customUploads.checkFileRepeat(fileName);
                         }
                     }
+
                     if (!canUpload) {
                         return;
                     }
@@ -989,7 +997,8 @@
                         const currentName = file.name;
                         // 添加占位元素
                         let itemFileInfo = {
-                            name: file.name
+                            name: file.name,
+                            uploadStatus: false
                         };
                         customUploads.addFileItem(itemFileInfo, 'add');
 
@@ -1011,20 +1020,40 @@
                                         res = JSON.parse(res);
                                     }
                                     if (res.code === 0) {
-                                        customUploads.uploadSuccess(res.data, index);
-                                    } else {
-                                        ecui.tip('error', `${file.name}上传失败`);
+                                        customUploads.uploadSuccess(res.data, currentName);
                                     }
                                 },
                                 onerror: function(event) {
-                                    customUploads.onerror(event, i);
+                                    customUploads.uploadFail(currentName);
                                 }
                             });
                         }
                     });
                 },
-                uploadSuccess: function(res, index) {
-                    console.log(res)
+                uploadSuccess: function(res, name) {
+                    let fileItem = this.getMain().getControl().FileItem;
+                    let itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem).filter(i => i._oData.name === name);
+                    let current = itemFiles[0],
+                        itemEl = current.getMain();
+                    ecui.dom.removeClass(itemEl, 'loading');
+                    if (res instanceof Object) {
+                        current._oData = Object.assign(current._oData, res, {
+                            uploadStatus: true
+                        })
+                    } else {
+                        current._oData = Object.assign(current._oData, {
+                            url: res,
+                            uploadStatus: true
+                        })
+                    }
+                },
+                uploadFail: function(name) {
+                    let fileItem = this.getMain().getControl().FileItem;
+                    let itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem).filter(i => i._oData.name === name);
+                    let current = itemFiles[0],
+                        itemEl = current.getMain();
+                    ecui.dom.removeClass(itemEl, 'loading');
+                    ecui.dom.addClass(itemEl, 'fail');
                 },
                 FileItem: ecui.inherits(
                     ecui.ui.Control,
@@ -1038,7 +1067,9 @@
                             if (!ecui.dom.hasClass(delEl, 'del-icon')) {
                                 return;
                             }
-                            console.log(e)
+                            let wrapEl = this.getMain();
+                            ecui.dispose(wrapEl);
+                            ecui.dom.remove(wrapEl);
                         }
                     }
                 ),
@@ -1051,7 +1082,8 @@
                         innerHTML: ecui.esr.getEngine().render('customUploadFileTarget', {
                             timestamp: Date.now(),
                             file,
-                            type
+                            type,
+                            viewType: this._sFileType
                         })
                     });
                     let fileItemEl = ecui.dom.first(tempEl);
@@ -1063,12 +1095,58 @@
                     let itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem).filter(i => i._oData.name === name);
                     let current = itemFiles[0],
                         itemEl = current.getMain();
+                    ecui.dom.addClass(itemEl, 'loading');
                     itemEl.querySelector('.progress-wrap .text').innerHTML = `${percent}%`;
                     itemEl.querySelector('.progress-wrap .progress-bar').style.width = `${percent}%`;
                     if (percent === 100) {
                         ecui.dom.removeClass(itemEl, 'loading');
                         ecui.dom.addClass(itemEl, 'success');
                     }
+                },
+                checkFileRepeat: function(name) {
+                    let fileItem = this.getMain().getControl().FileItem;
+                    let itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem);
+                    for (let i = 0, len = itemFiles.length; i < len; i++) {
+                        let fileName = itemFiles[i]._oData.name;
+                        if (fileName === name) {
+                            ecui.tip('error', `${name}已经存在,请勿重复上传!`);
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                checkMaxuploadNumber: function(selectCount) {
+                    let fileItem = this.getMain().getControl().FileItem;
+                    let fileCount = yiche.util.findChildrenControl(this.getMain(), fileItem).length + selectCount;
+                    if (fileCount <= this._nMaxCount) {
+                        return true;
+                    } else {
+                        ecui.tip('error', `最多可上传${this._nMaxCount}个文件!`);
+                        return false;
+                    }
+                },
+                getValues: function() {
+                    let fileItem = this.getMain().getControl().FileItem,
+                        itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem),
+                        successFiles = itemFiles.filter(i => i._oData.uploadStatus),
+                        countFile = itemFiles.length;
+                    if (successFiles.length !== countFile) {
+                        ecui.tip('error', '请删除上传失败的图片再提交保存!');
+                        return [];
+                    }
+                    let result = [];
+                    itemFiles.forEach(item => {
+                        result.push(item._oData);
+                    });
+                    return result;
+                },
+                setValues: function(list) {
+                    if (list.length === 0) {
+                        return;
+                    }
+                    list.forEach(item => {
+                        this.addFileItem(item, 'edit');
+                    })
                 }
             }
         )
