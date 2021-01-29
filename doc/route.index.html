@@ -523,9 +523,10 @@
 
 
     <h1>上传</h1>
-    <section class="ec-row ec-mb-20">
+    <section class="ec-row ec-mb-20" style="align-items:flex-start;">
         <div class="ec-col col-12">
-            <div class="ec-upload-file upload-file" ui="type:yiche.ui.CustomUploads;fileType:0;maxCount:5;">
+            <h3>文件上传</h3>
+            <div class="ec-upload-file upload-file" ui="type:yiche.ui.CustomUploads;fileType:0;maxCount:5;id:uploadFile1;">
                 <div class="ec-btn btn-type-primary upload-select-file" ui="type:@SelectFiles;">
                     <input type="file" class="ui-hide" accept=".png,.jpg,.jpeg" multiple />
                     <span>选择文件</span>
@@ -536,7 +537,8 @@
             </div>
         </div>
         <div class="ec-col col-12">
-            <div class="ec-upload-file upload-img-video" ui="type:yiche.ui.CustomUploads;fileType:1;maxCount:10;">
+            <h3>图片上传</h3>
+            <div class="ec-upload-file upload-img-video" ui="type:yiche.ui.CustomUploads;fileType:1;maxCount:10;id:uploadFile2;">
                 <ul class="file-list-wrap">
                     <div class="upload-select-file" ui="type:@SelectFiles;">
                         <input type="file" class="ui-hide" accept=".png,.jpg,.jpeg" multiple />
@@ -546,9 +548,10 @@
             </div>
         </div>
     </section>
-    <section class="ec-row ec-mb-20">
-        <div class="ec-col col-24">
-            <div class="ec-upload-file upload-img-video" ui="type:yiche.ui.CustomUploads;fileType:2;maxCount:1;">
+    <section class="ec-row ec-mb-20" style="align-items:flex-start;">
+        <div class="ec-col col-12">
+            <h3>视频上传</h3>
+            <div class="ec-upload-file upload-img-video" ui="type:yiche.ui.CustomUploads;fileType:2;maxCount:1;id:uploadFile3;">
                 <ul class="file-list-wrap">
                     <div class="upload-select-file" ui="type:@SelectFiles;">
                         <input type="file" class="ui-hide" accept=".mp4" multiple />

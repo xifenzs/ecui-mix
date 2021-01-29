@@ -265,7 +265,17 @@
                 }
             ];
         },
-        onafterrender: function(context) {},
+        onafterrender: function(context) {
+            // 回显已经上传文件
+            const fileLists = [{
+                name: '文件1',
+                url: 'http://image.bitautoimg.com/slpfile/6bfa3d43ff1d4ffa947a7d3601568639.jpg',
+                uploadStatus: true
+            }];
+            ecui.get('uploadFile1').setValues(fileLists);
+            ecui.get('uploadFile2').setValues(fileLists);
+            // ecui.get('uploadFile3').setValues(fileLists);
+        },
         onleave: function(context) {
             yiche.util.removeDialog();
         }

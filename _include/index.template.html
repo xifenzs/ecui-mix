@@ -125,7 +125,7 @@
 </div>
 
 <!-- target: customUploadFileTarget -->
-<!-- var addType = ${type} === 'add' ? '' : 'success' -->
+<!-- var: addType = ${type} === 'add' ? '' : 'success' -->
 <!-- if: ${viewType} === '0' -->
 <li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
     <div title="${file.name}" class="name">${file.name}</div>
@@ -141,12 +141,13 @@
     <span class="del-icon iconfont iconfont-delete"></span>
 </li>
 <!-- elif: ${viewType} === '1' -->
+<!-- var: fileUrl = ${type} === 'edit' ? ${file.url} : 'images/place-holder.png' -->
 <li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
     <div class="item-file-wrap">
-        <img src="images/place-holder.png" alt="" />
+        <img src="${fileUrl}" alt="" />
     </div>
     <div class="mask">
-        <a href="" target="_blank">
+        <a href="${fileUrl}" target="_blank">
             <span class="iconfont iconfont-prewiew"></span>
         </a>
         <span class="iconfont iconfont-delete del-icon"></span>
@@ -169,9 +170,10 @@
     </div>
 </li>
 <!-- elif: ${viewType} === '2' -->
+<!-- var fileUrl = ${type} === 'edit' ? ${file.url} : '' -->
 <li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
     <div class="item-file-wrap">
-        <video src="" alt="" />
+        <video src="${fileUrl}" alt="" />
     </div>
     <div class="mask">
         <a href="" target="_blank">
