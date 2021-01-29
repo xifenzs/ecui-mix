@@ -927,10 +927,10 @@
             ecui.ui.Control,
             function(el, options) {
                 ecui.ui.Control.call(this, el, options);
-                this._sFileType = options.fileType || 0; // 0: 文件 1:图片 2:视频
+                this._sFileType = options.fileType || '0'; // 0: 文件 1:图片 2:视频
                 this._sUploadUrl = options.url || '/serve-idea/api/file/upload'; // 上传地址
                 this._sCheckFileInfo = options.checkFileInfo || {
-                    size: 999999999,
+                    size: 99999999999,
                     msg: '不限制文件大小!'
                 }; // 文件大小校验信息
                 this._nMaxCount = options.maxCount || 1; //一次最大可上传数量
@@ -947,12 +947,13 @@
                         $ready: function(options) {},
                         init: function(event) {
                             ecui.ui.Upload.prototype.init.call(this, event);
-                            ecui.dom.addEventListener(this._eFiles, 'change', this.getParent().handleGetFiles)
+                            ecui.dom.addEventListener(this._eFiles, 'change', this.getParent().handleGetFiles);
                         }
                     }
                 ),
                 // 获取选中的文件信息
                 handleGetFiles: function(e) {
+                    debugger
                     let files = [],
                         selectEl = ecui.dom.parent(this),
                         canUpload = true;
@@ -1045,6 +1046,9 @@
                             url: res,
                             uploadStatus: true
                         })
+                    }
+                    if (this._sFileType === '1') {
+                        itemEl.querySelector('.item-file-wrap img').src = res;
                     }
                 },
                 uploadFail: function(name) {

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';
-  src:  url('fonts/iconfont.eot?cjnj3v');
-  src:  url('fonts/iconfont.eot?cjnj3v#iefix') format('embedded-opentype'),
-    url('fonts/iconfont.ttf?cjnj3v') format('truetype'),
-    url('fonts/iconfont.woff?cjnj3v') format('woff'),
-    url('fonts/iconfont.svg?cjnj3v#iconfont') format('svg');
+  src:  url('fonts/iconfont.eot?xs7an1');
+  src:  url('fonts/iconfont.eot?xs7an1#iefix') format('embedded-opentype'),
+    url('fonts/iconfont.ttf?xs7an1') format('truetype'),
+    url('fonts/iconfont.woff?xs7an1') format('woff'),
+    url('fonts/iconfont.svg?xs7an1#iconfont') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -124,7 +124,12 @@
 .iconfont-delete:before {
   content: "\e909";
 }
-
+.iconfont-add:before {
+  content: "\e912";
+}
+.iconfont-prewiew:before {
+  content: "\e913";
+}
 
 
 .iconfont-radio-status:before{

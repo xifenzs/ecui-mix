@@ -126,7 +126,7 @@
 
 <!-- target: customUploadFileTarget -->
 <!-- var addType = ${type} === 'add' ? '' : 'success' -->
-<!-- if: ${viewType} === 0 -->
+<!-- if: ${viewType} === '0' -->
 <li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
     <div title="${file.name}" class="name">${file.name}</div>
     <div class="progress-wrap">
@@ -140,10 +140,42 @@
     </div>
     <span class="del-icon iconfont iconfont-delete"></span>
 </li>
-<!-- elif: ${viewType} === 1 -->
-
-<!-- elif: ${viewType} === 2 -->
-
+<!-- elif: ${viewType} === '1' -->
+<li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
+    <div class="item-file-wrap">
+        <img src="http://image.bitautoimg.com/slpfile/1e7d928febf54f1b85b68fa81fdc808a.jpg" alt="" />
+    </div>
+    <div class="mask">
+        <span class="iconfont iconfont-prewiew"></span>
+        <span class="iconfont iconfont-delete del-icon"></span>
+    </div>
+    <div class="progress-wrap">
+        <div class="status">
+            <span class="text">45%</span>
+        </div>
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+</li>
+<!-- elif: ${viewType} === '2' -->
+<li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
+    <div class="item-file-wrap">
+        <img src="http://image.bitautoimg.com/slpfile/1e7d928febf54f1b85b68fa81fdc808a.jpg" alt="" />
+    </div>
+    <div class="mask">
+        <span class="iconfont iconfont-prewiew"></span>
+        <span class="iconfont iconfont-delete del-icon"></span>
+    </div>
+    <div class="progress-wrap">
+        <div class="status">
+            <span class="text">45%</span>
+        </div>
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+</li>
 <!-- else -->
 
 <!-- /if -->
