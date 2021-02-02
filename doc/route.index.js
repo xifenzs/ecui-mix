@@ -271,10 +271,18 @@
                 name: '文件1',
                 url: 'http://image.bitautoimg.com/slpfile/6bfa3d43ff1d4ffa947a7d3601568639.jpg',
                 uploadStatus: true
+            }, {
+                name: '文件2',
+                url: 'http://image.bitautoimg.com/slpfile/45c054d58ec349ee8a2685a4a6147a4e.jpg',
+                uploadStatus: true
+            }, {
+                name: '文件3',
+                url: 'http://image.bitautoimg.com/slpfile/a5b98ddd214747179c5d5e6b736c7d29.jpg',
+                uploadStatus: true
             }];
             ecui.get('uploadFile1').setValues(fileLists);
             ecui.get('uploadFile2').setValues(fileLists);
-            // ecui.get('uploadFile3').setValues(fileLists);
+            ecui.get('uploadFile4').setValues(fileLists);
         },
         onleave: function(context) {
             yiche.util.removeDialog();

@@ -25,14 +25,8 @@
 <div id="dialogContainer"></div>
 <div id="dialogContainer_1"></div>
 <div id="dialogContainer_2"></div>
-<div class="loading-before"></div>
 <div class="loading-after"></div>
-<div class="preview-session ui-hide" id="preview_session_handle">
-    <div class="close" ui="type:yiche.ui.PreviewHide"></div>
-    <div class="session-main">
-        <div class="swiper"></div>
-    </div>
-</div>
+<!-- use: customPreviewImgTarget() -->
 
 
 <!-- target:userLogooutTarget -->
@@ -147,9 +141,13 @@
         <img src="${fileUrl}" alt="" />
     </div>
     <div class="mask">
+        <!-- if: ${preview} === 'a' -->
         <a href="${fileUrl}" target="_blank">
             <span class="iconfont iconfont-prewiew"></span>
         </a>
+        <!-- else -->
+        <span class="iconfont iconfont-prewiew handle-prewiew-img"></span>
+        <!-- /if -->
         <span class="iconfont iconfont-delete del-icon"></span>
     </div>
     <div class="progress-wrap">
@@ -176,9 +174,13 @@
         <video src="${fileUrl}" alt="" />
     </div>
     <div class="mask">
+        <!-- if: ${preview} === 'a' -->
         <a href="" target="_blank">
             <span class="iconfont iconfont-prewiew"></span>
         </a>
+        <!-- else -->
+        <span class="iconfont iconfont-prewiew handle-prewiew-img"></span>
+        <!-- /if -->
         <span class="iconfont iconfont-delete del-icon"></span>
     </div>
     <div class="progress-wrap">
@@ -201,3 +203,17 @@
 <!-- else -->
 
 <!-- /if -->
+
+
+
+
+<!-- target: customPreviewImgTarget -->
+<div class="preview-session" ui="type:yiche.ui.CustomPreview;id:handlePreview;">
+    <div class="session-main">
+        <div class="close" ui="type:@HandleHide;"></div>
+        <div class="btn left" ui="type:@PreviewImgChange;btnType:prev;"></div>
+        <div class="btn right" ui="type:@PreviewImgChange;btnType:next;"></div>
+        <div class="swiper">
+        </div>
+    </div>
+</div>

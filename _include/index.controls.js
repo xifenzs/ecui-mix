@@ -934,6 +934,7 @@
                     msg: '不限制文件大小!'
                 }; // 文件大小校验信息
                 this._nMaxCount = options.maxCount || 1; //一次最大可上传数量
+                this._sPreviewType = options.preview || 'a'; //一次最大可上传数量 a:打开一个新窗口预览  m: 当前页出现一个蒙层进行预览
             }, {
                 SelectFiles: ecui.inherits(
                     ecui.ui.Upload,
@@ -1084,13 +1085,36 @@
 
                     }, {
                         onclick: function(e) {
-                            let delEl = e.target;
-                            if (!ecui.dom.hasClass(delEl, 'del-icon')) {
+                            let el = e.target;
+                            if (!ecui.dom.hasClass(el, 'iconfont')) {
                                 return;
                             }
-                            let wrapEl = this.getMain();
-                            ecui.dispose(wrapEl);
-                            ecui.dom.remove(wrapEl);
+                            // 删除
+                            if (ecui.dom.hasClass(el, 'del-icon')) {
+                                let wrapEl = this.getMain();
+                                ecui.dispose(wrapEl);
+                                ecui.dom.remove(wrapEl);
+                                return;
+                            }
+                            // 预览
+                            let parent = this.getParent().getMain().getControl();
+                            if (parent._sPreviewType === 'm' && ecui.dom.hasClass(el, 'handle-prewiew-img')) {
+                                let currentName = this._oData.name,
+                                    fileItem = parent.FileItem,
+                                    itemFiles = yiche.util.findChildrenControl(parent.getMain(), fileItem);
+                                if (itemFiles.length === 0) {
+                                    return;
+                                }
+                                let list = [],
+                                    current = -1;
+                                itemFiles.forEach((item, index) => {
+                                    list.push(item._oData);
+                                    if (item._oData.name === currentName) {
+                                        current = index;
+                                    }
+                                })
+                                ecui.get('handlePreview').initPreview(list, current);
+                            }
                         }
                     }
                 ),
@@ -1104,7 +1128,8 @@
                             timestamp: Date.now(),
                             file,
                             type,
-                            viewType: this._sFileType
+                            viewType: this._sFileType,
+                            preview: this._sPreviewType
                         })
                     });
                     let fileItemEl = ecui.dom.first(tempEl);
@@ -1168,6 +1193,101 @@
                     list.forEach(item => {
                         this.addFileItem(item, 'edit');
                     })
+                }
+            }
+        ),
+
+        // 图片预览
+        CustomPreview: ecui.inherits(
+            ecui.ui.Control,
+            function(el, options) {
+                ecui.ui.Control.call(this, el, options);
+                this._sCurrentIndex = options.index;
+                this._oDataList = options.data;
+                this._eImgWrapEl = el.querySelector('.swiper');
+                this._uPrev = null;
+                this._uNext = null;
+                this.hide();
+            }, {
+                HandleHide: ecui.inherits(
+                    ecui.ui.Control, {
+                        onclick: function() {
+                            let parent = this.getParent();
+                            parent.repaint();
+                            parent._sCurrentIndex = 0;
+                            parent._oDataList = [];
+                            parent._eImgWrapEl.innerHTML = '';
+                            parent.hide();
+                        }
+                    }
+                ),
+                PreviewImgChange: ecui.inherits(
+                    ecui.ui.Control,
+                    function(el, options) {
+                        ecui.ui.Control.call(this, el, options);
+                        this._sBtnType = options.btnType;
+                    }, {
+                        onclick: function() {
+                            let parent = this.getParent(),
+                                list = parent._oDataList,
+                                imgPos = parent._eImgWrapEl,
+                                uPrev = parent._uPrev,
+                                uNext = parent._uNext,
+                                type = this._sBtnType,
+                                len = list.length;
+                            if (type === 'prev') {
+                                parent._sCurrentIndex--;
+                                if (parent._sCurrentIndex === 0) {
+                                    uPrev.hide();
+                                }
+                                if (!uNext.isShow()) {
+                                    uNext.show();
+                                }
+
+                            } else {
+                                parent._sCurrentIndex++;
+                                if (parent._sCurrentIndex === len - 1) {
+                                    uNext.hide();
+                                }
+                                if (!uPrev.isShow()) {
+                                    uPrev.show();
+                                }
+                            }
+                            imgPos.innerHTML = `<img src="${list[parent._sCurrentIndex].url}" alt="${list[parent._sCurrentIndex].name}" />`;
+                        }
+                    }
+                ),
+                initPreview: function(list, index) {
+                    this._oDataList = [];
+                    this._sCurrentIndex = 0;
+                    if (list.length === 0) {
+                        return;
+                    }
+                    this._oDataList = list;
+                    this._sCurrentIndex = index;
+                    const imgEl = `<img src="${this._oDataList[this._sCurrentIndex].url}" alt="${this._oDataList[this._sCurrentIndex].name}" />`;
+                    this._eImgWrapEl.innerHTML = imgEl;
+                    this.show();
+                    if (this._sCurrentIndex === 0 && this._oDataList.length === 1) {
+                        this._uPrev.hide();
+                        this._uNext.hide();
+                    } else if (this._sCurrentIndex === 0 && this._oDataList.length - 1 > 0) {
+                        this._uPrev.hide();
+                        this._uNext.show();
+                    } else if (this._sCurrentIndex === this._oDataList.length - 1 && this._oDataList.length - 1 > 0) {
+                        this._uPrev.show();
+                        this._uNext.hide();
+                    } else {
+                        this._uPrev.show();
+                        this._uNext.show();
+                    }
+                },
+                onready: function() {
+                    let btnControls = yiche.util.findChildrenControl(this.getMain(), this.PreviewImgChange);
+                    if (btnControls.length === 2) {
+                        this._uPrev = btnControls[0];
+                        this._uNext = btnControls[1];
+                    }
                 }
             }
         )

@@ -224,7 +224,7 @@ body {
                             .mask-nav-name {
                                 display: none;
                                 background: rgba(255, 255, 255, 1);
-                                box-shadow: 5px 5px 6px 0 rgba(228,236,244,0.50);
+                                box-shadow: 5px 5px 6px 0 rgba(228, 236, 244, 0.50);
                                 box-sizing: border-box;
                                 padding: 10px 20px;
                                 color: rgba(0, 0, 0, 0.85);
@@ -348,10 +348,10 @@ body {
                             background: transparent;
                             padding: 0 0 0 10px;
                             z-index: 10;
-                            
+
                             ul {
                                 background: #FFFFFF;
-                                box-shadow: 0 2px 8px 0 rgba(0,0,0,0.15);
+                                box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
                                 border-radius: 4px;
                                 width: 100%;
                                 box-sizing: border-box;
@@ -373,34 +373,34 @@ body {
                                 .child-item {
                                     box-sizing: border-box;
                                     position: relative;
-    
+
                                     .c-a {
                                         width: 100%;
                                         height: 48px;
                                         display: block;
                                         box-sizing: border-box;
                                         position: relative;
-    
+
                                         .menu-child-item-wrap {
                                             box-sizing: border-box;
                                             padding: 0 40px;
                                             display: flex;
                                             height: 100%;
                                             align-items: center;
-    
+
                                             span {
                                                 font-family: PingFangSC-Regular;
                                                 font-size: 14px;
                                                 color: rgba(0, 0, 0, 0.85);
                                                 letter-spacing: 0;
-    
+
                                                 &.iconfont {
                                                     font-size: 18px;
                                                     margin-right: 24px;
                                                 }
                                             }
                                         }
-    
+
                                         .nav-item-bar {
                                             position: absolute;
                                             right: 0;
@@ -412,7 +412,7 @@ body {
                                         }
                                     }
 
-                                    &.child-item-selected{
+                                    &.child-item-selected {
                                         .c-a {
                                             .menu-child-item-wrap {
                                                 span {
@@ -504,7 +504,7 @@ body {
                     .iconfont-indent-decrease:before {
                         content: "\ea7b";
                         color: #3366FF;
-                      }
+                    }
                 }
             }
 
@@ -522,7 +522,7 @@ body {
                                     }
                                 }
 
-                                .name{
+                                .name {
                                     display: none;
                                 }
                             }
@@ -541,8 +541,8 @@ body {
                                 display: none !important;
                             }
 
-                            &:hover{
-                                .nav-child-mask-wrap{
+                            &:hover {
+                                .nav-child-mask-wrap {
                                     display: block;
                                 }
                             }
@@ -1395,9 +1395,9 @@ body {
     }
 }
 
-.ec-custom-tree{
+.ec-custom-tree {
     box-sizing: border-box;
-    border: 1px solid rgba(0,0,0,0.15);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 2px;
     border-bottom: 0;
 
@@ -1405,13 +1405,13 @@ body {
         box-sizing: border-box;
         width: 100%;
         min-height: 45px;
-        background: rgba(0,0,0,0.02);
-        box-shadow: 0 1px 0 0 rgba(0,0,0,0.06);
+        background: rgba(0, 0, 0, 0.02);
+        box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.06);
         border-radius: 2px 2px 0 0;
         background: #FFFFFF;
-        
 
-        .tree-parent{
+
+        .tree-parent {
             box-sizing: border-box;
             width: 100%;
             height: 45px;
@@ -1419,13 +1419,13 @@ body {
             align-items: center;
             font-family: PingFangSC-Regular;
             font-size: 14px;
-            color: rgba(0,0,0,0.85);
+            color: rgba(0, 0, 0, 0.85);
             line-height: 22px;
             padding: 0 18px;
-            background: rgba(0,0,0,0.02);
-            box-shadow: 0 1px 0 0 rgba(0,0,0,0.06);
+            background: rgba(0, 0, 0, 0.02);
+            box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.06);
             border-radius: 2px 2px 0 0;
-            border-bottom: 1px solid rgba(0,0,0,0.15);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15);
             cursor: pointer;
 
             i {
@@ -1436,10 +1436,10 @@ body {
                 margin-right: 14px;
                 transform: rotate(-90deg);
             }
-            
+
         }
 
-        .child-wrap{
+        .child-wrap {
             width: 100%;
             box-sizing: border-box;
             background: #ffffff;
@@ -1452,45 +1452,47 @@ body {
                 padding: 0 40px;
                 font-family: PingFangSC-Regular;
                 font-size: 14px;
-                color: rgba(0,0,0,0.85);
+                color: rgba(0, 0, 0, 0.85);
                 line-height: 22px;
                 display: flex;
                 align-items: center;
                 cursor: pointer;
 
-                &.child-item-actived{
+                &.child-item-actived {
                     background: #F6F7FC;
                     border-radius: 2px 2px 0 0;
                 }
 
-                &:last-child{
-                    border-bottom: 1px solid rgba(0,0,0,0.15);
+                &:last-child {
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
                 }
             }
         }
 
-        &.tree-item-expend{
-            .tree-parent{
+        &.tree-item-expend {
+            .tree-parent {
                 i {
                     transform: rotate(0deg);
                 }
             }
+
             .child-wrap {
                 display: block;
             }
+
             transition: 0.3s;
         }
     }
 }
 
 
-.ec-upload-file{
+.ec-upload-file {
     box-sizing: border-box;
     position: relative;
-    
+
     &.upload-file {
 
-        .upload-select-file{
+        .upload-select-file {
             width: 100px;
             margin-bottom: 10px;
         }
@@ -1499,7 +1501,7 @@ body {
             box-sizing: border-box;
             width: 100%;
 
-            .file-item{
+            .file-item {
                 width: 100%;
                 display: flex;
                 align-items: center;
@@ -1512,7 +1514,7 @@ body {
                     flex: 1;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    white-space:nowrap;
+                    white-space: nowrap;
                     word-wrap: normal;
                     box-sizing: border-box;
                 }
@@ -1541,9 +1543,10 @@ body {
                         display: flex;
                         justify-content: center;
                         align-items: center;
+
                         .text {
                             display: inline-block;
-                            color: rgba(0,0,0,.45);
+                            color: rgba(0, 0, 0, .45);
                             font-size: 12px;
                             line-height: 1;
                             white-space: nowrap;
@@ -1551,6 +1554,7 @@ body {
                             vertical-align: middle;
                             word-break: normal;
                         }
+
                         .icon {
                             display: none;
                             height: 16px;
@@ -1559,7 +1563,7 @@ body {
                         }
                     }
 
-                    
+
 
                 }
 
@@ -1567,7 +1571,7 @@ body {
                     width: 30px;
                     font-size: 18px;
                     text-align: right;
-                    color: rgba(0,0,0,0.45);
+                    color: rgba(0, 0, 0, 0.45);
                     cursor: pointer;
                 }
 
@@ -1582,6 +1586,7 @@ body {
                         .text {
                             display: inline-block;
                         }
+
                         .icon {
                             display: none;
                             background: #fff url(images/frd/upload-loading.gif) no-repeat center center;
@@ -1595,10 +1600,12 @@ body {
                             background: #52c41a;
                         }
                     }
+
                     .status {
                         .text {
                             display: none;
                         }
+
                         .icon {
                             display: inline-block;
                             background: #fff url(images/frd/upload-success.png) no-repeat center center;
@@ -1608,23 +1615,28 @@ body {
 
                 &.fail {
                     border: 1px solid #ff4d4f;
+
                     .name {
                         color: #ff4d4f;
                     }
+
                     .progress {
                         .progress-bar {
                             background: #ff4d4f;
                         }
                     }
+
                     .status {
                         .text {
                             display: none;
                         }
+
                         .icon {
                             display: inline-block;
                             background: url(images/frd/upload-fail.png) no-repeat center center;
                         }
                     }
+
                     .del-icon {
                         color: #ff4d4f;
                     }
@@ -1635,14 +1647,14 @@ body {
     }
 
     &.upload-img-video {
-        .file-list-wrap{
+        .file-list-wrap {
             box-sizing: border-box;
             padding: 10px;
             position: relative;
             display: flex;
             flex-wrap: wrap;
 
-            .file-item{
+            .file-item {
                 width: 104px;
                 height: 104px;
                 box-sizing: border-box;
@@ -1677,7 +1689,7 @@ body {
                     box-sizing: border-box;
                     align-items: center;
                     justify-content: center;
-                    background: rgba(0,0,0,0.3);
+                    background: rgba(0, 0, 0, 0.3);
                     z-index: 3;
                     display: none;
 
@@ -1689,7 +1701,7 @@ body {
                     }
                 }
 
-                .error-wrap{
+                .error-wrap {
                     width: 94px;
                     height: 94px;
                     position: absolute;
@@ -1700,18 +1712,20 @@ body {
                     z-index: 2;
                     display: none;
 
-                    .error-icon{
+                    .error-icon {
                         text-align: center;
                         margin: 20px auto 10px;
-                        .iconfont{
+
+                        .iconfont {
                             font-size: 30px;
                             color: #ff4d4f;
                         }
                     }
 
-                    .error-text{
+                    .error-text {
                         text-align: center;
-                        span{
+
+                        span {
                             font-size: 12px;
                             color: #ff4d4f;
                         }
@@ -1720,7 +1734,7 @@ body {
                 }
 
                 &:hover {
-                    .mask{
+                    .mask {
                         display: flex;
                     }
                 }
@@ -1755,9 +1769,10 @@ body {
                         margin: 30px auto 10px;
                         box-sizing: border-box;
                         text-align: center;
+
                         .text {
                             display: inline-block;
-                            color: rgba(0,0,0,.45);
+                            color: rgba(0, 0, 0, .45);
                             font-size: 12px;
                             line-height: 1;
                             white-space: nowrap;
@@ -1767,12 +1782,13 @@ body {
                         }
                     }
 
-                    
+
 
                 }
 
                 &.loading {
                     border: 1px dashed #d9d9d9;
+
                     .error-wrap {
                         display: none;
                     }
@@ -1780,10 +1796,12 @@ body {
 
                 &.success {
                     border: 1px solid #d9d9d9;
+
                     .progress-wrap {
                         opacity: 0;
                         transition: opacity 2s;
                     }
+
                     .error-wrap {
                         display: none;
                     }
@@ -1791,12 +1809,13 @@ body {
 
                 &.fail {
                     border: 1px solid #ff4d4f;
+
                     .error-wrap {
                         display: block;
                     }
 
-                    .mask{
-                        .iconfont-prewiew{
+                    .mask {
+                        .iconfont-prewiew {
                             display: none;
                         }
                     }
@@ -1804,7 +1823,7 @@ body {
             }
 
 
-            .upload-select-file{
+            .upload-select-file {
                 width: 104px;
                 height: 104px;
                 box-sizing: border-box;
@@ -1824,16 +1843,88 @@ body {
 
                 &:hover {
                     border: 1px dashed #1890ff;
-                    .iconfont{
+
+                    .iconfont {
                         color: #1890ff;
                     }
                 }
             }
         }
-        
+
     }
 
-    &.upload-video {
-        
+    &.upload-video {}
+}
+
+.preview-session {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 999999;
+    background: rgba(0, 0, 0, 0.15);
+
+    .session-main {
+        width: 800px;
+        height: 450px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        .close {
+            position: absolute;
+            right: -67px;
+            top: -47px;
+            width: 42px;
+            height: 42px;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 40px 40px;
+            background-image: url(images/close.png);
+            cursor: pointer;
+        }
+
+        .btn {
+            position: absolute;
+            top: 50%;
+            width: 86px;
+            height: 118px;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 48px 88px;
+            transform: translateY(-50%);
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(255, 234, 234, 0.40);
+            }
+
+            &.left {
+                left: -99px;
+                background-image: url(images/left_circle.png);
+            }
+
+            &.right {
+                right: -99px;
+                background-image: url(images/right_circle.png);
+            }
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            background: #F4F4F4;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                outline: none;
+                border: none;
+            }
+        }
     }
 }
