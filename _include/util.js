@@ -334,6 +334,51 @@
                 }
             });
         },
+        /**
+         * 导出非csv文件。
+         * @public
+         *
+         * @param {string} url 接口地址
+         * @param {string} params 请求参数
+         *
+         *  
+         */
+        exportFile: function(url, params) {
+            ecui.dom.addClass(document.body, 'ui-loading');
+            ecui.io.ajax(url, {
+                method: 'POST',
+                headers: ecui.esr.headers,
+                data: JSON.stringify(params),
+                responseType: 'blob',
+                onsuccess: function(res, xhr) {
+                    let headers = xhr.getAllResponseHeaders().toLowerCase();
+                    let arr = headers.trim().split(/[\r\n]+/); // 由于返回的是用\r\n来进行分割的字符串，需要做转换
+                    let headerMap = {};
+                    arr.forEach(function(line) {
+                        let parts = line.split(': ')
+                        let header = parts.shift()
+                        let value = parts.join(': ')
+                        headerMap[header] = value
+                    })
+                    try {
+                        const blob = new Blob([res], { type: 'application/vnd.ms-excel' });
+                        const link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = decodeURI(headerMap['content-disposition'].split(';')[1].split('=')[1]);
+                        link.click();
+                        link = null;
+                    } catch (error) {
+                        console.warn(error);
+                    }
+                },
+                onerror: function(xhr) {
+                    if (onerror) {
+                        ecui.dom.removeClass(document.body, 'ui-loading');
+                        onerror(xhr);
+                    }
+                }
+            });
+        },
         post: function(url, data, onsuccess, onerror) {
             ecui.io.ajax(url, {
                 method: 'post',
