@@ -301,6 +301,29 @@
         </div>
     </div>
 
+    <h1>自定义显示项</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-24" style="text-align: right;">
+            <div class="ec-custom-options" ui="type:NS.CustomOptions;">
+                <div class="ec-btn btn-type-primary">自定义选项</div>
+                <section class="options-wrap">
+                    <div class="title">
+                        <div class="ec-checkbox-item-all checkbox-icon-img" ui="type:NS.ReportADGroupCheckboxSelectAll;scopedName:ec_checkbox_session_options;id:checkboxAllOptions;">
+                            <i class="icon-img icon-img-status"></i> 全选
+                        </div>
+                    </div>
+                    <div class="options" id="ec_checkbox_session_options">
+                        <div class="ui-hide"></div>
+                    </div>
+                    <div class="actions">
+                        <div class="actions-btn default" ui="type:@HideOptions;">取消</div>
+                        <div class="actions-btn primary" ui="type:@HideOptions;">确认</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
     <h1>字体图标</h1>
     <div class="ec-row ec-mb-20 iconfont-html">
         <div class="ec-col col-4">
@@ -472,6 +495,8 @@
             <p>iconfont-home-bhshcy</p>
         </div>
     </div>
+
+
 
 
     <h1>分页</h1>
@@ -738,3 +763,10 @@
         <!-- /for -->
     </ul>
 </section>
+
+
+<!-- target:customTableOptionTarget -->
+<div class="ec-checkbox-item checkbox-icon-img" ui="type:NS.ReportADGroupCheckBox;itemData:&{item};scopedName:ec_checkbox_session_options;">
+    <div class="icon-img"></div>
+    <div class="label">${item.title}</div>
+</div>

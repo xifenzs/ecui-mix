@@ -1258,6 +1258,37 @@ body {
         }
     }
 
+    &.checkbox-icon-img {
+        box-sizing: border-box;
+        display: flex;
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: rgba(0,0,0,0.85);
+        letter-spacing: 0;
+        margin: 10px 9px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        cursor: pointer;
+
+        .icon-img {
+            width: 16px;
+            height: 16px;
+            background: url(images/base/checkbox-icon.png) no-repeat center center;
+            margin-right: 8px;
+        }
+
+        .label{
+            width: 48px;
+            text-align: left;
+        }
+
+        &.ec-checkbox-item-checked {
+            .icon-img {
+                background: url(images/base/checkbox-checked-icon.png) no-repeat center center;
+            }
+        }
+    }
+
 }
 
 .ec-checkbox-item-all {
@@ -1320,6 +1351,42 @@ body {
 
         &.ec-checkbox-item-all-checked {
             border: 1px solid #409eff;
+        }
+    }
+
+    &.checkbox-icon-img {
+        display: flex;
+        box-sizing: border-box;
+        font-family: PingFangSC-Medium;
+        font-size: 14px;
+        color: #67779C;
+        align-items: center;
+        cursor: pointer;
+
+        .icon-img {
+            width: 16px;
+            height: 16px;
+            display: block;
+            background: url(images/base/checkbox-icon.png) no-repeat center;
+            background-size: 100%;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        &.ec-checkbox-item-all-part{
+            .icon-img {
+                background: url(images/base/checkbox-part-icon.png) no-repeat center;
+                background-size: 100%;
+            }
+            
+        }
+
+        &.ec-checkbox-item-all-checked {
+            .icon-img {
+                background-image: url(images/base/checkbox-checked-icon.png);
+                background-position: center center;
+                background-size: contain;
+            }
         }
     }
 
@@ -1925,6 +1992,86 @@ body {
                 outline: none;
                 border: none;
             }
+        }
+    }
+}
+
+.ec-custom-options {
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+
+    .options-wrap{
+        background: #FFFFFF;
+        border: 1px solid rgba(0,0,0,0.15);
+        border-radius: 2px;
+        box-sizing: border-box;
+        position: absolute;
+        right: 0;
+        top: 36px;
+        width: 341px;
+        height: 0px;
+        overflow: hidden;
+        opacity: 0;
+        // transition: all 0.3s;
+
+        .title {
+            font-family: PingFangSC-Regular;
+            font-size: 14px;
+            color: #000000;
+            letter-spacing: 0;
+            text-align: left;
+        }
+
+        .options {
+            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0 0 0 26px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            margin-top: 30px;
+
+            .actions-btn {
+                width: 74px;
+                height: 24px;
+                box-sizing: border-box;
+                line-height: 24px;
+                text-align: center;
+                font-family: PingFangSC-Regular;
+                font-size: 12px;
+                letter-spacing: 0;
+                margin: 0 6px;
+                cursor: pointer;
+
+                &.default{
+                    background: #FFFFFF;
+                    border: 1px solid #3366FF;
+                    border-radius: 1.5px;
+                    color: #3366FF;
+                }
+                &.primary{
+                    background: #3366FF;
+                    border: 1 solid #3366FF;
+                    border-radius: 1.5px;
+                    color: #FFFFFF;
+                }
+            }
+        }
+    }
+
+    &.ec-custom-options-actived{
+        .options-wrap {
+            height: auto;
+            min-height: 100px;
+            opacity: 1;
+            padding: 20px;
+            // transition: all 0.3s;
         }
     }
 }

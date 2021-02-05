@@ -29,6 +29,7 @@
                     }
                 }
             ),
+
             CheckBox: ecui.inherits(yiche.ui.CustomCheckbox, {
                 findChildrenControl: function(el) {
                     return yiche.util.findChildrenControl(el, NS.ui.CheckBox)
@@ -44,6 +45,7 @@
                     return yiche.util.findChildrenControl(el, NS.ui.CheckBox)
                 }
             }),
+
             BtnCheckBox: ecui.inherits(yiche.ui.CustomCheckbox, {
                 findChildrenControl: function(el) {
                     return yiche.util.findChildrenControl(el, NS.ui.BtnCheckBox)
@@ -59,6 +61,7 @@
                     return yiche.util.findChildrenControl(el, NS.ui.BtnCheckBox)
                 }
             }),
+
             BorderCheckBox: ecui.inherits(yiche.ui.CustomCheckbox, {
                 findChildrenControl: function(el) {
                     return yiche.util.findChildrenControl(el, NS.ui.BorderCheckBox)
@@ -74,6 +77,7 @@
                     return yiche.util.findChildrenControl(el, NS.ui.BorderCheckBox)
                 }
             }),
+
             OpenDialog: ecui.inherits(
                 ecui.ui.Control,
                 function(el, options) {
@@ -99,7 +103,102 @@
                         ecui.esr.callRoute('dialogTest', true);
                     }
                 }
-            )
+            ),
+
+            // 自定义显示项
+            ReportADGroupCheckBox: ecui.inherits(yiche.ui.CustomCheckbox, {
+                findChildrenControl: function(el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.ReportADGroupCheckBox)
+                },
+                handleChange: function() {
+                    let { itemLength, list } = this.getData();
+                    let nowLen = list.length;
+                    ecui.get('checkboxAllOptions').changeStatus(itemLength, nowLen);
+                }
+            }),
+            ReportADGroupCheckboxSelectAll: ecui.inherits(yiche.ui.CustomCheckboxSelectAll, {
+                findChildrenControl: function(el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.ReportADGroupCheckBox)
+                }
+            }),
+            CustomOptions: ecui.inherits(
+                ecui.ui.Control,
+                function(el, options) {
+                    ecui.ui.Control.call(this, el, options);
+                    this._uOptopns = el.querySelector('.options');
+                    this._bVisible = false;
+                }, {
+                    HideOptions: ecui.inherits(
+                        ecui.ui.Control, {
+                            onclick: function(e) {
+                                // 按钮类型
+                                let type = e.target.innerText;
+                                if (type === '确认') {
+                                    let temp = this.getParent().getData().oldData,
+                                        res = this.getParent().getData().res;
+                                    if (res.length === 0) {
+                                        ecui.tip('error', '请至少选择一项');
+                                        return;
+                                    }
+                                    ecui.esr.setData('customOptions', temp);
+                                    // ecui.esr.callRoute('reportADGroupListTable', true);
+                                    yiche.util.setSessionStorage('reportADGroupMenu', temp);
+                                }
+                                ecui.dispatchEvent(this.getParent(), 'blur');
+                            }
+                        }
+                    ),
+                    onclick: function(e) {
+                        let type = e.target.innerText;
+                        if (type === '自定义选项') {
+                            if (this._bVisible) {
+                                this.alterStatus('-actived');
+                                ecui.dispose(this._uOptopns);
+                                this._uOptopns.innerHTML = `<div class="ui-hide"></div>`;
+                            } else {
+                                this.readerItems();
+                                ecui.get('checkboxAllOptions').refreshStatus();
+                                this.alterStatus('+actived');
+                            }
+                            this._bVisible = !this._bVisible;
+                        }
+                    },
+                    onblur: function() {
+                        this.alterStatus('-actived');
+                        this._bVisible = false;
+                        ecui.dispose(this._uOptopns);
+                        this._uOptopns.innerHTML = `<div class="ui-hide"></div>`;
+                    },
+                    readerItems: function() {
+                        let data = ecui.esr.getData('customOptions'),
+                            optionEl = this._uOptopns,
+                            NS = ecui.esr.getData('NS');
+                        if (data && data.length > 0) {
+                            data.forEach(item => {
+                                let tempEl = ecui.dom.create({
+                                    innerHTML: ecui.esr.getEngine().render('customTableOptionTarget', {
+                                        item,
+                                        NS
+                                    })
+                                });
+                                let fileItemEl = ecui.dom.first(tempEl);
+                                ecui.dom.insertBefore(fileItemEl, ecui.dom.last(optionEl));
+                                ecui.init(fileItemEl);
+                            });
+                        }
+                    },
+                    getData: function() {
+                        let control = ecui.get('checkboxAllOptions');
+                        if (control) {
+                            return control.getData();
+                        }
+                        return {
+                            res: [],
+                            oldData: []
+                        };
+                    }
+                }
+            ),
         }
     );
 
@@ -112,6 +211,11 @@
         onbeforerequest: function(context) {
             // 列表请求数据
             context.tableParams = {};
+            // 分页相关参数
+            context.basePaginationInfo = {
+                pageNo: 1,
+                pageSize: 20
+            };
         },
         onbeforerender: function(context) {
             // 面包屑导航
@@ -264,6 +368,103 @@
                     }]
                 }
             ];
+
+            // 自定义选项
+            context.customOptions = [{
+                    title: '广告计划名称',
+                    name: 'report-ad-group-ggjhmc',
+                    checked: true,
+                    key: 'display',
+                    width: 150
+                },
+                {
+                    title: '广告计划ID',
+                    name: 'report-ad-group-ggjhid',
+                    checked: true,
+                    key: 'click',
+                    width: 150
+                },
+                {
+                    title: '项目名称',
+                    name: 'report-ad-group-xmmc',
+                    checked: true,
+                    key: 'display',
+                    width: 150
+                },
+                {
+                    title: '项目ID',
+                    name: 'report-ad-group-xmid',
+                    checked: true,
+                    key: 'click',
+                    width: 150
+                },
+                {
+                    title: '展示量',
+                    name: 'report-ad-group-zsl',
+                    checked: true,
+                    key: 'display',
+                    width: 150
+                },
+                {
+                    title: '点击量',
+                    name: 'report-ad-group-djl',
+                    checked: true,
+                    key: 'click',
+                    width: 150
+                },
+                {
+                    title: '转化量',
+                    name: 'report-ad-group-zhl',
+                    checked: true,
+                    key: 'distinctDisplay',
+                    width: 150
+                },
+                {
+                    title: '点击率',
+                    name: 'report-ad-group-djlv',
+                    checked: true,
+                    key: 'ctr',
+                    width: 150
+                },
+                {
+                    title: '转化率',
+                    name: 'report-ad-group-zhlv',
+                    checked: true,
+                    key: 'cvr',
+                    width: 150
+                },
+                {
+                    title: '转化成本',
+                    name: 'report-ad-group-zhcb',
+                    checked: true,
+                    key: 'distinctClick',
+                    width: 150
+                },
+                {
+                    title: '单次点击成本',
+                    name: 'report-ad-group-dcdjcb',
+                    checked: true,
+                    key: 'distinctClick',
+                    width: 150
+                },
+                {
+                    title: '千次曝光成本',
+                    name: 'report-ad-group-qcbgcb',
+                    checked: true,
+                    key: 'distinctClick',
+                    width: 150
+                },
+                {
+                    title: '消耗',
+                    name: 'report-ad-group-xh',
+                    checked: true,
+                    key: 'distinctCtr',
+                    width: 150
+                }
+            ];
+            if (yiche.util.getSessionStorage('reportADGroupMenu')) {
+                context.customOptions = yiche.util.getSessionStorage('reportADGroupMenu');
+            }
         },
         onafterrender: function(context) {
             // 回显已经上传文件
@@ -288,6 +489,54 @@
             yiche.util.removeDialog();
         }
     });
+
+    ecui.esr.addRoute(
+        'reportADGroupListTable', {
+            model: ['reportADGroupList@JSON ' + yiche.info.API_BASE + 'ad-report-yms/groupByCondition?${tableParams}'],
+            main: 'reportAdGroupListTableView',
+            view: 'reportADGroupTableTarget',
+            searchParm: {
+                pageNo: 1,
+                pageSize: 20
+            },
+            isRouteLoading: true,
+            onbeforerequest: function(context) {
+                const tmp = {};
+                ecui.esr.parseObject(document.forms.reportADGroupSearchParamsForm, tmp);
+
+                // 记录当前页信息
+                context.pageNo = context.pageNum = context.pageNo || +this.searchParm.pageNo;
+                context.pageSize = this.searchParm.pageSize = +context.pageSize || +this.searchParm.pageSize;
+
+                // 回填 pageNum 和 pageSize
+                context.basePaginationInfo = Object.assign(context.basePaginationInfo, {
+                    pageNo: context.pageNo,
+                    pageSize: context.pageSize
+                });
+
+                // 合并请求参数
+                context.tableParams = Object.assign(context.tableParams, tmp, context.basePaginationInfo);
+            },
+            onbeforerender: function(context) {
+                context.tableWidth = 412;
+                let tempTableWidth = context.tableWidth;
+                context.customOptions.forEach(item => {
+                    if (item.checked) {
+                        tempTableWidth += item.width + 12;
+                    }
+                })
+                context.tableWidth = tempTableWidth;
+
+                // 处理表头宽度
+                let currentWidth = document.querySelector('.page-container').offsetWidth - 50;
+                context.fixWidth = currentWidth - context.tableWidth - 12;
+                context.tableWidth = Math.max(context.tableWidth, currentWidth);
+            },
+            onafterrender: function(context) {
+
+            }
+        }
+    );
 
     ecui.esr.addRoute('dialogTest', {
         model: [],
