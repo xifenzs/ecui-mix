@@ -260,12 +260,7 @@
          */
         getSessionStorage: function(key) {
             const varHeader = yiche.info.STORAGE_HEADER + key;
-            let res = JSON.parse(window.sessionStorage.getItem(varHeader));
-            if (res instanceof Object) {
-                return res || {};
-            } else {
-                return res || '';
-            }
+            return JSON.parse(window.sessionStorage.getItem(varHeader));
         },
         /**
          * 本地清除指定名称的内容。
@@ -322,7 +317,7 @@
                         a = null;
                         ecui.dom.removeClass(document.body, 'ui-loading');
                     } catch (error) {
-                        console.warn(e);
+                        console.warn(error);
                     }
 
                 },
@@ -426,7 +421,22 @@
                 }
             });
         },
-
+        /**
+         * 获取数据类型。
+         * @public
+         *
+         * @param {string} data 接口地址
+         * @return {string} 数据类型
+         *
+         *  
+         */
+        getDataType: function(obj) {
+            let type = typeof obj;
+            if (type !== 'object') {
+                return type;
+            }
+            return Object.prototype.toString.call(obj).replace(/^\[object (\S+)\]$/, '$1');
+        }
     };
 
     Date.prototype.pattern = function(fmt) {
