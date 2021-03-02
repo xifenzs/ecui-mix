@@ -951,6 +951,7 @@
                     }, {
                         onclick: function() {
                             this._eFiles.click();
+                            this.alterStatus('-error');
                         },
                         $ready: function(options) {},
                         init: function(event) {
@@ -972,11 +973,6 @@
                     }
                     files = Array.prototype.slice.call(e.target.files, 0);
                     if (files.length === 0) {
-                        return;
-                    }
-
-                    // 校验一次最大上传数量
-                    if (customUploads._nMaxCount && customUploads.checkMaxuploadNumber && !customUploads.checkMaxuploadNumber(files.length)) {
                         return;
                     }
 
@@ -1049,6 +1045,8 @@
                             });
                         }
                     });
+                    // 文件数达到最大时隐藏文件上传按钮
+                    customUploads.handleHideSelectFilesBtn();
                 },
                 uploadSuccess: function(res, name) {
                     let fileItem = this.getMain().getControl().FileItem;
@@ -1098,7 +1096,11 @@
                             }
                             // 删除
                             if (ecui.dom.hasClass(el, 'del-icon')) {
-                                let wrapEl = this.getMain();
+                                let wrapEl = this.getMain(),
+                                    selectFile = this.getParent().getMain().querySelector('.ui-upload').getControl();
+                                if (!selectFile.isShow()) {
+                                    selectFile.show();
+                                }
                                 ecui.dispose(wrapEl);
                                 ecui.dom.remove(wrapEl);
                                 return;
@@ -1169,8 +1171,8 @@
                     return true;
                 },
                 checkMaxuploadNumber: function(selectCount) {
-                    let fileItem = this.getMain().getControl().FileItem;
-                    let fileCount = yiche.util.findChildrenControl(this.getMain(), fileItem).length + selectCount;
+                    let fileItem = this.getMain().getControl().FileItem,
+                        fileCount = yiche.util.findChildrenControl(this.getMain(), fileItem).length + selectCount;
                     if (fileCount <= this._nMaxCount) {
                         return true;
                     } else {
@@ -1199,7 +1201,21 @@
                     }
                     list.forEach(item => {
                         this.addFileItem(item, 'edit');
-                    })
+                    });
+                    // 文件数达到最大时隐藏文件上传按钮
+                    this.handleHideSelectFilesBtn();
+                },
+                handleRequired: function() {
+                    let selectFile = this.getMain().querySelector('.ui-upload').getControl();
+                    selectFile.alterStatus('+error');
+                },
+                // 当文件列表的文件数达到最大上传数时,隐藏上传按钮
+                handleHideSelectFilesBtn: function() {
+                    let fileItem = this.getMain().getControl().FileItem,
+                        fileCount = yiche.util.findChildrenControl(this.getMain(), fileItem).length;
+                    if (fileCount === this._nMaxCount * 1) {
+                        this.getMain().querySelector('.ui-upload').getControl().hide();
+                    }
                 }
             }
         ),
