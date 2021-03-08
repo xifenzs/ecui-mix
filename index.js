@@ -38,35 +38,20 @@
 
 
     window.requestCount = 0;
-    /**
-     * request请求前处理函数。
-     * @public
-     *
-     */
-    ecui.esr.onbeforerequest = function() {
-        window.requestCount++;
-        ecui.dom.addClass(document.body, 'ui-loading');
-    };
-
-    /**
-     * request请求后处理函数。
-     * @public
-     *
-     */
-    ecui.esr.onafterrequest = function() {
-        window.requestCount = Math.max(0, --window.requestCount);
-        if (window.requestCount <= 0) {
-            ecui.dom.removeClass(document.body, 'ui-loading');
+    // 统计请求,设置loading
+    ecui.esr.getBodyData = function(data, headers, url) {
+            if (url && url.length > 0) {
+                window.requestCount++;
+                ecui.dom.addClass(document.body, 'ui-loading');
+            }
         }
-    };
-
-    /**
-     * esr执行异常处理函数。
-     * @public
-     *
-     * @param {object} e 异常对象
-     *
-     */
+        /**
+         * esr执行异常处理函数。
+         * @public
+         *
+         * @param {object} e 异常对象
+         *
+         */
     ecui.esr.onexception = function(e) {
         console.warn(e);
     };
@@ -82,6 +67,10 @@
      */
     var noTipCodes = [300000, 500016];
     ecui.esr.onparsedata = function(url, data) {
+        window.requestCount = Math.max(0, --window.requestCount);
+        if (window.requestCount <= 0) {
+            ecui.dom.removeClass(document.body, 'ui-loading');
+        }
         var code = data.code;
         if (0 === code) {
             return data.result;
