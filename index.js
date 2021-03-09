@@ -15,7 +15,7 @@
             PROJECT_NAME: '混合导航模板', // logo旁的项目名称
             STORAGE_HEADER: 'EFFECT_',
             routeLists: [], // 项目中的全部路由
-            API_BASE: '/dsp-console/console/report/', // 接口前缀
+            API_BASE: '/serve-idea/api/', // 接口前缀
             UPLOAD_FILES_HEADER: {}
         }
     };
@@ -40,18 +40,18 @@
     window.requestCount = 0;
     // 统计请求,设置loading
     ecui.esr.getBodyData = function(data, headers, url) {
-            if (url && url.length > 0) {
-                window.requestCount++;
-                ecui.dom.addClass(document.body, 'ui-loading');
-            }
+        if (url && url.length > 0) {
+            window.requestCount++;
+            ecui.dom.addClass(document.body, 'ui-loading');
         }
-        /**
-         * esr执行异常处理函数。
-         * @public
-         *
-         * @param {object} e 异常对象
-         *
-         */
+    };
+    /**
+     * esr执行异常处理函数。
+     * @public
+     *
+     * @param {object} e 异常对象
+     *
+     */
     ecui.esr.onexception = function(e) {
         console.warn(e);
     };
@@ -102,9 +102,9 @@
         err.forEach(function(item) {
             if (item.url) {
                 try {
-                    var errInfo = JSON.parse(item.xhr.response);
+                    let errInfo = JSON.parse(item.xhr.response);
                     ecui.globalTips(
-                        errInfo.description,
+                        errInfo.error,
                         'error'
                     );
                 } catch (err) {

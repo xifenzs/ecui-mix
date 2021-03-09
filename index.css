@@ -16,6 +16,10 @@ body {
     cursor: not-allowed !important;
 }
 
+.ui-global-tips{
+    top: 100px !important;
+}
+
 .ec-bg-purple-dark {
     background: #99a9bf;
 }
