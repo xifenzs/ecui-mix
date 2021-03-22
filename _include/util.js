@@ -260,7 +260,7 @@
          */
         getSessionStorage: function(key) {
             const varHeader = yiche.info.STORAGE_HEADER + key;
-            return JSON.parse(window.sessionStorage.getItem(varHeader));
+            return window.sessionStorage.getItem(varHeader);
         },
         /**
          * 本地清除指定名称的内容。

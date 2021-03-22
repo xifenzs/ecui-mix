@@ -465,10 +465,8 @@
             if (yiche.util.getSessionStorage('reportADGroupMenu')) {
                 context.customOptions = yiche.util.getSessionStorage('reportADGroupMenu');
             }
-        },
-        onafterrender: function(context) {
-            // 回显已经上传文件
-            const fileLists = [{
+            // 
+            context.manufacturerImageUrl = [{
                 name: '文件1',
                 url: 'http://image.bitautoimg.com/slpfile/6bfa3d43ff1d4ffa947a7d3601568639.jpg',
                 uploadStatus: true
@@ -481,9 +479,9 @@
                 url: 'http://image.bitautoimg.com/slpfile/a5b98ddd214747179c5d5e6b736c7d29.jpg',
                 uploadStatus: true
             }];
-            ecui.get('uploadFile1').setValues(fileLists);
-            ecui.get('uploadFile2').setValues(fileLists);
-            ecui.get('uploadFile4').setValues(fileLists);
+        },
+        onafterrender: function(context) {
+
         },
         onleave: function(context) {
             yiche.util.removeDialog();

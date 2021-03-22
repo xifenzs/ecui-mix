@@ -168,14 +168,14 @@
     </div>
 </li>
 <!-- elif: ${viewType} === '2' -->
-<!-- var fileUrl = ${type} === 'edit' ? ${file.url} : '' -->
+<!-- var: fileUrl = ${type} === 'edit' ? ${file.url} : '' -->
 <li class="file-item ${addType}" ui="type:@FileItem;rowData:&{file};">
     <div class="item-file-wrap">
-        <video src="${fileUrl}" alt="" />
+        <video src="${fileUrl}"></video>
     </div>
     <div class="mask">
         <!-- if: ${preview} === 'a' -->
-        <a href="" target="_blank">
+        <a href="${fileUrl}" target="_blank">
             <span class="iconfont iconfont-prewiew"></span>
         </a>
         <!-- else -->

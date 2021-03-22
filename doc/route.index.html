@@ -647,7 +647,7 @@
     <section class="ec-row ec-mb-20" style="align-items:flex-start;">
         <div class="ec-col col-12">
             <h3>文件上传</h3>
-            <div class="ec-upload-file upload-file" ui="type:yiche.ui.CustomUploads;fileType:0;maxCount:5;id:uploadFile1;">
+            <div class="ec-upload-file upload-file" ui="type:yiche.ui.CustomUploads;fileType:0;maxCount:5;url:image/addByAttachment;fileList:&{manufacturerImageUrl};">
                 <div class="ec-btn btn-type-primary upload-select-file" ui="type:@SelectFiles;">
                     <input type="file" class="ui-hide" accept=".png,.jpg,.jpeg" multiple />
                     <span>选择文件</span>
@@ -659,7 +659,7 @@
         </div>
         <div class="ec-col col-12">
             <h3>图片上传新开窗口预览</h3>
-            <div class="ec-upload-file upload-img-video" ui="type:yiche.ui.CustomUploads;fileType:1;maxCount:3;id:uploadFile2;">
+            <div class="ec-upload-file upload-img-video" ui="type:yiche.ui.CustomUploads;fileType:1;maxCount:3;url:image/addByAttachment;fileList:&{manufacturerImageUrl};">
                 <ul class="file-list-wrap">
                     <div class="upload-select-file" ui="type:@SelectFiles;">
                         <input type="file" class="ui-hide" accept=".png,.jpg,.jpeg" multiple />
@@ -683,7 +683,7 @@
         </div>
         <div class="ec-col col-12">
             <h3>图片上传本页预览</h3>
-            <div class="ec-upload-file upload-img-video" ui="type:yiche.ui.CustomUploads;fileType:1;maxCount:10;id:uploadFile4;preview:m;">
+            <div class="ec-upload-file upload-img-video" ui="type:yiche.ui.CustomUploads;fileType:1;maxCount:10;id:uploadFile4;preview:m;url:image/addByAttachment;fileList:&{manufacturerImageUrl};">
                 <ul class="file-list-wrap">
                     <div class="upload-select-file" ui="type:@SelectFiles;">
                         <input type="file" class="ui-hide" accept=".png,.jpg,.jpeg" multiple />
@@ -698,6 +698,15 @@
     <div class="ec-row ec-mb-20">
         <div class="ec-col col-12">
             <!-- use: customTreeSelectTarget(treeData=${treeData}, value=11) -->
+        </div>
+    </div>
+
+    <h1>富文本编辑器</h1>
+    <div class="ec-row ec-mb-20">
+        <div class="ec-col col-24">
+            <div ui="type:yiche.ui.Tinymce;required:true;value:${saveParams.graphicDetail};" class="wang-editor" id="handle_editor">
+                <div class="tinymce"></div>
+            </div>
         </div>
     </div>
 

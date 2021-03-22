@@ -19,23 +19,6 @@
             UPLOAD_FILES_HEADER: {}
         }
     };
-    /* 阻止 ie 按删除键会回退页面 - begin */
-    function onkeydown(event) {
-        var tags = ['INPUT', 'TEXTAREA', 'BUTTON', 'SUBMIT'];
-        var target = event.target || event.srcElement;
-        if (event.keyCode === 8 && tags.indexOf(target.tagName) < 0) {
-            event.keyCode = 0;
-            event.returnValue = false;
-            return false;
-        }
-    }
-    if (yiche.info.ieVersion < 9) {
-        document.attachEvent('onkeydown', onkeydown);
-    } else {
-        window.addEventListener('keydown', onkeydown);
-    }
-    /* 阻止 ie 按删除键会回退页面 - end */
-
 
     window.requestCount = 0;
     // 统计请求,设置loading
