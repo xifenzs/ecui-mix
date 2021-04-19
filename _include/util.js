@@ -436,6 +436,46 @@
                 return type;
             }
             return Object.prototype.toString.call(obj).replace(/^\[object (\S+)\]$/, '$1');
+        },
+
+        // from 值回填
+        resetFromsValue: function(name, obj) {
+            var tmp = {};
+            ecui.esr.parseObject(document.forms[name], tmp);
+            ecui.esr.fillForm(
+                document.forms[name],
+                Object.assign({}, tmp, obj)
+            );
+        },
+
+        // 检测颜色是否合法
+        checkColor: function(value) {
+            return !/^[a-fA-F0-9]{6,6}$/.test(value)
+        },
+
+        // 防抖(debounce)
+        debounce: function(fn, delay) {
+            let timer = null;
+            return function() {
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(fn, delay);
+            }
+        },
+
+        // 节流(throttle)
+        throttle: function(fn, wait) {
+            let pre = Date.now();
+            return function() {
+                let context = this;
+                let args = arguments;
+                let now = Date.now();
+                if (now - pre >= wait) {
+                    fn.apply(context, args);
+                    pre = Date.now();
+                }
+            }
         }
     };
 

@@ -39,6 +39,7 @@ body {
 .content-wrap {
     height: 100%;
     overflow: auto;
+    min-width: 1440px;
     background: rgb(242, 245, 250);
 
     .content-header {
@@ -166,7 +167,6 @@ body {
         box-sizing: border-box;
         display: flex;
         padding: 0;
-        min-width: 1440px;
         height: calc(~"100% - 60px");
 
         .content-menu {
@@ -603,20 +603,20 @@ body {
 }
 
 .frd-range-calendar-option {
-    width: 602px;
+    width: 450px;
     border-top: 1px solid #e6e6e6;
 }
 
 .frd-range-date {
     width: 100%;
     min-width: 200px;
-    height: 32px;
+    height: 30px;
     margin-bottom: 20px;
     text-align: left;
     padding-right: 40px;
-    line-height: 32px;
+    line-height: 30px;
     border: 1px solid #dee1e5;
-    border-radius: 2px;
+    border-radius: 4px;
     background: #fff url(images/calendar/date-icon.png) no-repeat calc(~'100% - 10px') center;
     background-size: 14px 14px;
 
@@ -704,14 +704,14 @@ body {
     box-sizing: border-box;
     width: 100%;
     min-width: 200px;
-    height: 36px;
+    height: 32px;
     display: flex;
     align-items: center;
     font-size: 12px;
     color: #7b8497;
     background: #ffffff;
     border: 1px solid #dee1e5;
-    border-radius: 2px;
+    border-radius: 4px;
 
     input {
         height: 100%;
@@ -758,13 +758,13 @@ body {
     box-sizing: border-box;
     width: 100%;
     min-width: 200px;
-    height: 36px;
+    height: 32px;
     text-align: left;
     font-size: 12px;
     color: #7b8497;
     background: #ffffff;
     border: 1px solid #dee1e5;
-    border-radius: 2px;
+    border-radius: 4px;
 
     .ui-combox-text {
         input {
@@ -773,13 +773,13 @@ body {
     }
 
     .ui-select-text {
-        height: 34px;
-        line-height: 34px;
+        height: 30px;
+        line-height: 30px;
     }
 
     .frd-muti-level-select-text {
-        height: 36px;
-        line-height: 36px;
+        height: 30px;
+        line-height: 30px;
     }
 }
 
@@ -791,8 +791,8 @@ body {
     box-sizing: border-box;
 
     .ui-select-item {
-        height: 34px;
-        line-height: 34px;
+        height: 30px;
+        line-height: 30px;
         padding: 0 4px;
         box-sizing: border-box;
     }
@@ -802,8 +802,8 @@ body {
     box-sizing: border-box;
 
     .ui-item {
-        height: 34px;
-        line-height: 34px;
+        height: 30px;
+        line-height: 30px;
         padding: 0 4px;
         box-sizing: border-box;
     }
@@ -862,19 +862,19 @@ body {
         box-sizing: border-box;
         width: 100%;
         min-width: 200px;
-        height: 36px;
-        display: flex;
+        height: 32px;
+        display: flex !important;
         align-items: center;
         font-size: 12px;
         color: #7b8497;
         background: #ffffff;
         border: 1px solid #dee1e5;
-        border-radius: 2px;
+        border-radius: 4px;
 
         input {
             height: 100%;
             flex: 1;
-            line-height: 36px;
+            line-height: 30px;
             box-sizing: border-box;
             padding: 0 10px !important;
             display: inline-block;
@@ -1026,11 +1026,15 @@ body {
 
 .ui-pagination {
     height: 35px;
+    font-size: 12px;
+    box-sizing: border-box;
+    padding: 0 10px;
 
     .page-info {
         height: 100%;
         line-height: 35px;
-        width: 180px;
+        min-width: 80px;
+        width: auto;
         display: inline-block;
         vertical-align: middle;
         text-align: right;
@@ -1044,21 +1048,24 @@ body {
         margin-right: 10px;
 
         .ui-item {
+            box-sizing: border-box;
             display: inline-block;
             vertical-align: middle;
-            height: 32px;
-            width: 32px;
+            height: 30px;
+            min-width: 30px;
+            width: auto;
+            padding: 0 3px;
             text-align: center;
-            line-height: 32px;
+            line-height: 30px;
             background: #ffffff;
-            border: 1px solid #d9d9d9;
+            border: 1px solid #EDEFF2;
+            border-radius: 4px;
             margin: 0 4px !important;
             cursor: pointer;
         }
 
         .ui-item-selected {
-            background: #3366ff;
-            color: #ffffff;
+            color: #3366ff;
             border-color: #3366ff;
         }
 
@@ -1089,13 +1096,15 @@ body {
     }
 
     .page-size {
-        height: 32px;
-        line-height: 32px;
+        height: 30px;
+        line-height: 30px;
         width: 106px;
         display: inline-block;
         vertical-align: middle;
-        border: 1px solid #d9d9d9;
+        border: 1px solid #EDEFF2;
+        border-radius: 4px;
         padding-left: 5px;
+        margin-top: -5px;
 
         .ui-select-text {
             height: 100%;
@@ -1109,19 +1118,21 @@ body {
     }
 
     .page-jump {
-        height: 32px;
+        height: 30px;
         width: 130px;
         display: inline-block;
         vertical-align: middle;
         margin-left: 10px;
+        margin-top: -6px;
 
         .ui-text {
-            height: 32px;
+            height: 30px;
             width: 63px;
             display: inline-block;
             position: relative;
             top: -1px;
-            border: 1px solid #d9d9d9;
+            border: 1px solid #EDEFF2;
+            border-radius: 4px;
             margin: 0 5px;
             text-align: left;
 
@@ -1136,6 +1147,12 @@ body {
             border: none;
             left: -6px;
         }
+    }
+}
+
+.page-size-options {
+    .ui-item {
+        height: 28px;
     }
 }
 
@@ -1935,8 +1952,6 @@ body {
         }
 
     }
-
-    &.upload-video {}
 }
 
 .preview-session {

@@ -1179,130 +1179,6 @@ body {
 }
 
 
-/* 分页信息展示 */
-/* 分页区域 */
-
-.ui-pagination{
-    width: 1200px;
-    height: 30px;
-    font-size: 0px;
-    text-align: right;
-    margin: 0 auto;
-
-    span,
-    font,
-    strong{
-        display:inline-block;
-        vertical-align: middle;
-        width: 20px;
-        height: 28px;
-        line-height: 28px;
-        border: 1px solid #D9D9D9;
-        border-radius: 2px;
-        font-size: 13px;
-        color: #595959;
-        margin: 0 0 0 8px;
-
-    }
-    font {
-        font-size: 0;
-        color: #ccc;
-        cursor: default;
-    }
-    span:hover {
-        color: #3366FF;
-        background: #F0F4FF;
-        border: 1px solid #3366FF;
-    }
-    strong {
-        color: #fff !important;
-        background: #3D70FB;
-        border: 1px solid #3366FF;
-    }
-
-    .first,
-    .prev,
-    .next,
-    .last {
-        width: 22px;
-        height: 30px;
-        border: 0 !important;
-        font-size: 0;
-    }
-    .first {
-        background: url('images/base/pagination/first-icon.png') no-repeat center;
-    }
-    .prev {
-        background: url('images/base/pagination/prev-icon.png') no-repeat center;
-    }
-    .next {
-        background: url('images/base/pagination/next-icon.png') no-repeat center;
-    }
-    .last {
-        background: url('images/base/pagination/last-icon.png') no-repeat center;
-    }
-
-    font.first {
-        background: url('images/base/pagination/first-disabled-icon.png') no-repeat center;
-    }
-    font.prev {
-        background: url('images/base/pagination/prev-disabled-icon.png') no-repeat center;
-    }
-    font.next {
-        background: url('images/base/pagination/next-disabled-icon.png') no-repeat center;
-    }
-    font.last {
-        background: url('images/base/pagination/last-disabled-icon.png') no-repeat center;
-    }
-
-    span.first:hover {
-        background: url('images/base/pagination/first-hover-icon.png') no-repeat center;
-    }
-    span.prev:hover {
-        background: url('images/base/pagination/prev-hover-icon.png') no-repeat center;
-    }
-    span.next:hover {
-        background: url('images/base/pagination/next-hover-icon.png') no-repeat center;
-    }
-    span.last:hover {
-        background: url('images/base/pagination/last-hover-icon.png') no-repeat center;
-    }
-
-
-    .pagination,
-    .pagination-msgBox {
-        display: inline-block;
-        vertical-align: middle;
-        font-size: 14px;
-    }
-    .pagination-msg {
-        display: inline-block;
-        vertical-align: middle;
-        height: 30px;
-        line-height: 30px;
-        margin-left: 10px;
-        font-size: 14px;
-
-        .ui-text {
-            width: 46px;
-            height: 28px;
-            line-height: 28px;
-            border: 1px solid #d3dce6;
-            vertical-align: middle;
-            margin: 0 10px;
-            border-radius: 2px;
-            padding-left: 0 !important;
-            text-align: center;
-
-            input {
-                width: 100%;
-                height: 100%;
-                text-align: center;
-            }
-        }
-    }
-}
-
 /*条件筛选区域*/
 .ui-select-options {
     .ui-item {
@@ -1627,4 +1503,74 @@ body {
     &.error.not-input .error-tip {
         display: none;
     }
+}
+
+
+
+.frd-range-calendar-option {
+    width: 450px;
+    border-top: 1px solid #e6e6e6;
+
+    .ui-calendar-title {
+        color: #333333 !important;
+        font-size: 14px !important;
+    }
+
+    .ui-today {
+        background: none;
+
+        div {
+            color: #3366ff !important;
+            background: #fff !important;
+            border-radius: 50%;
+            border: 1px solid #3366ff;
+        }
+    }
+}
+
+
+
+
+.frd-range-calendar {
+    background-color: #fff;
+    width: 224px;
+    box-shadow: 0 2px 6px 0 rgba(86, 86, 86, .5);
+    border-radius: 4px
+}
+
+.frd-range-calendar table {
+    height: 200px;
+    width: 100%
+}
+
+.frd-range-calendar table {
+    padding: 7px;
+    border: none
+}
+
+.ui-range-calendar .ui-range-date-option .frd-range-calendar table tr td {
+    width: 30px;
+    text-align: center
+}
+
+.frd-range-calendar table tr td {
+    display: inline-block;
+    width: 38px;
+    height: 24px;
+    line-height: 24px
+}
+
+.frd-range-calendar table tr td div {
+    color: #505050;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border-width: 0;
+    border-radius: 50%;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 24px;
+    cursor: pointer;
+    margin: 0 auto
 }

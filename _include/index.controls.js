@@ -502,6 +502,7 @@ yiche.ui = {
                         });
                     }
                 }.bind(this));
+                ecui.dom.addEventListener(window, 'resize', yiche.util.debounce(this.resizeCharts.bind(this), 200));
             },
             isEmpty: function() {
                 return this.emptyMask.isShow();
@@ -566,8 +567,12 @@ yiche.ui = {
                 }
 
             },
+            resizeCharts: function() {
+                this.chart.resize();
+            },
             $dispose: function() {
                 ecui.ui.Control.prototype.$dispose.call(this);
+                ecui.dom.removeEventListener(window, 'resize', yiche.util.debounce(this.resizeCharts.bind(this), 200));
                 this.chart && this.chart.dispose();
             }
         }
@@ -934,7 +939,7 @@ yiche.ui = {
             this._nMaxCount = options.maxCount || 1; //一次最大可上传数量
             this._sPreviewType = options.preview || 'a'; //一次最大可上传数量 a:打开一个新窗口预览  m: 当前页出现一个蒙层进行预览
             this._oFileValues = options.fileList; // 回显文件
-            this._sFileParamsName = options.fileParamName || 'imageFileName'; //请求参数名称定义
+            this._sFileParamsName = options.fileParamName || 'file'; //请求参数名称定义
         }, {
             SelectFiles: ecui.inherits(
                 ecui.ui.Upload,
@@ -949,18 +954,18 @@ yiche.ui = {
                     $ready: function(options) {},
                     init: function(event) {
                         ecui.ui.Upload.prototype.init.call(this, event);
-                        ecui.dom.addEventListener(this._eFiles, 'change', this.getParent().handleGetFiles);
+                        ecui.dom.addEventListener(this._eFiles, 'change', this.getParent().handleGetFiles.bind(this));
                     }
                 }
             ),
             // 获取选中的文件信息
             handleGetFiles: function(e) {
                 let files = [],
-                    fileInputEl = this,
-                    selectEl = ecui.dom.parent(fileInputEl),
+                    fileInputEl = this._eFiles, // 选择文件控件
+                    selectEl = this,
                     canUpload = true;
                 // 获取文件上传控件
-                let customUploads = selectEl.getControl().getParent() || null;
+                let customUploads = selectEl.getParent() || null;
                 if (!e.target.files || !customUploads) {
                     return;
                 }

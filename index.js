@@ -187,7 +187,7 @@
                 yiche.info.UPLOAD_FILES_HEADER = {
                     'x-model-name': 'idea',
                     'customReferer': window.location.href,
-                    'x-access-token': yiche.util.getSessionStorage('token')
+                    'x-access-token': sessionStorage.getItem('token')
                 };
 
             },
