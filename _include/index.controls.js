@@ -2,17 +2,17 @@ yiche.ui = {
     // 导航菜单
     CustomNavs: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Control.call(this, el, options);
             this._bCollapse = options.collapse || false;
         }, {
             CustomNavsParent: ecui.inherits(ecui.ui.Control,
-                function(el, options) {
+                function (el, options) {
                     ecui.ui.Control.call(this, el, options);
                     this._oNavData = options.navItem;
                     this._bIsOpened = false;
                 }, {
-                    onclick: function() {
+                    onclick: function () {
                         let hasChildNav = this._oNavData.children;
                         // 如果没有子菜单 就直接添加样式
                         if (hasChildNav && hasChildNav.length === 0) {
@@ -27,7 +27,7 @@ yiche.ui = {
                             this.alterStatus('-opened');
                         }
                     },
-                    removeParentControlSelected: function() {
+                    removeParentControlSelected: function () {
                         let parent = this.getParent(),
                             navParentControl = yiche.util.findChildrenControl(parent.getMain(), parent.CustomNavsParent);
                         navParentControl && navParentControl.forEach(item => {
@@ -35,7 +35,7 @@ yiche.ui = {
                             if (child && child.length > 0) { // 二级导航
                                 child.forEach(cItem => {
                                     cItem.alterStatus('-selected');
-                                })
+                                });
                             } else { // 一级导航
                                 item.alterStatus('-selected');
                             }
@@ -45,24 +45,24 @@ yiche.ui = {
                                 if (linkChild && linkChild.length > 0) {
                                     linkChild.forEach(lItem => {
                                         lItem.alterStatus('-selected');
-                                    })
+                                    });
                                 }
                             }
                         });
                     },
                     CustomNavsChild: ecui.inherits(ecui.ui.Control,
-                        function(el, options) {
+                        function (el, options) {
                             ecui.ui.Control.call(this, el, options);
                             this._oNavData = options.navItem;
                         }, {
-                            onclick: function(e) {
+                            onclick: function (e) {
                                 e.stopPropagation();
                                 this.getParent().removeParentControlSelected();
                                 this.alterStatus('+selected');
                             }
                         }
                     ),
-                    onmouseover: function() {
+                    onmouseover: function () {
                         let mainEl = this.getMain(),
                             menuWrapEl = ecui.dom.parent(ecui.dom.parent(ecui.dom.parent(mainEl)));
                         if (!ecui.dom.hasClass(menuWrapEl, 'menu-collapsed')) {
@@ -83,11 +83,11 @@ yiche.ui = {
                         maskElStyle.top = dom.top + 'px';
                     },
                     LinkItem: ecui.inherits(ecui.ui.Control,
-                        function(el, options) {
+                        function (el, options) {
                             ecui.ui.Control.call(this, el, options);
                             this._oNavData = options.navItem;
                         }, {
-                            onclick: function(e) {
+                            onclick: function (e) {
                                 e.stopPropagation();
                                 this.getParent().removeParentControlSelected();
                                 let timer = setTimeout(() => {
@@ -99,7 +99,7 @@ yiche.ui = {
                     )
                 }
             ),
-            refreshNavStatus: function() {
+            refreshNavStatus: function () {
                 const loc = ecui.esr.getLocation().split('~')[0],
                     parent = this,
                     navParentControl = yiche.util.findChildrenControl(parent.getMain(), parent.CustomNavsParent);
@@ -114,7 +114,7 @@ yiche.ui = {
                                     ecui.dispatchEvent(cItemParent, 'click');
                                 }
                             }
-                        })
+                        });
                     } else { // 一级导航
                         if (item._oNavData.route === loc) {
                             ecui.dispatchEvent(item, 'click');
@@ -128,12 +128,12 @@ yiche.ui = {
                                 if (lItem._oNavData.route === loc) {
                                     lItem.alterStatus('+selected');
                                 }
-                            })
+                            });
                         }
                     }
                 });
             },
-            handleCollapse: function() {
+            handleCollapse: function () {
                 this._bCollapse = !this._bCollapse;
                 let collapseEl = this.hasCollapse();
                 if (this._bCollapse) {
@@ -142,7 +142,7 @@ yiche.ui = {
                     ecui.dom.removeClass(collapseEl, 'menu-collapsed');
                 }
             },
-            hasCollapse: function() {
+            hasCollapse: function () {
                 let menuWrapEl = ecui.dom.parent(ecui.dom.parent(this.getMain())),
                     parentEl = false;
                 if (ecui.dom.hasClass(menuWrapEl, 'content-menu')) {
@@ -150,7 +150,7 @@ yiche.ui = {
                 }
                 return parentEl;
             },
-            $ready: function() {
+            $ready: function () {
                 this.refreshNavStatus();
                 if (this._bCollapse) {
                     let collapseEl = this.hasCollapse();
@@ -162,17 +162,17 @@ yiche.ui = {
     // 导航折叠
     CustomNavsCollapse: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Control.call(this, el, options);
             this._sNavId = options.navId;
         }, {
-            onclick: function() {
+            onclick: function () {
                 if (this._sNavId) {
                     let menuControl = ecui.get(this._sNavId);
                     if (!menuControl) {
                         return;
                     }
-                    collapseStatus = menuControl._bCollapse;
+                    let collapseStatus = menuControl._bCollapse;
                     menuControl.handleCollapse();
                     if (!collapseStatus) {
                         this.alterStatus('+collapsed');
@@ -183,7 +183,7 @@ yiche.ui = {
                     }
                 }
             },
-            onready: function() {
+            onready: function () {
                 if (yiche.util.getSessionStorage('MENU_COLLAPSE') === '1') {
                     ecui.dispatchEvent(this, 'click');
                 }
@@ -193,10 +193,10 @@ yiche.ui = {
     // 退出登录
     CustomLogout: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Control.call(this, el, options);
         }, {
-            onclick: function() {
+            onclick: function () {
                 // ecui.esr.request(
                 //     'data@POST /api-v2/user/logout',
                 //     function() {
@@ -214,7 +214,7 @@ yiche.ui = {
     CustomTexts: ecui.inherits(
         ecui.ui.Text,
         'custom-search-text',
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Text.call(this, el, options);
             var clearEl = ecui.dom.create('SPAN', {
                 className: 'clear-icon'
@@ -228,7 +228,7 @@ yiche.ui = {
             this._uSearch = ecui.$fastCreate(this.SearchText, searchEl, this, {});
             this._sCheckRule = options.checkRule;
         }, {
-            $input: function(event) {
+            $input: function (event) {
                 ecui.ui.Text.prototype.$input.call(this, event);
                 let value = this.getValue();
                 if (this._sCheckRule) {
@@ -247,21 +247,21 @@ yiche.ui = {
                 this.setValue(this._sLastValue || '');
             },
             SearchText: ecui.inherits(ecui.ui.Control, {
-                onclick: function() {
+                onclick: function () {
                     this.getParent().refresh();
                 }
             }),
             ClearValue: ecui.inherits(ecui.ui.Control, {
-                onclick: function() {
+                onclick: function () {
                     this.getParent().setValue('');
                 }
             }),
-            onkeydown: function(event) {
+            onkeydown: function (event) {
                 if (event.which === 13) {
                     this.refresh();
                 }
             },
-            refresh: function() {
+            refresh: function () {
                 yiche.util.findchildrenRouteAndCall(this);
             }
         }
@@ -270,7 +270,7 @@ yiche.ui = {
     CustomNumberTexts: ecui.inherits(
         ecui.ui.Number,
         'custom-search-text',
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Number.call(this, el, options);
             var clearEl = ecui.dom.create('SPAN', {
                 className: 'clear-icon'
@@ -284,28 +284,28 @@ yiche.ui = {
             this._uSearch = ecui.$fastCreate(this.SearchText, searchEl, this, {});
         }, {
             SearchText: ecui.inherits(ecui.ui.Control, {
-                onclick: function() {
+                onclick: function () {
                     this.getParent().refresh();
                 }
             }),
             ClearValue: ecui.inherits(ecui.ui.Control, {
-                onclick: function() {
+                onclick: function () {
                     this.getParent().setValue('');
                 }
             }),
-            onkeydown: function(event) {
+            onkeydown: function (event) {
                 if (event.which === 13) {
                     this.refresh();
                 }
             },
-            refresh: function() {
+            refresh: function () {
                 yiche.util.findchildrenRouteAndCall(this);
             }
         }
     ),
     // 图片预览
     PreviewHide: ecui.inherits(ecui.ui.Control, {
-        onclick: function() {
+        onclick: function () {
             let elPreview = ecui.$('preview_session_handle');
             ecui.dom.addClass(elPreview, 'ui-hide');
             elPreview.querySelector('.swiper').innerHTML = '';
@@ -314,17 +314,17 @@ yiche.ui = {
     // 点击展开显示子元素
     CustomToggle: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Control.call(this, el, options);
             this._oRowData = options.data;
             this._bVisible = false;
         }, {
-            onclick: function() {
+            onclick: function () {
                 this.asyncLoadChild();
                 this.handleToggle();
             },
             // 展开 收起
-            handleToggle: function() {
+            handleToggle: function () {
                 let parentEl = ecui.dom.parent(this.getMain());
                 if (!ecui.dom.hasClass(parentEl, 'ec-custom-toggle-wrap')) {
                     return;
@@ -337,7 +337,7 @@ yiche.ui = {
                 this._bVisible = !this._bVisible;
             },
             // 子元素相关操作
-            asyncLoadChild: function() {
+            asyncLoadChild: function () {
 
             }
         }
@@ -345,10 +345,10 @@ yiche.ui = {
     // 下拉
     CustomSelect: ecui.inherits(
         ecui.ui.Select,
-        function(el, options) {
-            ecui.ui.Select.call(this, el, options)
+        function (el, options) {
+            ecui.ui.Select.call(this, el, options);
         }, {
-            onchange: function(evt) {
+            onchange: function () {
                 if (!this.getValue()) {
                     return;
                 }
@@ -358,7 +358,7 @@ yiche.ui = {
     ),
     // 下拉搜索
     CustomCombox: ecui.inherits(ecui.ui.Combox, {
-        onchange: function() {
+        onchange: function () {
             if (!this.getValue()) {
                 return;
             }
@@ -368,7 +368,7 @@ yiche.ui = {
 
     // 日期范围筛选
     CustomTimers: ecui.inherits(frd.RangeSelectDate, {
-        onchange: function() {
+        onchange: function () {
             this.setValue(this._uRangeCalendar.getSelectDates());
             this._uRangeCalendar.hide();
             yiche.util.findchildrenRouteAndCall(this);
@@ -379,7 +379,7 @@ yiche.ui = {
     CustomInputTexts: ecui.inherits(
         ecui.ui.Text,
         'custom-text',
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Text.call(this, el, options);
             this.oRules = options.rules;
             var clearEl = ecui.dom.create('SPAN', {
@@ -390,11 +390,11 @@ yiche.ui = {
             this._eParentEl = ecui.dom.parent(el);
         }, {
             ClearValue: ecui.inherits(ecui.ui.Control, {
-                onclick: function() {
+                onclick: function () {
                     this.getParent().setValue('');
                 }
             }),
-            handleCheck: function() {
+            handleCheck: function () {
                 let check = this.isEditControl();
                 if (!this.oRules || !check) {
                     return;
@@ -414,17 +414,17 @@ yiche.ui = {
                     ecui.dom.removeClass(this._eParentEl, 'item-error');
                 }
             },
-            onblur: function() {
+            onblur: function () {
                 this.handleCheck();
             },
-            onerror: function() {
+            onerror: function () {
                 let check = this.isEditControl();
                 if (!check) {
                     return;
                 }
                 ecui.dom.addClass(this._eParentEl, 'item-error');
             },
-            isEditControl: function() {
+            isEditControl: function () {
                 let res = false;
                 if (this._eParentEl) {
                     res = ecui.dom.hasClass(this._eParentEl, 'edit-form-item');
@@ -437,25 +437,25 @@ yiche.ui = {
     // 编辑下拉
     CustomEditSelect: ecui.inherits(
         ecui.ui.Select,
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Select.call(this, el, options);
             this._eParentEl = ecui.dom.parent(el);
         }, {
-            onchange: function() {
+            onchange: function () {
                 let value = this.getValue(),
                     check = this.isEditControl();
                 if (value && check) {
                     ecui.dom.removeClass(this._eParentEl, 'item-error');
                 }
             },
-            onerror: function() {
+            onerror: function () {
                 let check = this.isEditControl();
                 if (!check) {
                     return;
                 }
                 ecui.dom.addClass(this._eParentEl, 'item-error');
             },
-            isEditControl: function() {
+            isEditControl: function () {
                 let res = false;
                 if (this._eParentEl) {
                     res = ecui.dom.hasClass(this._eParentEl, 'edit-form-item');
@@ -469,7 +469,7 @@ yiche.ui = {
     Echarts: ecui.inherits(
         ecui.ui.Control,
         'echarts',
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Control.call(this, el, options);
             this.reqDataName = options.reqDataName;
             this.echartInfo = options.echartInfo;
@@ -481,14 +481,14 @@ yiche.ui = {
             this.emptyMask = ecui.$fastCreate(ecui.ui.Control, this.emptyMaskEl, this);
 
         }, {
-            onready: function() {
+            onready: function () {
                 this.getMain().style.width = this.getWidth() + 'px';
                 this.chart = echarts.init(this.content.getMain());
                 if (this.echartInfo && this.echartInfo.immediate) {
                     let echartInfo = this.echartInfo;
                     this.render(echartInfo);
                 }
-                this.chart.on('legendselectchanged', function(param) {
+                this.chart.on('legendselectchanged', function (param) {
                     var selected = [];
                     for (var key in param.selected) {
                         if (param.selected[key]) {
@@ -504,10 +504,10 @@ yiche.ui = {
                 }.bind(this));
                 ecui.dom.addEventListener(window, 'resize', yiche.util.debounce(this.resizeCharts.bind(this), 200));
             },
-            isEmpty: function() {
+            isEmpty: function () {
                 return this.emptyMask.isShow();
             },
-            reqSuccess: function(data) {
+            reqSuccess: function (data) {
                 const that = this;
                 that.chart.hideLoading();
                 if (!that.content.isShow()) {
@@ -523,11 +523,11 @@ yiche.ui = {
                 }
             },
             // 处理 图表相关数据
-            transfromEchartOptions: function(data) {
+            transfromEchartOptions: function () {
                 let option = {};
                 return option;
             },
-            reqFail: function(xhr) {
+            reqFail: function (xhr) {
                 var err = JSON.parse(xhr.response);
                 ecui.globalTips(
                     err.description,
@@ -541,7 +541,7 @@ yiche.ui = {
                 }
                 return;
             },
-            render: function(echartInfo) {
+            render: function (echartInfo) {
                 if (!this.chart) {
                     return;
                 }
@@ -567,10 +567,10 @@ yiche.ui = {
                 }
 
             },
-            resizeCharts: function() {
+            resizeCharts: function () {
                 this.chart.resize();
             },
-            $dispose: function() {
+            $dispose: function () {
                 ecui.ui.Control.prototype.$dispose.call(this);
                 ecui.dom.removeEventListener(window, 'resize', yiche.util.debounce(this.resizeCharts.bind(this), 200));
                 this.chart && this.chart.dispose();
@@ -580,11 +580,11 @@ yiche.ui = {
 
     // 分页
     Pagination: ecui.inherits(frd.Pagination,
-        function(el, options) {
+        function (el, options) {
             this._nPageSizeOption = options.pageSizeOptions || [20, 50, 100];
             frd.Pagination.call(this, el, options);
         }, {
-            hascreatePageSize: function() {
+            hascreatePageSize: function () {
                 if (this._nPageSizeOption) {
                     let sizeHtml = '';
                     this._nPageSizeOption.forEach(item => {
@@ -599,7 +599,7 @@ yiche.ui = {
             },
             Pages: ecui.inherits(
                 frd.Pagination.prototype.Pages, {
-                    setPageInfoContent: function(pageNo, size, count, total, totalPage) {
+                    setPageInfoContent: function (pageNo, size, count, total) {
                         this.getParent()._uPageInfo.setContent(
                             '共 ' + total + ' 条数据'
                         );
@@ -612,16 +612,16 @@ yiche.ui = {
     // 单选
     CustomRadio: ecui.inherits(
         frd.SimulationRadio,
-        function(el, options) {
+        function (el, options) {
             this._bRefresh = options.refreshChildRoute || false;
             frd.SimulationRadio.call(this, el, options);
         }, {
-            onchange: function() {
+            onchange: function () {
                 if (this._bRefresh) {
                     this.refresh();
                 }
             },
-            refresh: function() {
+            refresh: function () {
                 yiche.util.findchildrenRouteAndCall(this);
             }
         }
@@ -630,22 +630,22 @@ yiche.ui = {
     // 复选
     CustomCheckbox: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             this._oItemData = options.itemData;
             this._sScopedName = options.scopedName;
             ecui.ui.Control.call(this, el, options);
         }, {
-            onready: function() {
+            onready: function () {
                 let { checked } = this._oItemData;
                 if (checked) {
                     this.alterStatus('+checked');
                 }
             },
-            onclick: function() {
+            onclick: function () {
                 this.changeStatus();
                 this.handleChange && this.handleChange();
             },
-            changeStatus: function() {
+            changeStatus: function () {
                 let { checked } = this._oItemData;
                 if (checked) {
                     this.alterStatus('-checked');
@@ -654,7 +654,7 @@ yiche.ui = {
                 }
                 this._oItemData.checked = !this._oItemData.checked;
             },
-            getData: function() {
+            getData: function () {
                 if (!this._sScopedName) {
                     return {
                         itemLength: '',
@@ -670,14 +670,14 @@ yiche.ui = {
                         if (item._oItemData.checked) {
                             res.push(item._oItemData);
                         }
-                    })
+                    });
                 }
                 return {
                     itemLength: len,
                     list: res
-                }
+                };
             },
-            findChildrenControl: function(el) {
+            findChildrenControl: function (el) {
                 return yiche.util.findChildrenControl(el, yiche.ui.CustomCheckbox);
             },
             handleChange: null
@@ -685,11 +685,11 @@ yiche.ui = {
     ),
     CustomCheckboxSelectAll: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             this._sScopedName = options.scopedName;
             ecui.ui.Control.call(this, el, options);
         }, {
-            onclick: function() {
+            onclick: function () {
                 let { len, nowLen } = this.getData();
                 if (len !== nowLen) {
                     this.alterStatus('-part');
@@ -701,7 +701,7 @@ yiche.ui = {
                     this.setData(false);
                 }
             },
-            changeStatus: function(len, nowLen) {
+            changeStatus: function (len, nowLen) {
                 // 全选
                 if (len === nowLen) {
                     this.alterStatus('-part');
@@ -716,7 +716,7 @@ yiche.ui = {
                     this.alterStatus('-part');
                 }
             },
-            getData: function() {
+            getData: function () {
                 let scopedEl = ecui.$(this._sScopedName),
                     checkBoxControls = this.findChildrenControl(scopedEl),
                     len = checkBoxControls.length,
@@ -728,7 +728,7 @@ yiche.ui = {
                             res.push(item._oItemData);
                         }
                         oldData.push(item._oItemData);
-                    })
+                    });
                 }
                 let nowLen = res.length;
                 return {
@@ -736,12 +736,12 @@ yiche.ui = {
                     nowLen,
                     res,
                     oldData
-                }
+                };
             },
-            findChildrenControl: function(el) {
+            findChildrenControl: function (el) {
                 return yiche.util.findChildrenControl(el, yiche.ui.CustomCheckbox);
             },
-            setData: function(flag) {
+            setData: function (flag) {
                 let scopedEl = ecui.$(this._sScopedName),
                     checkBoxControls = this.findChildrenControl(scopedEl),
                     len = checkBoxControls.length;
@@ -756,16 +756,16 @@ yiche.ui = {
                                 ecui.dispatchEvent(item, 'click');
                             }
                         }
-                    })
+                    });
                 }
             },
-            onready: function() {
+            onready: function () {
                 let timer = setTimeout(() => {
                     this.refreshStatus();
                     clearTimeout(timer);
                 }, 0);
             },
-            refreshStatus: function() {
+            refreshStatus: function () {
                 let { len, nowLen } = this.getData();
                 this.changeStatus(len, nowLen);
             }
@@ -775,25 +775,25 @@ yiche.ui = {
     // 树结构单选
     CustomTreeSelect: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Control.call(this, el, options);
             this._oResData = null;
         }, {
             CustomItem: ecui.inherits(
                 ecui.ui.Control,
-                function(el, options) {
+                function (el, options) {
                     ecui.ui.Control.call(this, el, options);
                     this._oRowData = options.data;
                 }, {
-                    hasExpend: function() {
+                    hasExpend: function () {
                         let el = this.getMain();
                         return ecui.dom.hasClass(el, 'tree-item-expend');
                     },
-                    onclick: function(e) {
+                    onclick: function (e) {
                         let targetEl = e.target;
                         this.handleCollapse(targetEl);
                     },
-                    handleCollapse: function(dom) {
+                    handleCollapse: function (dom) {
                         if (this._oRowData.children.length > 0) {
                             if (!ecui.dom.hasClass(dom, 'icon-open')) {
                                 return;
@@ -808,11 +808,11 @@ yiche.ui = {
                     },
                     CustomChildItem: ecui.inherits(
                         ecui.ui.Control,
-                        function(el, options) {
+                        function (el, options) {
                             ecui.ui.Control.call(this, el, options);
                             this._oChildItemData = options.data;
                         }, {
-                            onclick: function(e) {
+                            onclick: function (e) {
                                 e.stopPropagation();
                                 this.getParent().getParent().clearStatus();
                                 this.alterStatus('+actived');
@@ -820,9 +820,9 @@ yiche.ui = {
                             }
                         }
                     )
-                },
+                }
             ),
-            setValue: function(obj) {
+            setValue: function (obj) {
                 this._oResData = obj;
             },
             // 外部设置值
@@ -837,16 +837,16 @@ yiche.ui = {
                                     if (cItem._oChildItemData.id == id) {
                                         ecui.dispatchEvent(cItem, 'click');
                                     }
-                                })
+                                });
                             }
                         }
-                    })
+                    });
                 }
             },
-            getValue: function() {
+            getValue: function () {
                 return this._oResData;
             },
-            clearStatus: function() {
+            clearStatus: function () {
                 let allCustomItem = yiche.util.findChildrenControl(this.getMain(), this.CustomItem);
                 if (allCustomItem && allCustomItem.length > 0) {
                     allCustomItem.forEach(item => {
@@ -855,16 +855,16 @@ yiche.ui = {
                             if (child && child.length > 0) {
                                 child.forEach(cItem => {
                                     cItem.alterStatus('-actived');
-                                })
+                                });
                             }
                         }
-                    })
+                    });
                 }
             },
             SearchItem: ecui.inherits(
                 ecui.ui.Text,
                 'custom-search-text',
-                function(el, options) {
+                function (el, options) {
                     ecui.ui.Text.call(this, el, options);
                     var clearEl = ecui.dom.create('SPAN', {
                         className: 'clear-icon'
@@ -879,19 +879,19 @@ yiche.ui = {
                     this._sCheckRule = options.checkRule;
                 }, {
                     SearchText: ecui.inherits(ecui.ui.Control, {
-                        onclick: function() {
+                        onclick: function () {
                             const value = this.getParent().getValue();
                             this.getParent().getParent().handleSearch(value);
                         }
                     }),
                     ClearValue: ecui.inherits(ecui.ui.Control, {
-                        onclick: function() {
+                        onclick: function () {
                             this.getParent().setValue('');
                         }
                     })
                 }
             ),
-            handleSearch: function(value) {
+            handleSearch: function (value) {
                 let allCustomItem = yiche.util.findChildrenControl(this.getMain(), this.CustomItem);
                 if (allCustomItem && allCustomItem.length > 0) {
                     allCustomItem.forEach(item => {
@@ -911,7 +911,7 @@ yiche.ui = {
                                         cItem.show();
                                         count = count + 1;
                                     }
-                                })
+                                });
                                 if (count === 0) {
                                     item.hide();
                                 } else {
@@ -919,7 +919,7 @@ yiche.ui = {
                                 }
                             }
                         }
-                    })
+                    });
                 }
             }
         }
@@ -928,7 +928,7 @@ yiche.ui = {
     // 文件上传 
     CustomUploads: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Control.call(this, el, options);
             this._sFileType = options.fileType || '0'; // 0: 文件 1:图片 2:视频
             this._sUploadUrl = `${yiche.info.API_BASE}${options.url}` || '/serve-idea/api/file/upload'; // 上传地址
@@ -943,23 +943,23 @@ yiche.ui = {
         }, {
             SelectFiles: ecui.inherits(
                 ecui.ui.Upload,
-                function(el, options) {
+                function (el, options) {
                     ecui.ui.Upload.call(this, el, options);
                     this._eFiles = el.querySelector('input');
                 }, {
-                    onclick: function() {
+                    onclick: function () {
                         this._eFiles.click();
                         this.alterStatus('-error');
                     },
-                    $ready: function(options) {},
-                    init: function(event) {
+                    $ready: function () {}, // 覆盖原始方法
+                    init: function (event) {
                         ecui.ui.Upload.prototype.init.call(this, event);
                         ecui.dom.addEventListener(this._eFiles, 'change', this.getParent().handleGetFiles.bind(this));
                     }
                 }
             ),
             // 获取选中的文件信息
-            handleGetFiles: function(e) {
+            handleGetFiles: function (e) {
                 let files = [],
                     fileInputEl = this._eFiles, // 选择文件控件
                     selectEl = this,
@@ -970,13 +970,20 @@ yiche.ui = {
                     return;
                 }
                 files = Array.prototype.slice.call(e.target.files, 0);
-                if (files.length === 0) {
+                const fileLength =  files.length;
+                if (fileLength === 0) {
+                    return;
+                }
+
+                // 校验文件数量
+                if (!customUploads.checkMaxuploadNumber(fileLength)){
+                    fileInputEl.value = '';
                     return;
                 }
 
                 // 校验文件大小
                 if (customUploads._sCheckFileInfo) {
-                    for (let i = 0, len = files.length; i < len; i++) {
+                    for (let i = 0; i < fileLength; i++) {
                         const file = files[i],
                             fileName = file.name,
                             size = file.size;
@@ -998,8 +1005,8 @@ yiche.ui = {
                 const paramFileName = customUploads._sFileParamsName;
                 // 上传文件
                 let fileSecCount = files.length;
-                files.forEach((file) => {
-                    // 
+                files.forEach(file => {
+                    // 当前文件名称
                     const currentName = file.name;
                     // 添加占位元素
                     let itemFileInfo = {
@@ -1010,23 +1017,29 @@ yiche.ui = {
 
                     const reader = new FileReader();
                     reader.readAsDataURL(file);
-                    reader.onload = function(e) {
+                    reader.onload = function () {
                         const data = new FormData();
                         data.append(paramFileName, file);
                         ecui.io.ajax(customUploads._sUploadUrl, {
                             method: 'POST',
                             data: data,
                             headers: yiche.info.UPLOAD_FILES_HEADER,
-                            onupload: function(e) {
+                            onupload: function (e) {
                                 const percent = Math.round(e.loaded / e.total * 100);
                                 customUploads.updateProgressStatus(percent, currentName);
                             },
-                            onsuccess: function(res) {
+                            onsuccess: function (res) {
                                 if (typeof res == 'string') {
                                     res = JSON.parse(res);
                                 }
                                 if (res.errorCode === 0) {
                                     customUploads.uploadSuccess(res.data, currentName);
+                                } else {
+                                    ecui.globalTips(
+                                        res.msg,
+                                        'error'
+                                    );
+                                    customUploads.uploadFail(currentName);
                                 }
                                 // 解决前后2次选同一个文件不触发file的change事件
                                 fileSecCount--;
@@ -1034,7 +1047,7 @@ yiche.ui = {
                                     fileInputEl.value = '';
                                 }
                             },
-                            onerror: function(event) {
+                            onerror: function () {
                                 customUploads.uploadFail(currentName);
                                 // 解决前后2次选同一个文件不触发file的change事件
                                 fileSecCount--;
@@ -1043,12 +1056,12 @@ yiche.ui = {
                                 }
                             }
                         });
-                    }
+                    };
                 });
                 // 文件数达到最大时隐藏文件上传按钮
                 customUploads.handleHideSelectFilesBtn();
             },
-            uploadSuccess: function(res, name) {
+            uploadSuccess: function (res, name) {
                 let fileItem = this.getMain().getControl().FileItem;
                 let itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem).filter(i => i._oData.name === name);
                 let current = itemFiles[0],
@@ -1057,13 +1070,13 @@ yiche.ui = {
                 if (res instanceof Object) {
                     current._oData = Object.assign(current._oData, res, {
                         uploadStatus: true
-                    })
+                    });
                 } else {
                     current._oData = Object.assign(current._oData, {
                         url: res,
                         name: res,
                         uploadStatus: true
-                    })
+                    });
                 }
                 if (this._sFileType === '1') {
                     itemEl.querySelector('.item-file-wrap img').src = res;
@@ -1074,7 +1087,7 @@ yiche.ui = {
                     itemEl.querySelector('.mask a').href = res;
                 }
             },
-            uploadFail: function(name) {
+            uploadFail: function (name) {
                 let fileItem = this.getMain().getControl().FileItem;
                 let itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem).filter(i => i._oData.name === name);
                 let current = itemFiles[0],
@@ -1085,12 +1098,12 @@ yiche.ui = {
             },
             FileItem: ecui.inherits(
                 ecui.ui.Control,
-                function(el, options) {
+                function (el, options) {
                     ecui.ui.Control.call(this, el, options);
                     this._oData = options.rowData;
 
                 }, {
-                    onclick: function(e) {
+                    onclick: function (e) {
                         let el = e.target;
                         if (!ecui.dom.hasClass(el, 'iconfont')) {
                             return;
@@ -1122,13 +1135,13 @@ yiche.ui = {
                                 if (item._oData.name === currentName) {
                                     current = index;
                                 }
-                            })
+                            });
                             ecui.get('handlePreview').initPreview(list, current);
                         }
                     }
                 }
             ),
-            addFileItem: function(file, type) {
+            addFileItem: function (file, type) {
                 let fileListWrpaEl = this.getMain().querySelector('.file-list-wrap');
                 if (!fileListWrpaEl) {
                     return;
@@ -1146,7 +1159,7 @@ yiche.ui = {
                 ecui.dom.insertBefore(fileItemEl, ecui.dom.last(fileListWrpaEl));
                 ecui.init(fileItemEl);
             },
-            updateProgressStatus: function(percent, name) {
+            updateProgressStatus: function (percent, name) {
                 let fileItem = this.getMain().getControl().FileItem;
                 let itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem).filter(i => i._oData.name === name);
                 let current = itemFiles[0],
@@ -1159,35 +1172,44 @@ yiche.ui = {
                     ecui.dom.addClass(itemEl, 'success');
                 }
             },
-            checkFileRepeat: function(name) {
+            checkFileRepeat: function (name) {
                 let fileItem = this.getMain().getControl().FileItem;
                 let itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem);
                 for (let i = 0, len = itemFiles.length; i < len; i++) {
                     let fileName = itemFiles[i]._oData.name;
                     if (fileName === name) {
-                        ecui.tip('error', `${name}已经存在,请勿重复上传!`);
+                        ecui.globalTips(
+                            `${name}已经存在,请勿重复上传!`,
+                            'error'
+                        );
                         return false;
                     }
                 }
                 return true;
             },
-            checkMaxuploadNumber: function(selectCount) {
+            checkMaxuploadNumber: function (selectCount) {
                 let fileItem = this.getMain().getControl().FileItem,
                     fileCount = yiche.util.findChildrenControl(this.getMain(), fileItem).length + selectCount;
                 if (fileCount <= this._nMaxCount) {
                     return true;
                 } else {
-                    ecui.tip('error', `最多可上传${this._nMaxCount}个文件!`);
+                    ecui.globalTips(
+                        `最多可上传${this._nMaxCount}个文件!`,
+                        'error'
+                    );
                     return false;
                 }
             },
-            getValues: function() {
+            getValues: function () {
                 let fileItem = this.getMain().getControl().FileItem,
                     itemFiles = yiche.util.findChildrenControl(this.getMain(), fileItem),
                     successFiles = itemFiles.filter(i => i._oData.uploadStatus),
                     countFile = itemFiles.length;
                 if (successFiles.length !== countFile) {
-                    ecui.tip('error', '请删除上传失败的图片再提交保存!');
+                    ecui.globalTips(
+                        '请删除上传失败的图片再提交保存!',
+                        'error'
+                    );
                     return [];
                 }
                 let result = [];
@@ -1196,7 +1218,7 @@ yiche.ui = {
                 });
                 return result;
             },
-            setValues: function(list) {
+            setValues: function (list) {
                 if (list.length === 0) {
                     return;
                 }
@@ -1206,19 +1228,19 @@ yiche.ui = {
                 // 文件数达到最大时隐藏文件上传按钮
                 this.handleHideSelectFilesBtn();
             },
-            handleRequired: function() {
+            handleRequired: function () {
                 let selectFile = this.getMain().querySelector('.ui-upload').getControl();
                 selectFile.alterStatus('+error');
             },
             // 当文件列表的文件数达到最大上传数时,隐藏上传按钮
-            handleHideSelectFilesBtn: function() {
+            handleHideSelectFilesBtn: function () {
                 let fileItem = this.getMain().getControl().FileItem,
                     fileCount = yiche.util.findChildrenControl(this.getMain(), fileItem).length;
                 if (fileCount === this._nMaxCount * 1) {
                     this.getMain().querySelector('.ui-upload').getControl().hide();
                 }
             },
-            onready: function() {
+            onready: function () {
                 if (this._oFileValues && this._oFileValues.length > 0) {
                     this.setValues(this._oFileValues);
                 }
@@ -1229,7 +1251,7 @@ yiche.ui = {
     // 图片预览
     CustomPreview: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Control.call(this, el, options);
             this._sCurrentIndex = options.index;
             this._oDataList = options.data;
@@ -1240,7 +1262,7 @@ yiche.ui = {
         }, {
             HandleHide: ecui.inherits(
                 ecui.ui.Control, {
-                    onclick: function() {
+                    onclick: function () {
                         let parent = this.getParent();
                         parent.repaint();
                         parent._sCurrentIndex = 0;
@@ -1252,11 +1274,11 @@ yiche.ui = {
             ),
             PreviewImgChange: ecui.inherits(
                 ecui.ui.Control,
-                function(el, options) {
+                function (el, options) {
                     ecui.ui.Control.call(this, el, options);
                     this._sBtnType = options.btnType;
                 }, {
-                    onclick: function() {
+                    onclick: function () {
                         let parent = this.getParent(),
                             list = parent._oDataList,
                             imgPos = parent._eImgWrapEl,
@@ -1286,7 +1308,7 @@ yiche.ui = {
                     }
                 }
             ),
-            initPreview: function(list, index) {
+            initPreview: function (list, index) {
                 this._oDataList = [];
                 this._sCurrentIndex = 0;
                 if (list.length === 0) {
@@ -1311,7 +1333,7 @@ yiche.ui = {
                     this._uNext.show();
                 }
             },
-            onready: function() {
+            onready: function () {
                 let btnControls = yiche.util.findChildrenControl(this.getMain(), this.PreviewImgChange);
                 if (btnControls.length === 2) {
                     this._uPrev = btnControls[0];
@@ -1324,12 +1346,12 @@ yiche.ui = {
     // 富文本编辑器
     Tinymce: ecui.inherits(
         ecui.ui.Control,
-        function(el, options) {
+        function (el, options) {
             ecui.ui.Control.call(this, el, options);
             this._bRequired = options.required || false;
             this._sValue = options.value;
         }, {
-            onready: function() {
+            onready: function () {
                 let that = this,
                     value = this._sValue;
                 tinymce.init({
@@ -1342,7 +1364,7 @@ yiche.ui = {
                     branding: false,
                     fontsize_formats: '11px 12px 14px 16px 18px 24px 36px 48px',
                     toolbar: 'undo redo |  bold italic underline strikethrough backcolor forecolor| image | alignleft aligncenter alignright alignjustify | lineheight | fontselect | fontsizeselect | outdent indent',
-                    images_upload_handler: function(blobInfo, succFun, failFun) {
+                    images_upload_handler: function (blobInfo, succFun, failFun) {
                         let file = blobInfo.blob(); //转化为易于理解的file对象
                         const formData = new FormData();
                         formData.append('imageFileName', file);
@@ -1350,7 +1372,7 @@ yiche.ui = {
                             method: 'POST',
                             data: formData,
                             headers: yiche.info.UPLOAD_FILES_HEADER,
-                            onsuccess: function(res) {
+                            onsuccess: function (res) {
                                 if (typeof res == 'string') {
                                     res = JSON.parse(res);
                                 }
@@ -1359,18 +1381,18 @@ yiche.ui = {
                                 };
                                 succFun(json.location);
                             },
-                            onerror: function(event) {
+                            onerror: function (event) {
                                 failFun('HTTP Error: ' + event);
                             }
                         });
                     },
-                    file_picker_callback: function(callback, value, meta) {
+                    file_picker_callback: function (callback, value, meta) {
                         if (meta.filetype == 'image') {
                             callback('myimage.jpg', { alt: 'My alt text' });
                         }
                     },
-                    init_instance_callback: function(editor) {
-                        editor.on('focus', function() {
+                    init_instance_callback: function (editor) {
+                        editor.on('focus', function () {
                             that.alterStatus('-error');
                         });
                         if (value) {
@@ -1380,22 +1402,22 @@ yiche.ui = {
                     }
                 });
             },
-            getValue: function() {
+            getValue: function () {
                 let htmls = tinyMCE.activeEditor.getContent();
                 if (this._bRequired && !htmls) {
                     this.handleRequired();
                 }
                 return htmls;
             },
-            setValue: function(html) {
+            setValue: function (html) {
                 tinyMCE.activeEditor.setContent(html);
             },
-            handleRequired: function() {
+            handleRequired: function () {
                 this.alterStatus('+error');
             },
-            $dispose: function() {
+            $dispose: function () {
                 ecui.ui.Control.prototype.$dispose.call(this);
             }
         }
-    ),
+    )
 };

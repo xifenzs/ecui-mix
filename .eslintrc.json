@@ -21,7 +21,7 @@
         "no-spaced-func": 2
     },
     "parserOptions": {
-        "ecmaVersion": 5
+        "ecmaVersion": 12
     },
     "globals": {
         "ecui": "writable",
@@ -42,6 +42,16 @@
         "history": "writable",
         "frd": "writable",
         "_interface": "writable",
-        "location": "writable"
+        "location": "writable",
+        "clearTimeout": "writable",
+        "FormData": "writable",
+        "Blob": "writable",
+        "setInterval": "writable",
+        "clearInterval": "writable",
+        "Set": "writable",
+        "echarts": "writable",
+        "tinyMCE": "writable",
+        "tinymce": "writable",
+        "URL": "writable"
     }
 }

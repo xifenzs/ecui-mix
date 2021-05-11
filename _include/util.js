@@ -1,12 +1,4 @@
-(function() {
-    var core = ecui,
-        dom = core.dom,
-        ui = core.ui,
-        util = core.util,
-        ieVersion = /(msie (\d+\.\d)|IEMobile\/(\d+\.\d))/i.test(navigator.userAgent) ? document.documentMode || +(RegExp.$2 || RegExp.$3) : undefined,
-        firefoxVersion = /firefox\/(\d+\.\d)/i.test(navigator.userAgent) ? +RegExp.$1 : undefined,
-        ext = core.ext;
-
+(function () {
     yiche.util = {
         /**
          * 获取当前 dom/control 所属路由。
@@ -14,7 +6,7 @@
          *
          * @param {Element | Control} el 当前元素
          */
-        getRoute: function(el) {
+        getRoute: function (el) {
             var route,
                 parent = ecui.dom.parent(el instanceof ecui.ui.Control ? el.getMain() : el);
             for (; parent; parent = ecui.dom.parent(parent)) {
@@ -34,7 +26,7 @@
          *
          * @param {String} value 带 <br/> 的字符串
          */
-        parseBR: function(value) {
+        parseBR: function (value) {
             return value.split('<br/>');
         },
         /**
@@ -43,7 +35,7 @@
          *
          * @param {DOM} input  
          */
-        getFileName: function(input) {
+        getFileName: function (input) {
             var str = /macintosh|mac os x/i.test(navigator.userAgent) ? '/' : '\\';
             var name = '';
             if (input.files && input.files[0]) {
@@ -58,7 +50,7 @@
          * @public
          *
          */
-        removeDialog: function() {
+        removeDialog: function () {
             var dialogContainer = ecui.$('dialogContainer'),
                 dialogContainer_1 = ecui.$('dialogContainer_1'),
                 dialogContainer_2 = ecui.$('dialogContainer_2');
@@ -75,24 +67,6 @@
                 dialogContainer_2.innerHTML = '';
             }
         },
-
-        /**
-         * 设置页面title标题
-         * @public
-         *
-         * @param {Array} arr title数组
-         */
-        setLocationPage: function(data) {
-            var str = '';
-            for (var i = 0, item; item = data[i++];) {
-                if (item.href) {
-                    str += util.stringFormat('<a href="{2}">{0}</a>{1}', item.text, i < data.length ? '<span> / </span>' : '', item.href);
-                } else {
-                    str += util.stringFormat('<span>{0}</span>{1}', item.text, i < data.length ? '<span> / </span>' : '');
-                }
-            }
-            ecui.$('location_page').innerHTML = str;
-        },
         /**
          * 初始化dialog控件。
          * @public
@@ -103,7 +77,7 @@
          *
          * @return {Control} dialog 控件
          */
-        initDialog: function(container, targetName, options) {
+        initDialog: function (container, targetName, options) {
             if (typeof container === 'string') {
                 container = ecui.$(container);
             }
@@ -121,7 +95,7 @@
          *
          * @return {Array|Control} dialog 控件
          */
-        findChildrenControl: function(el, UIClass) {
+        findChildrenControl: function (el, UIClass) {
             if (!el || !UIClass) {
                 return [];
             }
@@ -151,7 +125,7 @@
          *
          * @return {Control} dialog 控件
          */
-        findControl: function(el, UIClass) {
+        findControl: function (el, UIClass) {
             for (; el; el = ecui.dom.parent(el)) {
                 if (el.getControl && el.getControl() instanceof UIClass) {
                     return el.getControl();
@@ -166,7 +140,7 @@
          * @param {string|Control} navId 控件id
          *
          */
-        refreshTopMuneSelectedStatus: function(navId) {
+        refreshTopMuneSelectedStatus: function (navId) {
             const nav = ecui.get(navId);
             nav && nav.refreshNavStatus();
         },
@@ -177,7 +151,7 @@
          * @param {string} value 所要处理的值
          *
          */
-        getToThousands: function(value) {
+        getToThousands: function (value) {
             if (value) {
                 if (value.indexOf('.') == -1) {
                     return value.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
@@ -201,10 +175,11 @@
          * @param {string|Control} control 控件
          *
          */
-        findchildrenRouteAndCall: function(control) {
+        findchildrenRouteAndCall: function (control) {
             const currentRoute = ecui.esr.findRoute(control);
             const children = currentRoute.children;
             if (!children) {
+                // eslint-disable-next-line no-undef
                 console.warn('该控件只适用在列表筛选数据的地方');
                 return;
             }
@@ -214,8 +189,6 @@
                 });
             } else if (typeof(children) == 'string' && children.length > 0) {
                 ecui.esr.callRoute(children + '~pageNum=1~pageNo=1', true);
-            } else {
-
             }
         },
         /**
@@ -228,7 +201,7 @@
          * @return {string} 获取时间差内的时间
          *  
          */
-        getCustomTime: function(now, dx) {
+        getCustomTime: function (now, dx) {
             let baseDay = 24 * 60 * 60 * 1000,
                 value = new Date(now.getTime() - dx * baseDay);
             return value.getFullYear() +
@@ -246,7 +219,7 @@
          *
          *  
          */
-        setSessionStorage: function(key, value) {
+        setSessionStorage: function (key, value) {
             const varHeader = yiche.info.STORAGE_HEADER + key;
             window.sessionStorage.setItem(varHeader, JSON.stringify(value));
         },
@@ -258,7 +231,7 @@
          *
          *  
          */
-        getSessionStorage: function(key) {
+        getSessionStorage: function (key) {
             const varHeader = yiche.info.STORAGE_HEADER + key;
             return window.sessionStorage.getItem(varHeader);
         },
@@ -270,7 +243,7 @@
          *
          *  
          */
-        removeSessionStorage: function(key) {
+        removeSessionStorage: function (key) {
             const varHeader = yiche.info.STORAGE_HEADER + key;
             window.sessionStorage.removeItem(varHeader);
         },
@@ -282,7 +255,7 @@
          *
          *  
          */
-        clearSessionStorage: function() {
+        clearSessionStorage: function () {
             window.sessionStorage.clear();
         },
         /**
@@ -295,13 +268,13 @@
          *
          *  
          */
-        exportCsvFile: function(url, params, name) {
+        exportCsvFile: function (url, params, name) {
             ecui.dom.addClass(document.body, 'ui-loading');
             ecui.io.ajax(url, {
                 method: 'POST',
                 headers: ecui.esr.headers,
                 data: JSON.stringify(params),
-                onsuccess: function(res) {
+                onsuccess: function (res) {
                     try {
                         let name0 = decodeURI(name),
                             BOM = '\uFEFF';
@@ -317,13 +290,16 @@
                         a = null;
                         ecui.dom.removeClass(document.body, 'ui-loading');
                     } catch (error) {
+                        // eslint-disable-next-line no-undef
                         console.warn(error);
                     }
 
                 },
-                onerror: function(xhr) {
+                onerror: function (xhr) {
+                    // eslint-disable-next-line no-undef
                     if (onerror) {
                         ecui.dom.removeClass(document.body, 'ui-loading');
+                        // eslint-disable-next-line no-undef
                         onerror(xhr);
                     }
                 }
@@ -338,83 +314,89 @@
          *
          *  
          */
-        exportFile: function(url, params) {
-            ecui.dom.addClass(document.body, 'ui-loading');
+        exportFile: function (url, params) {
             ecui.io.ajax(url, {
                 method: 'POST',
                 headers: ecui.esr.headers,
                 data: JSON.stringify(params),
                 responseType: 'blob',
-                onsuccess: function(res, xhr) {
-                    let headers = xhr.getAllResponseHeaders().toLowerCase();
-                    let arr = headers.trim().split(/[\r\n]+/); // 由于返回的是用\r\n来进行分割的字符串，需要做转换
-                    let headerMap = {};
-                    arr.forEach(function(line) {
-                        let parts = line.split(': ')
-                        let header = parts.shift()
-                        let value = parts.join(': ')
-                        headerMap[header] = value
-                    })
+                onsuccess: function (res, xhr) {
+                    let headers = xhr.getAllResponseHeaders().toLowerCase(),
+                        arr = headers.trim().split(/[\r\n]+/), // 由于返回的是用\r\n来进行分割的字符串，需要做转换
+                        headerMap = {};
+                    arr.forEach(function (line) {
+                        let parts = line.split(': ');
+                        let header = parts.shift();
+                        let value = parts.join(': ');
+                        headerMap[header] = value;
+                    });
                     try {
                         const blob = new Blob([res], { type: 'application/vnd.ms-excel' });
                         const link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
                         link.download = decodeURI(headerMap['content-disposition'].split(';')[1].split('=')[1]);
                         link.click();
+                        // eslint-disable-next-line no-const-assign
                         link = null;
                     } catch (error) {
+                        // eslint-disable-next-line no-undef
                         console.warn(error);
                     }
                 },
-                onerror: function(xhr) {
+                onerror: function (xhr) {
+                    // eslint-disable-next-line no-undef
                     if (onerror) {
-                        ecui.dom.removeClass(document.body, 'ui-loading');
+                        // eslint-disable-next-line no-undef
                         onerror(xhr);
                     }
                 }
             });
         },
-        post: function(url, data, onsuccess, onerror) {
+        post: function (url, data, onsuccess, onerror) {
             ecui.io.ajax(url, {
                 method: 'post',
                 headers: ecui.esr.headers,
                 data: JSON.stringify(data),
-                onsuccess: function(text) {
+                onsuccess: function (text) {
                     try {
-                        var data = JSON.parse(text);
-                        if (data && data.status === 401) {
-                            window.location.href = 'login.html';
+                        const data = JSON.parse(text);
+                        if (data && data.code !== 0) {
+                            ecui.tip('error', data.msg);
                             return;
+                        } else {
+                            onsuccess(data.data);
                         }
-                        onsuccess(data);
                     } catch (e) {
+                        // eslint-disable-next-line no-undef
                         console.warn(e);
                     }
                 },
-                onerror: function(xhr) {
+                onerror: function (xhr) {
                     if (onerror) {
                         onerror(xhr);
                     }
                 }
             });
         },
-        get: function(url, onsuccess, onerror) {
+        get: function (url, onsuccess, onerror) {
             ecui.io.ajax(url, {
                 method: 'get',
                 headers: ecui.esr.headers,
-                onsuccess: function(text) {
+                onsuccess: function (text) {
                     try {
-                        var data = JSON.parse(text);
-                        if (data && data.status === 401) {
-                            window.location.href = 'login.html';
+                        const data = JSON.parse(text);
+                        if (data && data.code !== 0) {
+                            ecui.tip('error', data.msg);
                             return;
+                        } else {
+                            onsuccess(data.data);
                         }
-                        onsuccess(data);
                     } catch (e) {
+                        // eslint-disable-next-line no-undef
                         console.warn(e);
                     }
                 },
-                onerror: function(xhr) {
+                onerror: function (xhr) {
                     if (onerror) {
                         onerror(xhr, url);
                     }
@@ -430,7 +412,7 @@
          *
          *  
          */
-        getDataType: function(obj) {
+        getDataType: function (obj) {
             let type = typeof obj;
             if (type !== 'object') {
                 return type;
@@ -439,7 +421,7 @@
         },
 
         // from 值回填
-        resetFromsValue: function(name, obj) {
+        resetFromsValue: function (name, obj) {
             var tmp = {};
             ecui.esr.parseObject(document.forms[name], tmp);
             ecui.esr.fillForm(
@@ -449,25 +431,25 @@
         },
 
         // 检测颜色是否合法
-        checkColor: function(value) {
-            return !/^[a-fA-F0-9]{6,6}$/.test(value)
+        checkColor: function (value) {
+            return !/^[a-fA-F0-9]{6,6}$/.test(value);
         },
 
         // 防抖(debounce)
-        debounce: function(fn, delay) {
+        debounce: function (fn, delay) {
             let timer = null;
-            return function() {
+            return function () {
                 if (timer) {
                     clearTimeout(timer);
                 }
                 timer = setTimeout(fn, delay);
-            }
+            };
         },
 
         // 节流(throttle)
-        throttle: function(fn, wait) {
+        throttle: function (fn, wait) {
             let pre = Date.now();
-            return function() {
+            return function () {
                 let context = this;
                 let args = arguments;
                 let now = Date.now();
@@ -475,11 +457,11 @@
                     fn.apply(context, args);
                     pre = Date.now();
                 }
-            }
+            };
         }
     };
 
-    Date.prototype.pattern = function(fmt) {
+    Date.prototype.pattern = function (fmt) {
         var o = {
             'M+': this.getMonth() + 1, //月份
             'd+': this.getDate(), //日

@@ -9,69 +9,75 @@
     <![endif]-->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-        }
-        
-        .main {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .main img {
-            width: 390px;
-            height: 280px;
-            position: absolute;
-            left: 50%;
-            top: 40%;
-            transform: translate(-50%, -50%);
-            border: none;
-            outline: none;
-        }
-        
-        .main a {
-            text-decoration: none;
-            position: absolute;
-            left: 50%;
-            bottom: 36%;
-            transform: translate(-50%, -50%);
-            color: #ffffff;
-            background-color: #306BFF;
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      html,body{
+        width: 100%;
+        height: 100%;
+      }
+      .main{
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .main img{
+        width: 390px;
+        height: 280px;
+        position: absolute;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%,-50%);
+        border: none;
+        outline: none;
+      }
+      .main .btn-wrap {
+        position: absolute;
+        left: 50%;
+        bottom: 36%;
+        transform: translate(-50%,-50%);
+        padding: 10px 20px;
+        display: flex;
+        cursor: pointer;
+      }
+      .main .btn-wrap a, span{
+        box-sizing: border-box;
+        text-decoration: none;
+        width: 120px;
+        text-align: center;
+        color: #ffffff;
+        background-color: #306BFF;
+        padding: 10px 20px;
+        border-radius: 4px;
+        margin: 0 20px;
+        cursor: pointer;
+      }
     </style>
 </head>
 
 <body>
-    <div class="main">
-        <img src="images/404.png" alt="" />
-        <a id="login-el" href="http://test.ad.yiche.com/ecui-effect-dsp/index.html">首页</a>
+  <div class="main">
+    <img src="images/404.png" alt="">
+    <div class="btn-wrap">
+      <a href="index.html">返回首页</a>
+      <a id="login-el" href="http://test.ad.yiche.com/slp-manage/login.html">重新登录</a>
     </div>
-    <script>
-        window.onload = function() {
-            getEnv = () => {
-                const loc = window.location.origin;
-                let envPath = 'http://test.ad.yiche.com/ecui-effect-dsp/index.html';
-                const Reg = new RegExp('test', 'g');
-                if (!loc.match(Reg)) {
-                    envPath = 'http://localhost:9006/ecui-effect-dsp/index.html';
-                }
-                document.getElementById('login-el').setAttribute('href', envPath);
-            }
-            getEnv();
-        }
-    </script>
+  </div>
+  <script>
+    window.onload = function(){
+      getEnv = () => {
+          const loc = window.location.origin;
+          let envPath = 'http://test.ad.yiche.com/slp-manage/login.html'; 
+          const Reg = new RegExp('test','g');
+          if(!loc.match(Reg)){
+              envPath = 'https://ad.yiche.com/manager/login';
+          }
+          document.getElementById('login-el').setAttribute('href',envPath);
+      }
+      getEnv();
+    }
+  </script>
 </body>
-
 </html>
+

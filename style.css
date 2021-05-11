@@ -207,8 +207,12 @@ body {
     z-index: 64016;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.1) url('images/base/loading.gif') center center no-repeat;
+    background: rgba(0, 0, 0, 0.6) url('images/base/loading.gif') center center no-repeat;
     background-size: 100px 100px;
+}
+
+.ui-mask {
+    opacity: 0.6 !important;
 }
 /*日期*/
 

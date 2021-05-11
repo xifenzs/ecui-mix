@@ -1,9 +1,4 @@
-(function() {
-    var core = ecui,
-        dom = core.dom,
-        ui = core.ui,
-        util = core.util,
-        clearHintTimer = util.blank;
+(function () {
     window.yiche = {
         info: {
             iosVersion: /(iPhone|iPad).*?OS (\d+(_\d+)?)/i.test(navigator.userAgent) ? +(RegExp.$2.replace('_', '.')) : undefined,
@@ -11,7 +6,7 @@
             chromeVersion: /Chrome\/(\d+\.\d)/i.test(navigator.userAgent) ? +RegExp.$1 : undefined,
             firefoxVersion: /firefox\/(\d+\.\d)/i.test(navigator.userAgent) ? +RegExp.$1 : undefined,
             safariVersion: !/(chrome|crios|ucbrowser)/i.test(navigator.userAgent) && /(\d+\.\d)(\.\d)?\s+.*safari/i.test(navigator.userAgent) ? +RegExp.$1 : undefined,
-            now: util.formatDate(new Date(), 'yyyy-MM-dd'),
+            now: ecui.util.formatDate(new Date(), 'yyyy-MM-dd'),
             PROJECT_NAME: '混合导航模板', // logo旁的项目名称
             STORAGE_HEADER: 'EFFECT_',
             routeLists: [], // 项目中的全部路由
@@ -22,7 +17,7 @@
 
     window.requestCount = 0;
     // 统计请求,设置loading
-    ecui.esr.getBodyData = function(data, headers, url) {
+    ecui.esr.getBodyData = function (data, headers, url) {
         if (url && url.length > 0) {
             window.requestCount++;
             ecui.dom.addClass(document.body, 'ui-loading');
@@ -35,7 +30,8 @@
      * @param {object} e 异常对象
      *
      */
-    ecui.esr.onexception = function(e) {
+    ecui.esr.onexception = function (e) {
+        // eslint-disable-next-line no-undef
         console.warn(e);
     };
 
@@ -48,8 +44,7 @@
      *
      * @return {Object|numer} data.code为0时，返回 data.result ，否则返回 data.code
      */
-    var noTipCodes = [300000, 500016];
-    ecui.esr.onparsedata = function(url, data) {
+    ecui.esr.onparsedata = function (url, data) {
         window.requestCount = Math.max(0, --window.requestCount);
         if (window.requestCount <= 0) {
             ecui.dom.removeClass(document.body, 'ui-loading');
@@ -57,32 +52,20 @@
         var code = data.code;
         if (0 === code) {
             return data.result;
-        }
-        if (code === 10302) {
-            // 延迟 10ms 执行重定向，防止业务中有跳转登录页逻辑，导致页面跳转不正确
-            util.timer(function() {
-                location.href = data.result;
-            }, 10);
-            return;
-        } else if (code === 12011) {
-            ecui.esr.headers['x-access-token'] = '';
-            window.location = './login.html';
-        } else if (code === 12012) {
-            ecui.tip('error', data.msg);
-            if (ecui.esr.DEFAULT_PAGE) {
-                ecui.esr.redirect(ecui.esr.DEFAULT_PAGE);
-            } else {
-                window.location = './login.html';
-            }
         } else {
-            if (noTipCodes.indexOf(code) < 0) {
-                ecui.tip('error', data.message);
+            if (code === 12011){
+                window.location.href = window.location.origin.match(new RegExp('test', 'g')) ? 'http://test.yiche.slp.com/slp-manage/login.html' : 'https://ad.yiche.com/manager/login';
             }
+            ecui.tip('error', data.msg);
+            return data.code;
         }
-        return data.code;
     };
-    ecui.esr.onrequesterror = function(err) {
-        err.forEach(function(item) {
+    ecui.esr.onrequesterror = function (err) {
+        window.requestCount = Math.max(0, --window.requestCount);
+        if (window.requestCount <= 0) {
+            ecui.dom.removeClass(document.body, 'ui-loading');
+        }
+        err.forEach(function (item) {
             if (item.url) {
                 try {
                     let errInfo = JSON.parse(item.xhr.response);
@@ -91,6 +74,7 @@
                         'error'
                     );
                 } catch (err) {
+                    // eslint-disable-next-line no-undef
                     console.warn(err);
                 }
             }
@@ -103,14 +87,14 @@
      * @public
      *
      */
-    ecui.esr.onready = function() {
+    ecui.esr.onready = function () {
         ecui.esr.headers = {
             'X-Requested-With': 'XMLHttpRequest',
             'Content-Type': 'application/json;charset=UTF-8',
             'customReferer': window.location.href
         };
         // 配合后端重定向，地址栏地址改变时，将 location.href 更新到请求头的 customReferer 字段
-        ecui.dom.addEventListener(window, 'hashchange', function(e) {
+        ecui.dom.addEventListener(window, 'hashchange', function (e) {
             // 设置请求头
             ecui.esr.headers.customReferer = window.location.href;
             // 获取当前路由
@@ -126,17 +110,17 @@
         ecui.ui.$AbstractSelect.prototype.TEXTNAME = 'code';
         // text输入框 禁用输入历史记录
         var textReady = ecui.ui.Text.prototype.$ready;
-        ecui.ui.Text.prototype.$ready = function(event) {
+        ecui.ui.Text.prototype.$ready = function (event) {
             this.getInput().setAttribute('autocomplete', 'off');
             textReady.call(this, event);
         };
         // combox输入框 禁用输入历史记录
         var comboxReady = ecui.ui.Combox.prototype.$ready;
-        ecui.ui.Combox.prototype.$ready = function(event) {
+        ecui.ui.Combox.prototype.$ready = function (event) {
             this.getInput().setAttribute('autocomplete', 'off');
             this._eTextInput.setAttribute('autocomplete', 'off');
             comboxReady.call(this, event);
-            ecui.util.timer(function() {
+            ecui.util.timer(function () {
                 ecui.setFocused();
                 ecui.dispatchEvent(this, 'blur');
             }.bind(this), 100);
@@ -148,7 +132,7 @@
             model: [],
             main: 'base_layout', // 挂载容器
             view: 'contentTarget', // 渲染模板
-            onbeforerender: function(context) {
+            onbeforerender: function (context) {
                 // 全局信息  菜单  用户信息  面包屑导航
                 context.GLOBLE_USER_INFO = {
                     userName: '张三'
@@ -172,10 +156,10 @@
                             if (itemChild && itemChild.length > 0) {
                                 itemChild.forEach(cItem => {
                                     cItem.route && route.push(cItem.route);
-                                })
+                                });
                             }
                         }
-                    })
+                    });
                     yiche.info.routeLists = JSON.parse(JSON.stringify(route));
                 }
                 // 面包屑导航
@@ -189,9 +173,6 @@
                     'customReferer': window.location.href,
                     'x-access-token': sessionStorage.getItem('token')
                 };
-
-            },
-            onafterrender: function(context) {
 
             }
         };

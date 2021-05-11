@@ -1416,12 +1416,23 @@ body {
 
 .ec-dialog {
     box-sizing: border-box;
+    border-radius: 4px;
+    overflow: hidden;
+
+    .ui-dialog-close{
+        background: url(images/frd/close.png) no-repeat center center;
+        z-index: 99;
+    }
 
     .ui-dialog-title {
         background: #ffffff;
         text-align: left;
         box-sizing: border-box;
         padding: 0 16px;
+        font-family: PingFangSC-Regular;
+        font-size: 18px;
+        color: #67779C;
+        border-bottom: 1px solid #EDEFF2;
     }
 
     .ui-dialog-body {
@@ -1434,7 +1445,7 @@ body {
             height: calc(~"100% - 72px");
             box-sizing: border-box;
             overflow: hidden auto;
-            padding: 16px;
+            padding: 16px 0 16px 16px;
         }
 
         .action {
@@ -1961,7 +1972,7 @@ body {
     left: 0;
     top: 0;
     z-index: 999999;
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.6);
 
     .session-main {
         width: 800px;
