@@ -1,4 +1,4 @@
-(function() {
+(function () {
     Object.assign(
         NS.data, {}
     );
@@ -7,10 +7,10 @@
         NS.ui, {
             SetBarEcharts: ecui.inherits(
                 yiche.ui.Echarts,
-                function(el, options) {
+                function (el, options) {
                     yiche.ui.Echarts.call(this, el, options);
                 }, {
-                    transfromEchartOptions: function(data) {
+                    transfromEchartOptions: function () {
                         return {
                             xAxis: {
                                 type: 'category',
@@ -25,80 +25,80 @@
                                 type: 'line',
                                 areaStyle: {}
                             }]
-                        }
+                        };
                     }
                 }
             ),
 
             CheckBox: ecui.inherits(yiche.ui.CustomCheckbox, {
-                findChildrenControl: function(el) {
-                    return yiche.util.findChildrenControl(el, NS.ui.CheckBox)
+                findChildrenControl: function (el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.CheckBox);
                 },
-                handleChange: function() {
+                handleChange: function () {
                     let { itemLength, list } = this.getData();
                     let nowLen = list.length;
                     ecui.get('checkboxAll').changeStatus(itemLength, nowLen);
                 }
             }),
             CustomCheckboxSelectAll: ecui.inherits(yiche.ui.CustomCheckboxSelectAll, {
-                findChildrenControl: function(el) {
-                    return yiche.util.findChildrenControl(el, NS.ui.CheckBox)
+                findChildrenControl: function (el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.CheckBox);
                 }
             }),
 
             BtnCheckBox: ecui.inherits(yiche.ui.CustomCheckbox, {
-                findChildrenControl: function(el) {
-                    return yiche.util.findChildrenControl(el, NS.ui.BtnCheckBox)
+                findChildrenControl: function (el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.BtnCheckBox);
                 },
-                handleChange: function() {
+                handleChange: function () {
                     let { itemLength, list } = this.getData();
                     let nowLen = list.length;
                     ecui.get('checkboxAllBtn').changeStatus(itemLength, nowLen);
                 }
             }),
             BtnCustomCheckboxSelectAll: ecui.inherits(yiche.ui.CustomCheckboxSelectAll, {
-                findChildrenControl: function(el) {
-                    return yiche.util.findChildrenControl(el, NS.ui.BtnCheckBox)
+                findChildrenControl: function (el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.BtnCheckBox);
                 }
             }),
 
             BorderCheckBox: ecui.inherits(yiche.ui.CustomCheckbox, {
-                findChildrenControl: function(el) {
-                    return yiche.util.findChildrenControl(el, NS.ui.BorderCheckBox)
+                findChildrenControl: function (el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.BorderCheckBox);
                 },
-                handleChange: function() {
+                handleChange: function () {
                     let { itemLength, list } = this.getData();
                     let nowLen = list.length;
                     ecui.get('checkboxAllBorder').changeStatus(itemLength, nowLen);
                 }
             }),
             BorderCustomCheckboxSelectAll: ecui.inherits(yiche.ui.CustomCheckboxSelectAll, {
-                findChildrenControl: function(el) {
-                    return yiche.util.findChildrenControl(el, NS.ui.BorderCheckBox)
+                findChildrenControl: function (el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.BorderCheckBox);
                 }
             }),
 
             OpenDialog: ecui.inherits(
                 ecui.ui.Control,
-                function(el, options) {
+                function (el, options) {
                     ecui.ui.Control.call(this, el, options);
                     this._alignTyle = options.btnAlgin;
                 }, {
-                    onclick: function() {
+                    onclick: function () {
                         const type = this._alignTyle;
                         if (!type) {
                             return;
                         }
                         switch (type) {
-                            case 'center':
-                                yiche.util.initDialog('dialogContainer', 'demoDialogBtnAlignCenterTarget', {}).showModal();
-                                break;
-                            case 'right':
-                                yiche.util.initDialog('dialogContainer', 'demoDialogBtnAlignRightTarget', {}).showModal();
-                                break;
-                            default:
-                                yiche.util.initDialog('dialogContainer', 'demoDialogBtnAlignLeftTarget', {}).showModal();
-                                break;
+                        case 'center':
+                            yiche.util.initDialog('dialogContainer', 'demoDialogBtnAlignCenterTarget', {}).showModal();
+                            break;
+                        case 'right':
+                            yiche.util.initDialog('dialogContainer', 'demoDialogBtnAlignRightTarget', {}).showModal();
+                            break;
+                        default:
+                            yiche.util.initDialog('dialogContainer', 'demoDialogBtnAlignLeftTarget', {}).showModal();
+                            break;
                         }
                         ecui.esr.callRoute('dialogTest', true);
                     }
@@ -107,30 +107,30 @@
 
             // 自定义显示项
             ReportADGroupCheckBox: ecui.inherits(yiche.ui.CustomCheckbox, {
-                findChildrenControl: function(el) {
-                    return yiche.util.findChildrenControl(el, NS.ui.ReportADGroupCheckBox)
+                findChildrenControl: function (el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.ReportADGroupCheckBox);
                 },
-                handleChange: function() {
+                handleChange: function () {
                     let { itemLength, list } = this.getData();
                     let nowLen = list.length;
                     ecui.get('checkboxAllOptions').changeStatus(itemLength, nowLen);
                 }
             }),
             ReportADGroupCheckboxSelectAll: ecui.inherits(yiche.ui.CustomCheckboxSelectAll, {
-                findChildrenControl: function(el) {
-                    return yiche.util.findChildrenControl(el, NS.ui.ReportADGroupCheckBox)
+                findChildrenControl: function (el) {
+                    return yiche.util.findChildrenControl(el, NS.ui.ReportADGroupCheckBox);
                 }
             }),
             CustomOptions: ecui.inherits(
                 ecui.ui.Control,
-                function(el, options) {
+                function (el, options) {
                     ecui.ui.Control.call(this, el, options);
                     this._uOptopns = el.querySelector('.options');
                     this._bVisible = false;
                 }, {
                     HideOptions: ecui.inherits(
                         ecui.ui.Control, {
-                            onclick: function(e) {
+                            onclick: function (e) {
                                 // 按钮类型
                                 let type = e.target.innerText;
                                 if (type === '确认') {
@@ -148,7 +148,7 @@
                             }
                         }
                     ),
-                    onclick: function(e) {
+                    onclick: function (e) {
                         let type = e.target.innerText;
                         if (type === '自定义选项') {
                             if (this._bVisible) {
@@ -163,13 +163,13 @@
                             this._bVisible = !this._bVisible;
                         }
                     },
-                    onblur: function() {
+                    onblur: function () {
                         this.alterStatus('-actived');
                         this._bVisible = false;
                         ecui.dispose(this._uOptopns);
                         this._uOptopns.innerHTML = `<div class="ui-hide"></div>`;
                     },
-                    readerItems: function() {
+                    readerItems: function () {
                         let data = ecui.esr.getData('customOptions'),
                             optionEl = this._uOptopns,
                             NS = ecui.esr.getData('NS');
@@ -187,7 +187,7 @@
                             });
                         }
                     },
-                    getData: function() {
+                    getData: function () {
                         let control = ecui.get('checkboxAllOptions');
                         if (control) {
                             return control.getData();
@@ -198,7 +198,7 @@
                         };
                     }
                 }
-            ),
+            )
         }
     );
 
@@ -208,7 +208,7 @@
         ],
         main: 'container', // 挂载容器
         view: 'docTarget', // 渲染模板
-        onbeforerequest: function(context) {
+        onbeforerequest: function (context) {
             // 列表请求数据
             context.tableParams = {};
             // 分页相关参数
@@ -217,7 +217,7 @@
                 pageSize: 20
             };
         },
-        onbeforerender: function(context) {
+        onbeforerender: function (context) {
             // 面包屑导航
             ecui.esr.setData('globleCrumbs', [{
                 content: '订单'
@@ -256,7 +256,7 @@
                         type: 'line',
                         areaStyle: {}
                     }]
-                }, // echart的默认配置
+                } // echart的默认配置
             };
             // 分页每页配置参数
             context.paginationInfo = {
@@ -284,183 +284,183 @@
             }];
             // tree data
             context.treeData = [{
-                    id: 1,
-                    name: '你好',
-                    children: [{
-                        id: 11,
-                        name: '你好11',
-                        children: []
-                    }, {
-                        id: 12,
-                        name: '你好12',
-                        children: []
-                    }, {
-                        id: 13,
-                        name: '你好13',
-                        children: []
-                    }, {
-                        id: 14,
-                        name: '你好14',
-                        children: []
-                    }]
-                },
-                {
-                    id: 2,
-                    name: '你好2',
-                    children: [{
-                        id: 21,
-                        name: '你好21',
-                        children: []
-                    }, {
-                        id: 22,
-                        name: '你好22',
-                        children: []
-                    }, {
-                        id: 23,
-                        name: '你好23',
-                        children: []
-                    }, {
-                        id: 24,
-                        name: '你好24',
-                        children: []
-                    }]
-                },
-                {
+                id: 1,
+                name: '你好',
+                children: [{
+                    id: 11,
+                    name: '你好11',
+                    children: []
+                }, {
+                    id: 12,
+                    name: '你好12',
+                    children: []
+                }, {
+                    id: 13,
+                    name: '你好13',
+                    children: []
+                }, {
+                    id: 14,
+                    name: '你好14',
+                    children: []
+                }]
+            },
+            {
+                id: 2,
+                name: '你好2',
+                children: [{
+                    id: 21,
+                    name: '你好21',
+                    children: []
+                }, {
+                    id: 22,
+                    name: '你好22',
+                    children: []
+                }, {
+                    id: 23,
+                    name: '你好23',
+                    children: []
+                }, {
+                    id: 24,
+                    name: '你好24',
+                    children: []
+                }]
+            },
+            {
+                id: 33,
+                name: '你好33',
+                children: [{
+                    id: 31,
+                    name: '你好31',
+                    children: []
+                }, {
+                    id: 32,
+                    name: '你好32',
+                    children: []
+                }, {
                     id: 33,
                     name: '你好33',
-                    children: [{
-                        id: 31,
-                        name: '你好31',
-                        children: []
-                    }, {
-                        id: 32,
-                        name: '你好32',
-                        children: []
-                    }, {
-                        id: 33,
-                        name: '你好33',
-                        children: []
-                    }, {
-                        id: 34,
-                        name: '你好34',
-                        children: []
-                    }]
-                },
-                {
-                    id: 4,
-                    name: '你好4',
-                    children: [{
-                        id: 41,
-                        name: '你好41',
-                        children: []
-                    }, {
-                        id: 42,
-                        name: '你好42',
-                        children: []
-                    }, {
-                        id: 43,
-                        name: '你好43',
-                        children: []
-                    }, {
-                        id: 44,
-                        name: '你好44',
-                        children: []
-                    }]
-                }
+                    children: []
+                }, {
+                    id: 34,
+                    name: '你好34',
+                    children: []
+                }]
+            },
+            {
+                id: 4,
+                name: '你好4',
+                children: [{
+                    id: 41,
+                    name: '你好41',
+                    children: []
+                }, {
+                    id: 42,
+                    name: '你好42',
+                    children: []
+                }, {
+                    id: 43,
+                    name: '你好43',
+                    children: []
+                }, {
+                    id: 44,
+                    name: '你好44',
+                    children: []
+                }]
+            }
             ];
 
             // 自定义选项
             context.customOptions = [{
-                    title: '广告计划名称',
-                    name: 'report-ad-group-ggjhmc',
-                    checked: true,
-                    key: 'display',
-                    width: 150
-                },
-                {
-                    title: '广告计划ID',
-                    name: 'report-ad-group-ggjhid',
-                    checked: true,
-                    key: 'click',
-                    width: 150
-                },
-                {
-                    title: '项目名称',
-                    name: 'report-ad-group-xmmc',
-                    checked: true,
-                    key: 'display',
-                    width: 150
-                },
-                {
-                    title: '项目ID',
-                    name: 'report-ad-group-xmid',
-                    checked: true,
-                    key: 'click',
-                    width: 150
-                },
-                {
-                    title: '展示量',
-                    name: 'report-ad-group-zsl',
-                    checked: true,
-                    key: 'display',
-                    width: 150
-                },
-                {
-                    title: '点击量',
-                    name: 'report-ad-group-djl',
-                    checked: true,
-                    key: 'click',
-                    width: 150
-                },
-                {
-                    title: '转化量',
-                    name: 'report-ad-group-zhl',
-                    checked: true,
-                    key: 'distinctDisplay',
-                    width: 150
-                },
-                {
-                    title: '点击率',
-                    name: 'report-ad-group-djlv',
-                    checked: true,
-                    key: 'ctr',
-                    width: 150
-                },
-                {
-                    title: '转化率',
-                    name: 'report-ad-group-zhlv',
-                    checked: true,
-                    key: 'cvr',
-                    width: 150
-                },
-                {
-                    title: '转化成本',
-                    name: 'report-ad-group-zhcb',
-                    checked: true,
-                    key: 'distinctClick',
-                    width: 150
-                },
-                {
-                    title: '单次点击成本',
-                    name: 'report-ad-group-dcdjcb',
-                    checked: true,
-                    key: 'distinctClick',
-                    width: 150
-                },
-                {
-                    title: '千次曝光成本',
-                    name: 'report-ad-group-qcbgcb',
-                    checked: true,
-                    key: 'distinctClick',
-                    width: 150
-                },
-                {
-                    title: '消耗',
-                    name: 'report-ad-group-xh',
-                    checked: true,
-                    key: 'distinctCtr',
-                    width: 150
-                }
+                title: '广告计划名称',
+                name: 'report-ad-group-ggjhmc',
+                checked: true,
+                key: 'display',
+                width: 150
+            },
+            {
+                title: '广告计划ID',
+                name: 'report-ad-group-ggjhid',
+                checked: true,
+                key: 'click',
+                width: 150
+            },
+            {
+                title: '项目名称',
+                name: 'report-ad-group-xmmc',
+                checked: true,
+                key: 'display',
+                width: 150
+            },
+            {
+                title: '项目ID',
+                name: 'report-ad-group-xmid',
+                checked: true,
+                key: 'click',
+                width: 150
+            },
+            {
+                title: '展示量',
+                name: 'report-ad-group-zsl',
+                checked: true,
+                key: 'display',
+                width: 150
+            },
+            {
+                title: '点击量',
+                name: 'report-ad-group-djl',
+                checked: true,
+                key: 'click',
+                width: 150
+            },
+            {
+                title: '转化量',
+                name: 'report-ad-group-zhl',
+                checked: true,
+                key: 'distinctDisplay',
+                width: 150
+            },
+            {
+                title: '点击率',
+                name: 'report-ad-group-djlv',
+                checked: true,
+                key: 'ctr',
+                width: 150
+            },
+            {
+                title: '转化率',
+                name: 'report-ad-group-zhlv',
+                checked: true,
+                key: 'cvr',
+                width: 150
+            },
+            {
+                title: '转化成本',
+                name: 'report-ad-group-zhcb',
+                checked: true,
+                key: 'distinctClick',
+                width: 150
+            },
+            {
+                title: '单次点击成本',
+                name: 'report-ad-group-dcdjcb',
+                checked: true,
+                key: 'distinctClick',
+                width: 150
+            },
+            {
+                title: '千次曝光成本',
+                name: 'report-ad-group-qcbgcb',
+                checked: true,
+                key: 'distinctClick',
+                width: 150
+            },
+            {
+                title: '消耗',
+                name: 'report-ad-group-xh',
+                checked: true,
+                key: 'distinctCtr',
+                width: 150
+            }
             ];
             if (yiche.util.getSessionStorage('reportADGroupMenu')) {
                 context.customOptions = yiche.util.getSessionStorage('reportADGroupMenu');
@@ -480,10 +480,7 @@
                 uploadStatus: true
             }];
         },
-        onafterrender: function(context) {
-
-        },
-        onleave: function(context) {
+        onleave: function () {
             yiche.util.removeDialog();
         }
     });
@@ -493,14 +490,9 @@
             model: ['reportADGroupList@JSON ' + yiche.info.API_BASE + 'ad-report-yms/groupByCondition?${tableParams}'],
             main: 'reportAdGroupListTableView',
             view: 'reportADGroupTableTarget',
-            searchParm: {
-                pageNo: 1,
-                pageSize: 20
-            },
-            isRouteLoading: true,
-            onbeforerequest: function(context) {
+            onbeforerequest: function (context) {
                 const tmp = {};
-                ecui.esr.parseObject(document.forms.reportADGroupSearchParamsForm, tmp);
+                ecui.esr.parseObject(document.forms.reportADGroupSearchParamsForm, tmp, false);
 
                 // 记录当前页信息
                 context.pageNo = context.pageNum = context.pageNo || +this.searchParm.pageNo;
@@ -515,23 +507,20 @@
                 // 合并请求参数
                 context.tableParams = Object.assign(context.tableParams, tmp, context.basePaginationInfo);
             },
-            onbeforerender: function(context) {
+            onbeforerender: function (context) {
                 context.tableWidth = 412;
                 let tempTableWidth = context.tableWidth;
                 context.customOptions.forEach(item => {
                     if (item.checked) {
                         tempTableWidth += item.width + 12;
                     }
-                })
+                });
                 context.tableWidth = tempTableWidth;
 
                 // 处理表头宽度
                 let currentWidth = document.querySelector('.page-container').offsetWidth - 50;
                 context.fixWidth = currentWidth - context.tableWidth - 12;
                 context.tableWidth = Math.max(context.tableWidth, currentWidth);
-            },
-            onafterrender: function(context) {
-
             }
         }
     );
@@ -539,9 +528,6 @@
     ecui.esr.addRoute('dialogTest', {
         model: [],
         main: 'dialog_test',
-        view: 'demoDialogBodyTarget',
-        onbeforerequest: function(context) {},
-        onbeforerender: function(context) {},
-        onafterrender: function(context) {}
+        view: 'demoDialogBodyTarget'
     });
 }());
