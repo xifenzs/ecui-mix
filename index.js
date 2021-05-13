@@ -56,7 +56,10 @@
             if (code === 12011){
                 window.location.href = window.location.origin.match(new RegExp('test', 'g')) ? 'http://test.yiche.slp.com/slp-manage/login.html' : 'https://ad.yiche.com/manager/login';
             }
-            ecui.tip('error', data.msg);
+            ecui.globalTips(
+                data.msg,
+                'error'
+            );
             return data.code;
         }
     };
@@ -65,7 +68,7 @@
         if (window.requestCount <= 0) {
             ecui.dom.removeClass(document.body, 'ui-loading');
         }
-        err.forEach(function (item) {
+        err && err.forEach(function (item) {
             if (item.url) {
                 try {
                     let errInfo = JSON.parse(item.xhr.response);

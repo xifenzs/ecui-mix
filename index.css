@@ -18,6 +18,10 @@
 ::-webkit-scrollbar-thumb:hover {
    background-color:#999999;
 }
+
+.ui-global-tips-line {
+    max-width: 1000px;
+}
 body {
     height: 100%;
     background: rgb(242, 245, 250);
@@ -1632,9 +1636,11 @@ body {
 
 .ec-dialog {
     box-sizing: border-box;
+    border-radius: 4px;
     min-width: 600px;
     max-width: 1000px;
     max-height: 600px;
+    overflow: hidden;
 
     .ui-dialog-title {
         background: #ffffff;
@@ -1645,6 +1651,18 @@ body {
         font-size: 18px;
         color: #67779C;
         border-bottom: 1px solid #EDEFF2;
+    }
+
+    .ui-dialog-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 15px;
+        height: 15px;
+        background: url(images/ecui/icons.png) no-repeat;
+        background-position: 0px -114px;
+        z-index: 99;
+        cursor: pointer;
     }
 
     .ui-dialog-body {
