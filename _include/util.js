@@ -458,6 +458,25 @@
                     pre = Date.now();
                 }
             };
+        },
+        // 刷新页面重置导航相关状态
+        reloadPageSetNavOpenStatus: function (control){
+            if (!control){
+                return;
+            }
+            let parent = control.getParent();
+            if (!parent.$ID && !parent._bIsOpened){
+                ecui.dispatchEvent(parent, 'click');
+                yiche.util.reloadPageSetNavOpenStatus(parent);
+            }
+        },
+        refreshPageSetNavSelectedStatus: function (){
+            const loc = ecui.esr.getLocation().split('~')[0];
+            yiche.info.ALL_MENU_ITEMS.forEach(item => {
+                if (item._oNavData.route === loc){
+                    ecui.dispatchEvent(item, 'click');
+                }
+            });
         }
     };
 

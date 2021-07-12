@@ -4,158 +4,50 @@ yiche.ui = {
         ecui.ui.Control,
         function (el, options) {
             ecui.ui.Control.call(this, el, options);
-            this._bCollapse = options.collapse || false;
         }, {
-            CustomNavsParent: ecui.inherits(ecui.ui.Control,
+            CustomNavItem: ecui.inherits(ecui.ui.Control,
                 function (el, options) {
                     ecui.ui.Control.call(this, el, options);
                     this._oNavData = options.navItem;
                     this._bIsOpened = false;
+                    this._bSelectedStatus = false;
                 }, {
-                    onclick: function () {
-                        let hasChildNav = this._oNavData.children;
-                        // 如果没有子菜单 就直接添加样式
-                        if (hasChildNav && hasChildNav.length === 0) {
-                            this.removeParentControlSelected();
-                            this.alterStatus('+selected');
-                            return;
-                        }
-                        this._bIsOpened = !this._bIsOpened;
-                        if (this._bIsOpened) {
-                            this.alterStatus('+opened');
-                        } else {
-                            this.alterStatus('-opened');
+                    onclick: function (e) {
+                        e.stopPropagation();
+                        let child = this._oNavData.children;
+                        this.handleOpen(child);
+                        this.handleSelectedItem(child);
+                    },
+                    handleOpen: function (child){
+                        if (child.length > 0) {
+                            this._bIsOpened = !this._bIsOpened;
+                            if (this._bIsOpened){
+                                this.alterStatus('+opened');
+                            } else {
+                                this.alterStatus('-opened');
+                            }
                         }
                     },
-                    removeParentControlSelected: function () {
-                        let parent = this.getParent(),
-                            navParentControl = yiche.util.findChildrenControl(parent.getMain(), parent.CustomNavsParent);
-                        navParentControl && navParentControl.forEach(item => {
-                            let child = yiche.util.findChildrenControl(item.getMain(), item.CustomNavsChild);
-                            if (child && child.length > 0) { // 二级导航
-                                child.forEach(cItem => {
-                                    cItem.alterStatus('-selected');
-                                });
-                            } else { // 一级导航
+                    handleChangeParentOpenStatus: function (){
+                        yiche.util.reloadPageSetNavOpenStatus(this);
+                    },
+                    handleSelectedItem: function (child){
+                        if (child.length === 0 && yiche.info.ALL_MENU_ITEMS && yiche.info.ALL_MENU_ITEMS.length > 0){
+                            yiche.info.ALL_MENU_ITEMS.forEach(item => {
                                 item.alterStatus('-selected');
-                            }
-                            let wrapLinkEl = item.getMain().querySelector('.nav-child-mask-wrap');
-                            if (wrapLinkEl) {
-                                let linkChild = yiche.util.findChildrenControl(wrapLinkEl, item.LinkItem);
-                                if (linkChild && linkChild.length > 0) {
-                                    linkChild.forEach(lItem => {
-                                        lItem.alterStatus('-selected');
-                                    });
-                                }
-                            }
-                        });
+                            });
+                            this.alterStatus('+selected');
+                            this.handleChangeParentOpenStatus();
+                        }
                     },
-                    CustomNavsChild: ecui.inherits(ecui.ui.Control,
-                        function (el, options) {
-                            ecui.ui.Control.call(this, el, options);
-                            this._oNavData = options.navItem;
-                        }, {
-                            onclick: function (e) {
-                                e.stopPropagation();
-                                this.getParent().removeParentControlSelected();
-                                this.alterStatus('+selected');
-                            }
-                        }
-                    ),
-                    onmouseover: function () {
-                        let mainEl = this.getMain(),
-                            menuWrapEl = ecui.dom.parent(ecui.dom.parent(ecui.dom.parent(mainEl)));
-                        if (!ecui.dom.hasClass(menuWrapEl, 'menu-collapsed')) {
-                            return;
-                        }
-                        let dom = ecui.dom.getPosition(mainEl),
-                            maskEl = mainEl.querySelector('.mask-nav-name'),
-                            hasChildNav = this._oNavData.children;
-                        if (hasChildNav && hasChildNav.length === 0) {
-                            maskEl.style.top = dom.top + 4 + 'px';
-                            return;
-                        }
-                        maskEl = mainEl.querySelector('.nav-child-mask-wrap');
-                        if (!maskEl) {
-                            return;
-                        }
-                        let maskElStyle = maskEl.style;
-                        maskElStyle.top = dom.top + 'px';
-                    },
-                    LinkItem: ecui.inherits(ecui.ui.Control,
-                        function (el, options) {
-                            ecui.ui.Control.call(this, el, options);
-                            this._oNavData = options.navItem;
-                        }, {
-                            onclick: function (e) {
-                                e.stopPropagation();
-                                this.getParent().removeParentControlSelected();
-                                let timer = setTimeout(() => {
-                                    this.alterStatus('+selected');
-                                    clearTimeout(timer);
-                                }, 300);
-                            }
-                        }
-                    )
+                    init: function (){
+                        let child = this._oNavData.children;
+                        child.length === 0 && yiche.info.ALL_MENU_ITEMS.push(this);
+                    }
                 }
             ),
-            refreshNavStatus: function () {
-                const loc = ecui.esr.getLocation().split('~')[0],
-                    parent = this,
-                    navParentControl = yiche.util.findChildrenControl(parent.getMain(), parent.CustomNavsParent);
-                navParentControl && navParentControl.forEach(item => {
-                    let child = yiche.util.findChildrenControl(item.getMain(), item.CustomNavsChild);
-                    if (child && child.length > 0) { // 二级导航
-                        child.forEach(cItem => {
-                            if (cItem._oNavData.route === loc) {
-                                ecui.dispatchEvent(cItem, 'click');
-                                let cItemParent = cItem.getParent();
-                                if (!cItemParent._bIsOpened) {
-                                    ecui.dispatchEvent(cItemParent, 'click');
-                                }
-                            }
-                        });
-                    } else { // 一级导航
-                        if (item._oNavData.route === loc) {
-                            ecui.dispatchEvent(item, 'click');
-                        }
-                    }
-                    let wrapLinkEl = item.getMain().querySelector('.nav-child-mask-wrap');
-                    if (wrapLinkEl) {
-                        let linkChild = yiche.util.findChildrenControl(wrapLinkEl, item.LinkItem);
-                        if (linkChild && linkChild.length > 0) {
-                            linkChild.forEach(lItem => {
-                                if (lItem._oNavData.route === loc) {
-                                    lItem.alterStatus('+selected');
-                                }
-                            });
-                        }
-                    }
-                });
-            },
-            handleCollapse: function () {
-                this._bCollapse = !this._bCollapse;
-                let collapseEl = this.hasCollapse();
-                if (this._bCollapse) {
-                    ecui.dom.addClass(collapseEl, 'menu-collapsed');
-                } else {
-                    ecui.dom.removeClass(collapseEl, 'menu-collapsed');
-                }
-            },
-            hasCollapse: function () {
-                let menuWrapEl = ecui.dom.parent(ecui.dom.parent(this.getMain())),
-                    parentEl = false;
-                if (ecui.dom.hasClass(menuWrapEl, 'content-menu')) {
-                    parentEl = menuWrapEl;
-                }
-                return parentEl;
-            },
-            $ready: function () {
-                this.refreshNavStatus();
-                if (this._bCollapse) {
-                    let collapseEl = this.hasCollapse();
-                    collapseEl && this.handleCollapse();
-                }
+            onready: function (){
+                yiche.util.refreshPageSetNavSelectedStatus();
             }
         }
     ),
@@ -1417,6 +1309,156 @@ yiche.ui = {
             },
             $dispose: function () {
                 ecui.ui.Control.prototype.$dispose.call(this);
+            }
+        }
+    ),
+
+    // 右侧pane
+    RightPaneView: ecui.inherits(
+        ecui.ui.Control,
+        function (el, options) {
+            ecui.ui.Control.call(this, el, options);
+        }, {
+            onclick: function (e){
+                if (ecui.dom.hasClass(e.target, 'ec-right-pane-view') || ecui.dom.hasClass(e.target, 'close')){
+                    ecui.dom.removeClass(this.getMain(), 'actived');
+                }
+            },
+            handleMaskShow: function (){
+                !ecui.dom.hasClass(this.getMain(), 'actived') && ecui.dom.addClass(this.getMain(), 'actived');
+            }
+        }
+    ),
+
+    // 拖动排序
+    DragSort: ecui.inherits(
+        ecui.ui.Control,
+        'ec-drag-sort',
+        function (el, options) {
+            ecui.ui.Control.call(this, el, options);
+            this.myItemsData = [];
+            this.myDragingEl = null;
+        }, {
+            HandleItem: ecui.inherits(
+                ecui.ui.Control,
+                'ec-drag-sort-item',
+                function (el, options) {
+                    ecui.ui.Control.call(this, el, options);
+                    this.myData = options.item;
+                }, {
+                    onready: function (){
+                        this.getMain().setAttribute('draggable', true);
+                    },
+                    onclick: function (){
+                        console.log(this.myData);
+                    }
+                }
+            ),
+            getData: function (){
+                let res = [],
+                    ctrs = yiche.util.findChildrenControl(this.getMain(), this.getMain().getControl().HandleItem);
+                ctrs && ctrs.forEach(item => {
+                    res.push(item.myData); 
+                });
+                console.log(res);
+            },
+            ondragstart: function (e){
+                this.myDragingEl = e.target;
+                e.dataTransfer.setData("te", e.target.innerText);
+            },
+            ondragover: function (e){
+                let target = e.target;
+                this._moving(target);
+            },
+            ondragend: function () {
+                this.myDragingEl = null;
+            },
+            _moving:function (target){
+                if (target.nodeName === "LI" && this.myDragingEl !== target) {
+                    const targetRect = target.getBoundingClientRect();
+                    const dragingRect = this.myDragingEl.getBoundingClientRect();
+                    if (this.myDragingEl && this.myDragingEl.animated) return;
+                    let currentIndex = this.handleIndex(this.myDragingEl);
+                    let endIndex = this.handleIndex(target);
+                    if (currentIndex < endIndex){ // 向下拖
+                        target.parentNode.insertBefore(this.myDragingEl, target.nextSibling);
+                    } else { // 向上拖
+                        target.parentNode.insertBefore(this.myDragingEl, target);
+                    }
+                    this.getData();
+                    this.handleMove(dragingRect, this.myDragingEl);
+                    this.handleMove(targetRect, target);
+                }
+            },
+            handleMove: function (prevRect, target){
+                let ms = 300,
+                    that = this;
+
+                if (ms) {
+                    let currentRect = target.getBoundingClientRect();
+        
+                    if (prevRect.nodeType === 1) {
+                        prevRect = prevRect.getBoundingClientRect();
+                    }
+                    that._css(target, 'transition', 'none');
+                    that._css(target, 'transform', 'translate3d(' +
+                        (prevRect.left - currentRect.left) + 'px,' +
+                        (prevRect.top - currentRect.top) + 'px, 0)'
+                    );
+                    target.offsetWidth; // 触发重绘
+                    that._css(target, 'transition', 'all ' + ms + 'ms');
+                    that._css(target, 'transform', 'translate3d(0,0,0)');
+        
+                    target.animated && clearTimeout(target.animated);
+                    target.animated = setTimeout(function () {
+                        that._css(target, 'transition', '');
+                        that._css(target, 'transform', '');
+                        target.animated = false;
+                    }, ms);
+                }
+            },
+            _css:function (el, prop, val){
+                const style = el && el.style;
+                if (style) {
+                    if (val === void 0) {
+                        if (document.defaultView && document.defaultView.getComputedStyle) {
+                            val = document.defaultView.getComputedStyle(el, '');
+                        } else if (el.currentStyle) {
+                            val = el.currentStyle;
+                        }
+
+                        return prop === void 0 ? val : val[prop];
+                    } else {
+                        if (!(prop in style)) {
+                            prop = '-webkit-' + prop;
+                        }
+                        style[prop] = val + (typeof val === 'string' ? '' : 'px');
+                    }
+                }
+            },
+            handleIndex: function (el){
+                let index = 0;
+                if (!el || !el.parentNode) {
+                    return -1;
+                }
+                while (el && (el = el.previousElementSibling)) {
+                    index++;
+                }
+                return index;
+            },
+            onready: function (){
+                const dragView = this.getMain();
+                const dragstart = this.ondragstart.bind(this);
+                const dragover = this.ondragover.bind(this);
+                const dragend = this.ondragend.bind(this);
+                ecui.dom.addEventListener(dragView, 'dragstart', dragstart);
+                ecui.dom.addEventListener(dragView, 'dragover', dragover);
+                ecui.dom.addEventListener(dragView, 'dragend', dragend);
+                ecui.addEventListener(this, 'dispose', function () {
+                    ecui.dom.removeEventListener(dragView, 'dragstart', dragstart);
+                    ecui.dom.removeEventListener(dragView, 'dragover', dragover);
+                    ecui.dom.removeEventListener(dragView, 'dragend', dragend);
+                });
             }
         }
     )

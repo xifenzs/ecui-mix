@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="content">
-        <!-- use: menuNavsTarget(menuList=${GLOBLE_ROUTE_LISTS}, collapse=${MENU_COLLAPES}) -->
+        <!-- use: navTarget(menuList=${GLOBLE_ROUTE_LISTS}, collapse=${MENU_COLLAPES}) -->
         <div class="content-main" id="container"></div>
     </div>
 </div>
@@ -27,6 +27,7 @@
 <div id="dialogContainer_2"></div>
 <div class="loading-after"></div>
 <!-- use: customPreviewImgTarget() -->
+<!-- use: mainRightPaneViewTarget() -->
 
 
 <!-- target:userLogooutTarget -->
@@ -35,88 +36,53 @@
     <img src="images/exit.png" alt="">
 </div>
 
-<!-- target:menuNavsTarget -->
+<!-- target: navTarget -->
 <div class="content-menu ${collapseName}">
     <div class="menu-list">
-        <ul class="menu" id="nav_bar" ui="type:yiche.ui.CustomNavs;id:navMenu;collapse:${collapse};">
-            <!-- for: ${menuList} as ${item} -->
-            <!-- if: ${item.children} && ${item.children.length} > 0 &&  ${item.show} -->
-            <li class="nav-item" ui="type:@CustomNavsParent;navItem:&{item};">
-                <div class="parent-wrap">
-                    <!-- if: ${item.icon} -->
-                    <span class="iconfont ${item.icon}"></span>
-                    <!-- /if -->
-                    <span class="font-14">${item.name}</span>
-                    <div class="nav-item-status-icon">
-                        <i class="iconfont iconfont-down-out"></i>
-                    </div>
-                </div>
-                <ul class="nav-child-wrap">
-                    <!-- for: ${item.children} as ${cItem} -->
-                    <!-- if: ${cItem.show} -->
-                    <li class="child-item" ui="type:@CustomNavsChild;navItem:&{cItem}">
-                        <a class="c-a" href="#${cItem.route}">
-                            <div class="menu-child-item-wrap">
-                                <!-- if: ${cItem.icon} -->
-                                <span class="iconfont ${cItem.icon}"></span>
-                                <!-- /if -->
-                                <span class="font-14">${cItem.name}</span>
-                            </div>
-                            <div class="nav-item-bar"></div>
-                        </a>
-                    </li>
-                    <!-- /if -->
-                    <!-- /for -->
-                </ul>
-                <!-- if: ${collapse} -->
-                <div class="nav-child-mask-wrap">
-                    <ul>
-                        <!-- for: ${item.children} as ${cItem} -->
-                        <!-- if: ${cItem.show} -->
-                        <li class="child-item" ui="type:@LinkItem;navItem:&{cItem};">
-                            <a class="c-a" href="#${cItem.route}">
-                                <div class="menu-child-item-wrap">
-                                    <!-- if: ${cItem.icon} -->
-                                    <span class="iconfont ${cItem.icon}"></span>
-                                    <!-- /if -->
-                                    <span class="font-14">${cItem.name}</span>
-                                </div>
-                            </a>
-                        </li>
-                        <!-- /if -->
-                        <!-- /for -->
-                    </ul>
-                </div>
-                <!-- /if -->
-            </li>
-            <!-- else -->
-            <!-- if: ${item.show} -->
-            <li class="nav-item" ui="type:@CustomNavsParent;navItem:&{item};">
-                <a class="p-a" href="#${item.route}">
-                    <div class="menu-item-wrap">
-                        <!-- if: ${item.icon} -->
-                        <span class="iconfont ${item.icon}"></span>
-                        <!-- /if -->
-                        <span class="name">${item.name}</span>
-                    </div>
-                    <div class="nav-item-bar"></div>
-                    <!-- if: ${collapse} -->
-                    <div class="mask-nav-name">${item.name}</div>
-                    <!-- /if -->
-                </a>
-            </li>
-            <!-- /if -->
-            <!-- /if -->
-            <!-- /for -->
-        </ul>
+        <div class="menu" id="nav_bar" ui="type:yiche.ui.CustomNavs;id:navMenu;">
+            <!-- use: menuTarget(menuItems = ${menuList})  -->
+        </div>
     </div>
-    <!-- if: ${collapse} -->
-    <div class="menu-collapse" ui="type:yiche.ui.CustomNavsCollapse;navId:navMenu;">
-        <i class="iconfont iconfont-indent-decrease"></i>
-        <span>收起</span>
+</div>
+
+
+<!-- target: menuTarget -->
+<!-- for: ${menuItems} as ${item} -->
+    <!-- if: ${item.children} && ${item.children.length} > 0 &&  ${item.show} -->
+    <div class="nav-item ec-menu-level-${item.level}" ui="type:@CustomNavItem;navItem:&{item};">
+        <div class="parent-wrap">
+            <!-- if: ${item.icon} -->
+            <span class="iconfont ${item.icon}"></span>
+            <!-- /if -->
+            <span class="font-14">${item.name}</span>
+            <div class="nav-item-status-icon">
+                <i class="iconfont icon-arrow-down-bold"></i>
+                <i class="iconfont icon-arrow-up-bold"></i>
+            </div>
+        </div>
+        <div class="nav-child-wrap">
+           <!-- use: menuTarget(menuItems = ${item.children})  -->
+        </div>
+    </div>
+    <!-- else -->
+    <!-- if: ${item.show} -->
+    <div class="nav-item ec-menu-level-${item.level}" ui="type:@CustomNavItem;navItem:&{item};">
+        <a class="link" href="#${item.route}">
+            <div class="menu-item-wrap">
+                <!-- if: ${item.icon} -->
+                <span class="iconfont ${item.icon}"></span>
+                <!-- /if -->
+                <span class="name">${item.name}</span>
+            </div>
+            <div class="nav-item-bar"></div>
+            <!-- if: ${collapse} -->
+            <div class="mask-nav-name">${item.name}</div>
+            <!-- /if -->
+        </a>
     </div>
     <!-- /if -->
-</div>
+    <!-- /if -->
+<!-- /for -->
 
 <!-- target: customUploadFileTarget -->
 <!-- var: addType = ${type} === 'add' ? '' : 'success' -->
@@ -132,7 +98,7 @@
             <span class="icon"></span>
         </div>
     </div>
-    <span class="del-icon iconfont iconfont-delete"></span>
+    <span class="del-icon iconfont icon-ashbin"></span>
 </li>
 <!-- elif: ${viewType} === '1' -->
 <!-- var: fileUrl = ${type} === 'edit' ? ${file.url} : 'images/place-holder.png' -->
@@ -143,12 +109,12 @@
     <div class="mask">
         <!-- if: ${preview} === 'a' -->
         <a href="${fileUrl}" target="_blank">
-            <span class="iconfont iconfont-prewiew"></span>
+            <span class="iconfont icon-browse"></span>
         </a>
         <!-- else -->
-        <span class="iconfont iconfont-prewiew handle-prewiew-img"></span>
+        <span class="iconfont icon-browse handle-prewiew-img"></span>
         <!-- /if -->
-        <span class="iconfont iconfont-delete del-icon"></span>
+        <span class="iconfont icon-ashbin del-icon"></span>
     </div>
     <div class="progress-wrap">
         <div class="status">
@@ -160,7 +126,7 @@
     </div>
     <div class="error-wrap">
         <div class="error-icon">
-            <span class="iconfont iconfont-image"></span>
+            <span class="iconfont icon-picture"></span>
         </div>
         <div class="error-text">
             <span>上传失败</span>
@@ -176,12 +142,12 @@
     <div class="mask">
         <!-- if: ${preview} === 'a' -->
         <a href="${fileUrl}" target="_blank">
-            <span class="iconfont iconfont-prewiew"></span>
+            <span class="iconfont icon-browse"></span>
         </a>
         <!-- else -->
-        <span class="iconfont iconfont-prewiew handle-prewiew-img"></span>
+        <span class="iconfont icon-browse handle-prewiew-img"></span>
         <!-- /if -->
-        <span class="iconfont iconfont-delete del-icon"></span>
+        <span class="iconfont icon-ashbin del-icon"></span>
     </div>
     <div class="progress-wrap">
         <div class="status">
@@ -193,7 +159,7 @@
     </div>
     <div class="error-wrap">
         <div class="error-icon">
-            <span class="iconfont iconfont-image"></span>
+            <span class="iconfont icon-picture"></span>
         </div>
         <div class="error-text">
             <span>上传失败</span>
@@ -220,3 +186,15 @@
 
 <!-- target: noDataTarget -->
 <div class="no-result"></div>
+
+
+<!-- target: mainRightPaneViewTarget -->
+<section class="ec-right-pane-view" ui="type:yiche.ui.RightPaneView;id:handleRightPane;">
+    <div class="pane-main">
+        <header>
+            <h4>标题</h4>
+            <div class="close">关闭</div>
+        </header>
+        <div class="main"></div>
+    </div>
+</section>

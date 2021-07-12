@@ -7,9 +7,10 @@
             firefoxVersion: /firefox\/(\d+\.\d)/i.test(navigator.userAgent) ? +RegExp.$1 : undefined,
             safariVersion: !/(chrome|crios|ucbrowser)/i.test(navigator.userAgent) && /(\d+\.\d)(\.\d)?\s+.*safari/i.test(navigator.userAgent) ? +RegExp.$1 : undefined,
             now: ecui.util.formatDate(new Date(), 'yyyy-MM-dd'),
-            PROJECT_NAME: '混合导航模板', // logo旁的项目名称
+            PROJECT_NAME: '左侧导航模板', // logo旁的项目名称
             STORAGE_HEADER: 'EFFECT_',
             routeLists: [], // 项目中的全部路由
+            ALL_MENU_ITEMS: [], // 所有菜单链接
             API_BASE: '/serve-idea/api/', // 接口前缀
             UPLOAD_FILES_HEADER: {}
         }
@@ -97,16 +98,16 @@
             'customReferer': window.location.href
         };
         // 配合后端重定向，地址栏地址改变时，将 location.href 更新到请求头的 customReferer 字段
-        ecui.dom.addEventListener(window, 'hashchange', function (e) {
+        ecui.dom.addEventListener(window, 'hashchange', function () {
             // 设置请求头
             ecui.esr.headers.customReferer = window.location.href;
             // 获取当前路由
-            const toPath = e.newURL.split('#')[1].split('~')[0];
-            if (yiche.info.routeLists.indexOf(toPath) === -1) {
-                window.location.href = 'errorPage.html';
-            } else {
-                yiche.util.refreshTopMuneSelectedStatus('navMenu');
-            }
+            // const toPath = e.newURL.split('#')[1].split('~')[0];
+            // if (yiche.info.routeLists.indexOf(toPath) === -1) {
+            // window.location.href = 'errorPage.html';
+            // } else {
+            // }
+            yiche.util.refreshPageSetNavSelectedStatus(); // 同步导航选中状态
         });
 
         // 设置 选项控件的文本在 options 中的名称
@@ -143,10 +144,27 @@
                 // 路由列表
                 context.GLOBLE_ROUTE_LISTS = [{
                     name: '文档',
-                    route: '/doc/index',
+                    route: '',
                     show: true,
-                    icon: 'iconfont-nav-promotion-ad-plan',
-                    children: []
+                    level: '1',
+                    icon: '',
+                    children: [{
+                        name: '文档1',
+                        route: '',
+                        show: true,
+                        level: '2',
+                        icon: '',
+                        children: [
+                            {
+                                name: '文档2',
+                                route: '/doc/index',
+                                show: true,
+                                level: '3',
+                                icon: '',
+                                children: []
+                            }
+                        ]
+                    }]
                 }];
                 // 汇总路由
                 if (context.GLOBLE_ROUTE_LISTS.length > 0) {

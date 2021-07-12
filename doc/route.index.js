@@ -479,6 +479,30 @@
                 url: 'http://image.bitautoimg.com/slpfile/a5b98ddd214747179c5d5e6b736c7d29.jpg',
                 uploadStatus: true
             }];
+
+            // 拖动排序数据
+            context.dragList = [
+                {
+                    id: 1,
+                    name: '内容1'
+                },
+                {
+                    id: 2,
+                    name: '内容2'
+                }, {
+                    id: 3,
+                    name: '内容3'
+                }, {
+                    id: 4,
+                    name: '内容4'
+                }, {
+                    id: 5,
+                    name: '内容5'
+                }
+            ];
+        },
+        onafterrender: function (){
+
         },
         onleave: function () {
             yiche.util.removeDialog();
