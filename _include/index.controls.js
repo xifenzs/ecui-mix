@@ -1360,17 +1360,18 @@ yiche.ui = {
                 ctrs && ctrs.forEach(item => {
                     res.push(item.myData); 
                 });
-                console.log(res);
             },
             ondragstart: function (e){
                 this.myDragingEl = e.target;
                 e.dataTransfer.setData("te", e.target.innerText);
             },
             ondragover: function (e){
+                e.preventDefault();
                 let target = e.target;
                 this._moving(target);
             },
-            ondragend: function () {
+            ondragend: function (e) {
+                e.preventDefault();
                 this.myDragingEl = null;
             },
             _moving:function (target){
