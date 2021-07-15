@@ -210,7 +210,9 @@
         view: 'docTarget', // 渲染模板
         onbeforerequest: function (context) {
             // 列表请求数据
-            context.tableParams = {};
+            context.tableParams = {
+                lastData: yiche.util.getCustomTime(new Date(), 1)
+            };
             // 分页相关参数
             context.basePaginationInfo = {
                 pageNo: 1,
