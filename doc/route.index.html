@@ -57,6 +57,27 @@
             <div ui="type:yiche.ui.CustomTimers;startName:start;endName:end;startValue:${tableParams.start};endValue:${tableParams.end};">
             </div>
         </div>
+        <div class="ec-col col-4"></div>
+        <div class="ec-col col-12">
+            <div class="ec-select-timer" ui="type:yiche.ui.SelectedCustomerTime;id:itmerEl;routeName:;">
+                <div ui="type:@CustomerSelect;defaultValue:300;name:dateType;id:reportSizeDateSelector;">
+                    <div ui="value:0;">今天</div>
+                    <div ui="value:1;">昨天</div>
+                    <div ui="value:7;">过去7天</div>
+                    <div ui="value:15;">过去15天</div>
+                    <div ui="value:30;">过去30天</div>
+                    <div ui="value:nw;">本周</div>
+                    <div ui="value:pw;">上周</div>
+                    <div ui="value:nm;">本月</div>
+                    <div ui="value:pm;">上月</div>
+                    <div ui="value:ny;">本年</div>
+                    <div ui="value:-1;" class="btnDisabled">自定义</div>
+                </div>
+                <div class="ec-timer">
+                    <div ui="type:@CustomerRangeCalendarInput;startName:startDate;endName:endDate;timePlaceString:请选择日期;closeBtn:true;startValue:${firstDay};endValue:${todayString};end:${todayString};"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <h1>输入搜索</h1>

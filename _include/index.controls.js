@@ -267,6 +267,134 @@ yiche.ui = {
         }
     }),
 
+    SelectedCustomerTime: ecui.inherits(
+        ecui.ui.Control,
+        function (el, options) {
+            ecui.ui.Control.call(this, el, options);
+            this._sRouteName = options.routeName; //要刷新的路由名称
+        }, {
+            CustomerSelect: ecui.inherits(
+                ecui.ui.Select,
+                function (el, options) {
+                    this._sDefaultValue = options.defaultValue; //默认值
+                    ecui.ui.Select.call(this, el, options);
+                }, {
+                    onchange: function () {
+                        let calendarControl = this.getParent().calendarControl,
+                            beginDate = new Date(),
+                            endDate = new Date();
+                        if (this.getValue() === '0') { // 今日
+                        } else if (this.getValue() === '1' || this.getValue() === '7' || this.getValue() === '15' || this.getValue() === '30') { // 1:昨天 7:过去7天 15:过去15天 (不包括今天)
+                            beginDate.setDate(beginDate.getDate() - this.getValue());
+                            endDate.setDate(endDate.getDate() - 1);
+                        } else if (this.getValue() === 'nw') { // 本周(包括今天)
+                            let cur = beginDate.getDay();// 看是本周的第几天
+                            if (cur === 0) {
+                                beginDate.setTime(beginDate.getTime() - 6 * 24 * 60 * 60 * 1000);
+                            } else {
+                                beginDate.setTime(beginDate.getTime() - (cur - 1) * 24 * 60 * 60 * 1000);
+                            }
+                        } else if (this.getValue() === 'pw') { // 上周
+                            let cur = beginDate.getDay(), // 看是本周的第几天
+                                temp = cur === 0 ? beginDate.getDate() :  beginDate.getDate() - cur;
+                            beginDate.setDate(temp - 6);
+                            endDate.setDate(temp);
+                        } else if (this.getValue() === 'nm') { // 本月(包括今天)
+                            beginDate.setDate(1);
+                            endDate.setMonth(beginDate.getMonth() + 1); // 本月加一即为下个月
+                            endDate.setDate(1); // 设置为本月的第一天
+                            endDate.setDate(endDate.getDate() - 1); //本月第一天减一天即为上月的最后一天
+                        } else if (this.getValue() === 'pm') { // 上月
+                            beginDate.setDate(1); // 必须先设置日,再设置月, 否则会在 31 号查看时会出现显示问题
+                            beginDate.setMonth(beginDate.getMonth() - 1); // 本月减一即为上月
+                            endDate.setDate(1); // 设置为本月的第一天
+                            endDate.setDate(endDate.getDate() - 1); //本月第一天减一天即为上月的最后一天
+                        } else if (this.getValue() === 'ny') { // 本年(包括今天)
+                            beginDate.setMonth(0);
+                            beginDate.setDate(1);
+                            endDate.setMonth(11);
+                            endDate.setDate(31);
+                        }
+    
+                        let beginDateString = ecui.util.formatDate(new Date(beginDate), "yyyy-MM-dd"),
+                            endDateString = ecui.util.formatDate(new Date(endDate), "yyyy-MM-dd");
+                        calendarControl.setRangeValue([beginDateString, endDateString]);
+                        calendarControl._uBeginInput.setValue(beginDateString);
+                        calendarControl._uEndInput.setValue(endDateString);
+    
+                        if (this.getValue() === '-1') { //自定义
+                            calendarControl._uBeginInput.setValue('');
+                            calendarControl._uEndInput.setValue('');
+                        }
+                        this.getParent().callRoute();
+                    },
+    
+                    Item: ecui.inherits(
+                        ecui.ui.Select.prototype.Item,
+                        'ui-select-item', {
+                            $click: function (event) {
+                                ecui.ui.Item.prototype.$click.call(this, event);
+                                if (this.getValue() != '') {
+                                    // 日期的自定义，什么都不干
+                                    let parent = this.getParent();
+                                    parent._uOptions.hide();
+                                    if (parent.getSelected() !== this) {
+                                        parent.setSelected(this);
+                                        ecui.dispatchEvent(parent, 'change', event);
+                                    }
+                                }
+                            }
+                        }
+                    ),
+    
+                    onready: function () {
+                        let parent = this.getParent(),
+                            selectControls = ecui.query(function (item) {
+                                return item instanceof parent.CustomerSelect && ecui.dom.contain(parent.getMain(), item.getMain());
+                            }, this);
+                        if (selectControls.length > 0) {
+                            parent.selectControl = selectControls[0];
+                        }
+                        !this.getValue() && this.setValue(this._sDefaultValue + '');
+                    }
+                }
+            ),
+    
+            CustomerRangeCalendarInput: ecui.inherits(
+                frd.RangeSelectDate,
+                function (el, options) {
+                    frd.RangeSelectDate.call(this, el, options);
+                    this._sTimePlaceString = options.timePlaceString;
+                    this._sStartValue = options.startValue; 
+                    this._sEndValue = options.endValue; 
+                }, {
+                    onready: function () {
+                        let parent = this.getParent(),
+                            calendarControls = ecui.query(function (item) {
+                                return item instanceof parent.CustomerRangeCalendarInput && ecui.dom.contain(parent.getMain(), item.getMain());
+                            }, this);
+                         
+                        if (calendarControls.length > 0) {
+                            parent.calendarControl = calendarControls[0];
+                        }
+                        this.setRangeValue([this._sStartValue, this._sEndValue]);
+                    },
+    
+                    onchange: function () {
+                        frd.RangeSelectDate.prototype.onchange.call(this);
+                        this.getParent().selectControl.setValue('-1');
+                        
+                        this.getParent().callRoute();
+                    }
+                }
+            ),
+
+            callRoute: function (){
+                this._sRouteName && ecui.esr.callRoute(this._sRouteName + '~pageNo=1~pageNum=1', true);
+            }
+        }
+    ),
+
     // 编辑输入
     CustomInputTexts: ecui.inherits(
         ecui.ui.Text,

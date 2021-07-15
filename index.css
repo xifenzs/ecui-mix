@@ -671,6 +671,12 @@ body {
         padding: 0 10px;
         font-size: 12px;
     }
+
+    .frd-close-icon {
+        background-color: #ffffff;
+        width: 30px;
+        height: 30px;
+    }
 }
 .frd-range-calendar-option {
     width: 450px;
@@ -2391,4 +2397,18 @@ body {
         margin-bottom: 20px;
         background-color: #ffffff;
     }
+}
+
+.ec-select-timer {
+    box-sizing: border-box;
+    display: flex;
+
+    .ui-select {
+        min-width: 50px;
+        max-width: 100px;
+        margin-right: 10px;
+    }
+
+    .ec-timer {}
+
 }
