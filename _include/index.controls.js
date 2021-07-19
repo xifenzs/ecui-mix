@@ -195,14 +195,6 @@ yiche.ui = {
             }
         }
     ),
-    // 图片预览
-    PreviewHide: ecui.inherits(ecui.ui.Control, {
-        onclick: function () {
-            let elPreview = ecui.$('preview_session_handle');
-            ecui.dom.addClass(elPreview, 'ui-hide');
-            elPreview.querySelector('.swiper').innerHTML = '';
-        }
-    }),
     // 点击展开显示子元素
     CustomToggle: ecui.inherits(
         ecui.ui.Control,
@@ -334,7 +326,7 @@ yiche.ui = {
                         'ui-select-item', {
                             $click: function (event) {
                                 ecui.ui.Item.prototype.$click.call(this, event);
-                                if (this.getValue() != '') {
+                                if (this.getValue() !== '-1') {
                                     // 日期的自定义，什么都不干
                                     let parent = this.getParent();
                                     parent._uOptions.hide();
@@ -1280,18 +1272,16 @@ yiche.ui = {
             this._uNext = null;
             this.hide();
         }, {
-            HandleHide: ecui.inherits(
-                ecui.ui.Control, {
-                    onclick: function () {
-                        let parent = this.getParent();
-                        parent.repaint();
-                        parent._sCurrentIndex = 0;
-                        parent._oDataList = [];
-                        parent._eImgWrapEl.innerHTML = '';
-                        parent.hide();
-                    }
+            onclick: function (e){
+                const el = e.target;
+                if (ecui.dom.hasClass(el, 'preview-session') || ecui.dom.hasClass(el, 'close')){
+                    this.repaint();
+                    this._sCurrentIndex = 0;
+                    this._oDataList = [];
+                    this._eImgWrapEl.innerHTML = '';
+                    this.hide();
                 }
-            ),
+            },
             PreviewImgChange: ecui.inherits(
                 ecui.ui.Control,
                 function (el, options) {
